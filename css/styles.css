@@ -1,0 +1,38 @@
+ html {
+        scroll-behavior: smooth;
+      }
+
+@keyframes gradient-x {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 4s ease infinite;
+}
+
+.poppins-medium {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+  /* Blinking cursor effect */
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  #cursor {
+    animation: blink 1s step-end infinite;
+    font-weight: 300; 
+  }
+
+  /* Class to hide the cursor */
+  .cursor-hidden {
+    opacity: 0 !important;
+  }

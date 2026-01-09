@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+  <head>
+    <!-- Meta Tags -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="ClearFolio - Responsive personal portfolio template built with HTML, Tailwind CSS, and JavaScript."
+    />
+    <meta
+      name="keywords"
+      content="Sipan Danielyan, web developer, landing pages, IT specialist, system administration, Tailwind CSS"
+    />
+    <meta name="author" content="Sipan Danielyan" />
+    <title>Sipan Danielyan – Personal Portfolio Template</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              bg: "#111111", // Custom dark background
+              text: "#ffffff", // Primary text color
+              accent: "#ff004f", // Highlight/Accent color
+            },
+            fontFamily: {
+              poppins: ["Poppins", "sans-serif"],
+              gloria: ['"Gloria Hallelujah"', "cursive"],
+              tangerine: ['"Tangerine"', "cursive"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Merienda:wght@300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tangerine:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <!-- Animate On Scroll (AOS) Library -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+    <!-- Lottie Animation Library -->
+    <script src="https://unpkg.com/lottie-web@5.7.4/build/player/lottie.min.js"></script>
+
+    <!-- Alpine.js (For UI Interactivity like Navbar Toggle) -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+
+    <!-- Custom CSS and JS -->
+    <link rel="stylesheet" href="css/styles.css" />
+    <script src="js/script.js"></script>
+  </head>
+
+  <body class="bg-bg text-text">
+    <!-- Navbar -->
+    <nav
+      x-data="{ open: false, activeSection: 'home' }"
+      x-init="
+    window.addEventListener('scroll', () => {
+      const sections = ['home', 'about', 'skills','resume', 'projects', 'services', 'contact'];
+      const scrollY = window.scrollY + 150;
+      for (const id of sections) {
+        const section = document.getElementById(id);
+        if (section && scrollY >= section.offsetTop && scrollY < section.offsetTop + section.offsetHeight) {
+          activeSection = id;
+        }
+      }
+    });
+  "
+      class="fixed w-full top-0 left-0 z-50 bg-[#111111] text-white border-b border-gray-800 shadow-md transition-all duration-500"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <!-- Logo -->
+          <a
+            href="#"
+            class="text-xl md:text-3xl font-extrabold text-[#ff004f] tracking-wide font-gloria"
+          >
+            Sipan Danielyan
+          </a>
+
+          <!-- Desktop Navigation -->
+          <div
+            class="hidden md:flex items-center space-x-8 text-md font-medium"
+          >
+            <template
+              x-for="link in ['Home', 'About', 'Skills', 'Resume', 'Projects', 'Services', 'Contact']"
+              :key="link"
+            >
+              <a
+                :href="'#' + link.toLowerCase()"
+                class="relative group transition-all duration-300"
+              >
+                <span
+                  :class="activeSection === link.toLowerCase() ? 'text-[#ff004f]' : 'text-white'"
+                  class="transition duration-300"
+                  x-text="link"
+                ></span>
+                <!-- Underline effect -->
+                <span
+                  class="absolute left-0 -bottom-1 h-[2px] bg-[#ff004f] transition-all duration-300"
+                  :class="activeSection === link.toLowerCase() ? 'w-full' : 'w-0 group-hover:w-full'"
+                ></span>
+              </a>
+            </template>
+          </div>
+
+          <!-- Resume Button (Desktop) -->
+          <div class="hidden md:flex">
+            <a
+              href="assets/resume-sipan-danielyan.pdf"
+              target="_blank"
+              class="bg-[#ff004f] hover:bg-[#e60047] text-white px-5 py-2 rounded-lg font-semibold shadow-lg transform hover:scale-105 transition-all duration-300"
+            >
+              Resume
+            </a>
+          </div>
+
+          <!-- Mobile Menu Button -->
+          <div class="md:hidden flex items-center">
+            <button @click="open = !open" class="focus:outline-none">
+              <!-- Menu Icon -->
+              <svg
+                x-show="!open"
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-7 h-7"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 8h16M4 16h16"
+                />
+              </svg>
+              <!-- Close Icon -->
+              <svg
+                x-show="open"
+                x-cloak
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-7 h-7"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation Dropdown -->
+      <div
+        x-show="open"
+        x-transition:enter="transition ease-out duration-500"
+        x-transition:enter-start="opacity-0 -translate-y-5"
+        x-transition:enter-end="opacity-100 translate-y-0"
+        x-transition:leave="transition ease-in duration-400"
+        x-transition:leave-start="opacity-100 translate-y-0"
+        x-transition:leave-end="opacity-0 -translate-y-5"
+        class="md:hidden bg-[#111111] px-6 py-6 space-y-5 text-center text-base font-medium"
+      >
+        <template
+          x-for="link in ['Home', 'About', 'Skills', 'Resume', 'Projects', 'Services', 'Contact']"
+          :key="link"
+        >
+          <a
+            :href="'#' + link.toLowerCase()"
+            :class="activeSection === link.toLowerCase() ? 'text-[#ff004f]' : 'text-white'"
+            class="block hover:text-[#ff004f] transition duration-300"
+            x-text="link"
+          ></a>
+        </template>
+
+        <!-- Resume Button (Mobile) -->
+        <a
+          href="assets/resume-sipan-danielyan.pdf"
+          target="_blank"
+          class="inline-block bg-[#ff004f] hover:bg-[#e60047] text-white py-2 px-4 rounded-md transition duration-300 shadow-md"
+        >
+          Resume
+        </a>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+
+    <section
+      id="home"
+      class="relative bg-bg text-text min-h-[100vh] flex items-center justify-center overflow-hidden px-4 pt-24"
+    >
+      <div class="absolute inset-0">
+        <div
+          class="absolute top-1/3 left-1/4 w-72 h-72 bg-[#ff004f] opacity-20 rounded-full filter blur-3xl"
+        ></div>
+        <div
+          class="absolute bottom-1/4 right-1/4 w-72 h-72 bg-[#ffffff] opacity-10 rounded-full filter blur-3xl"
+        ></div>
+      </div>
+
+      <div
+        class="relative z-10 max-w-5xl w-full text-center py-20"
+        data-aos="fade-up"
+        data-aos-duration="1000"
+      >
+        <h1
+          class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 font-gloria tracking-tight"
+        >
+          Hello, I'm
+          <span
+            id="typed-name"
+            class="text-accent inline-block animate__animated animate__fadeIn animate__delay-1s animate__slow underline decoration-wavy decoration-2 underline-offset-4"
+          >
+          </span
+          ><span id="cursor" class="text-accent">|</span>
+        </h1>
+
+        <p
+          class="text-xl sm:text-2xl text-gray-300 font-medium mb-4 animate-fade-in"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
+          IT Specialist & Website Developer from Armenia 🇦🇲
+        </p>
+
+        <p
+          class="text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto mb-8"
+          data-aos="fade-up"
+          data-aos-delay="400"
+        >
+          I specialize in building sleek, responsive, and interactive web
+          interfaces using React, Tailwind CSS, and modern JavaScript
+          frameworks.
+        </p>
+
+        <a
+          href="#projects"
+          class="inline-block bg-accent hover:bg-[#e60047] text-white px-8 py-3 rounded-full shadow-xl transform hover:scale-105 transition-all duration-300 font-semibold text-lg"
+          data-aos="zoom-in"
+          data-aos-delay="600"
+        >
+          View My Work
+        </a>
+      </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section
+      id="about"
+      class="relative bg-bg text-text py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
+    >
+      <!-- Background Effects -->
+      <div
+        class="absolute top-0 left-0 w-80 h-80 bg-accent opacity-20 blur-[100px] rounded-full"
+      ></div>
+      <div
+        class="absolute bottom-0 right-0 w-72 h-72 bg-white opacity-10 blur-[80px] rounded-full"
+      ></div>
+
+      <div class="relative max-w-4xl mx-auto text-center z-10">
+        <div class="mb-10" data-aos="fade-down">
+          <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-accent">
+            About Me
+          </h2>
+          <div class="mx-auto mt-2 h-1 w-40 bg-accent rounded-full"></div>
+        </div>
+        <!-- Profile Image -->
+        <div
+          class="relative mx-auto w-44 h-44 rounded-full overflow-hidden border-[3px] border-accent shadow-xl mb-10"
+          data-aos="zoom-in"
+        >
+          <img
+            src="assets/images/Sipan-Danielyan.jpg"
+            alt="Sipan Danielyan"
+            class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700"
+          />
+        </div>
+
+        <!-- Heading -->
+        <h2
+          class="text-4xl sm:text-5xl font-extrabold mb-4 leading-tight"
+          data-aos="fade-up"
+        >
+          Hello, I’m <span class="text-accent">Sipan Danielyan</span>
+        </h2>
+
+        <!-- Description -->
+        <p
+          class="text-lg text-gray-300 mb-5 leading-relaxed max-w-3xl mx-auto"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          An IT Specialist and Website Developer from Armenia with 2+ years of experience building clean, responsive websites and landing pages for real business needs.
+        </p>
+        <p
+          class="text-base text-gray-400 mb-10 max-w-3xl mx-auto"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
+          I focus on fast, user-friendly interfaces, reliable deployment, and practical solutions. I also build C# desktop tools for local systems and support IT infrastructure and networks.
+        </p>
+
+        <!-- Tech Stack -->
+        <div class="mb-10" data-aos="fade-up" data-aos-delay="100">
+          <h3
+            class="text-sm font-bold text-accent tracking-widest uppercase mb-4"
+          >
+            Tech Stack
+          </h3>
+          <div class="flex flex-wrap justify-center gap-3">
+            <span class="bg-white/10 text-white px-4 py-1 rounded-full text-sm"
+              >HTML</span
+            >
+            <span class="bg-white/10 text-white px-4 py-1 rounded-full text-sm"
+              >Tailwind CSS</span
+            >
+            <span class="bg-white/10 text-white px-4 py-1 rounded-full text-sm"
+              >JavaScript</span
+            >
+            <span class="bg-white/10 text-white px-4 py-1 rounded-full text-sm"
+              >ReactJS</span
+            >
+            <span class="bg-white/10 text-white px-4 py-1 rounded-full text-sm"
+              >Node.js</span
+            >
+            <span class="bg-white/10 text-white px-4 py-1 rounded-full text-sm"
+              >Express.js</span
+            >
+            <span class="bg-white/10 text-white px-4 py-1 rounded-full text-sm"
+              >MongoDB</span
+            >
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <a
+          href="#projects"
+          class="inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-[#e60047] text-white text-sm font-semibold rounded-full shadow-lg transition-transform transform hover:scale-105"
+          data-aos="zoom-in-up"
+          data-aos-delay="300"
+        >
+          View My Work
+        </a>
+      </div>
+    </section>
+
+    <!-- 6️⃣ Skills Section -->
+    <section
+      id="skills"
+      class="relative bg-bg text-white py-24 px-6 md:px-16 overflow-hidden"
+    >
+      <!-- Accent Glow Background -->
+      <div
+        class="absolute top-0 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-accent opacity-10 rounded-full blur-[120px] pointer-events-none"
+      ></div>
+
+      <div class="max-w-7xl mx-auto relative z-10">
+        <!-- Section Header -->
+        <div
+          class="text-center mb-16"
+          data-aos="fade-up"
+          data-aos-duration="800"
+        >
+          <h2
+            class="text-5xl font-extrabold text-accent mb-4 font-poppins tracking-tight"
+          >
+            Tech Stack
+          </h2>
+          <p class="text-gray-400 text-lg max-w-xl mx-auto">
+            Languages, libraries & tools I build modern web applications with.
+          </p>
+        </div>
+
+        <!-- Skills Grid -->
+        <div
+          class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 text-center"
+        >
+          <!-- Skill Card -->
+          <div
+            class="group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="100"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+              alt="HTML5"
+              class="h-12 mx-auto mb-4 transition-transform group-hover:scale-110 group-hover:-rotate-6"
+            />
+            <p class="font-semibold text-white text-lg">HTML5</p>
+          </div>
+
+          <div
+            class="group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="200"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+              alt="CSS3"
+              class="h-12 mx-auto mb-4 transition-transform group-hover:scale-110 group-hover:rotate-6"
+            />
+            <p class="font-semibold text-white text-lg">CSS3</p>
+          </div>
+
+          <div
+            class="group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="300"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+              alt="JavaScript"
+              class="h-12 mx-auto mb-4 transition-transform group-hover:scale-110 group-hover:-rotate-6"
+            />
+            <p class="font-semibold text-white text-lg">JavaScript</p>
+          </div>
+
+          <div
+            class="group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="400"
+          >
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg"
+              alt="Tailwind"
+              class="h-12 mx-auto mb-4 transition-transform group-hover:scale-110 group-hover:rotate-6"
+            />
+            <p class="font-semibold text-white text-lg">Tailwind CSS</p>
+          </div>
+
+          <div
+            class="group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="500"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+              alt="React"
+              class="h-12 mx-auto mb-4 transition-transform group-hover:scale-110 group-hover:-rotate-6"
+            />
+            <p class="font-semibold text-white text-lg">React</p>
+          </div>
+
+          <div
+            class="group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="600"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+              alt="Node.js"
+              class="h-12 mx-auto mb-4 transition-transform group-hover:scale-110 group-hover:rotate-6"
+            />
+            <p class="font-semibold text-white text-lg">Node.js</p>
+          </div>
+
+          <div
+            class="group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="700"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
+              alt="Express.js"
+              class="h-12 mx-auto mb-4 bg-white p-1 rounded transition-transform group-hover:scale-110 group-hover:-rotate-6"
+            />
+            <p class="font-semibold text-white text-lg">Express.js</p>
+          </div>
+
+          <div
+            class="group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="800"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+              alt="MongoDB"
+              class="h-12 mx-auto mb-4 transition-transform group-hover:scale-110 group-hover:rotate-6"
+            />
+            <p class="font-semibold text-white text-lg">MongoDB</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resume Section -->
+    <section
+      id="resume"
+      class="bg-bg text-white py-24 px-6 md:px-16 overflow-hidden relative"
+    >
+      <!-- Background Glow -->
+      <div
+        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent opacity-10 rounded-full blur-[140px] pointer-events-none"
+      ></div>
+
+      <div class="max-w-7xl mx-auto relative z-10">
+        <div class="text-center mb-16" data-aos="fade-up">
+          <h2
+            class="text-5xl font-extrabold text-accent mb-4 font-poppins tracking-tight"
+          >
+            Resume
+          </h2>
+          <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+            A quick glance at my education and work experience.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          <!-- Education Column -->
+          <div class="flex flex-col space-y-10">
+            <h3 class="text-3xl font-bold text-accent text-center">
+              Education
+            </h3>
+            <div class="space-y-10">
+              <div
+                class="border-l-4 border-accent pl-6 relative"
+                data-aos="fade-up"
+                data-aos-delay="100"
+              >
+                <div
+                  class="absolute -left-[10px] top-0 w-5 h-5 bg-accent rounded-full"
+                ></div>
+                <h4 class="text-2xl font-semibold">
+                  B.Tech in Computer Science
+                </h4>
+                <p class="text-gray-400 text-sm mb-2">
+                  XYZ University • 2017 – 2021
+                </p>
+                <p class="text-gray-300 text-base">
+                  Specialized in frontend development, data structures, and
+                  full-stack web projects.
+                </p>
+              </div>
+              <div
+                class="border-l-4 border-accent pl-6 relative"
+                data-aos="fade-up"
+                data-aos-delay="200"
+              >
+                <div
+                  class="absolute -left-[10px] top-0 w-5 h-5 bg-accent rounded-full"
+                ></div>
+                <h4 class="text-2xl font-semibold">
+                  Higher Secondary Education
+                </h4>
+                <p class="text-gray-400 text-sm mb-2">
+                  ABC Senior School • 2015 – 2017
+                </p>
+                <p class="text-gray-300 text-base">
+                  Completed with distinction in Science stream with focus on
+                  Mathematics and Computer Science.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Experience Column -->
+          <div class="flex flex-col space-y-10">
+            <h3 class="text-3xl font-bold text-accent text-center">
+              Work Experience
+            </h3>
+            <div class="space-y-10">
+              <div
+                class="border-l-4 border-accent pl-6 relative"
+                data-aos="fade-up"
+                data-aos-delay="100"
+              >
+                <div
+                  class="absolute -left-[10px] top-0 w-5 h-5 bg-accent rounded-full"
+                ></div>
+                <h4 class="text-2xl font-semibold">Frontend Developer</h4>
+                <p class="text-gray-400 text-sm mb-2">
+                  WebTech Studio • 2021 – Present
+                </p>
+                <p class="text-gray-300 text-base">
+                  Developed and maintained dynamic websites and dashboards using
+                  React, Tailwind CSS, and RESTful APIs with performance and UX
+                  in focus.
+                </p>
+              </div>
+              <div
+                class="border-l-4 border-accent pl-6 relative"
+                data-aos="fade-up"
+                data-aos-delay="200"
+              >
+                <div
+                  class="absolute -left-[10px] top-0 w-5 h-5 bg-accent rounded-full"
+                ></div>
+                <h4 class="text-2xl font-semibold">Intern - Web Development</h4>
+                <p class="text-gray-400 text-sm mb-2">
+                  Tech Solutions Pvt Ltd • Jan – Jun 2021
+                </p>
+                <p class="text-gray-300 text-base">
+                  Worked on client projects and improved UI consistency across
+                  internal tools using HTML, CSS, and JavaScript.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="bg-bg text-white py-24 px-6 md:px-16">
+      <div class="max-w-7xl mx-auto">
+        <!-- Section Header -->
+        <div class="text-center mb-16" data-aos="fade-up">
+          <h2 class="text-4xl font-extrabold mb-4 text-accent font-sora">
+            My Work Showcase
+          </h2>
+          <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+            A few of the digital experiences I've crafted — blending
+            performance, precision, and creativity.
+          </p>
+        </div>
+
+        <!-- Project Grid -->
+        <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
+          <!-- Project Card -->
+          <div
+            class="relative group bg-black/30 backdrop-blur-md border border-gray-700 p-6 rounded-2xl transition-all hover:shadow-2xl hover:scale-[1.02] duration-300"
+            data-aos="zoom-in-up"
+          >
+            <!-- Image -->
+            <div class="relative overflow-hidden rounded-xl mb-6">
+              <img
+                src="https://images.unsplash.com/photo-1585079542156-2755d9c8a094?auto=format&fit=crop&w=800&q=80"
+                alt="Project Image"
+                class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105 rounded-xl"
+              />
+              <div
+                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              ></div>
+            </div>
+
+            <!-- Text -->
+            <h3 class="text-xl font-bold text-white mb-2">Landing Pages & Websites</h3>
+            <p class="text-sm text-gray-400 mb-4">
+              A clean, developer-focused portfolio built with vanilla JS and
+              Tailwind CSS.
+            </p>
+
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-2 text-xs mb-5">
+              <span class="bg-accent/10 text-accent px-3 py-1 rounded-full">
+                HTML
+              </span>
+              <span class="bg-accent/10 text-accent px-3 py-1 rounded-full">
+                Tailwind
+              </span>
+              <span class="bg-accent/10 text-accent px-3 py-1 rounded-full">
+                JavaScript
+              </span>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex justify-between items-center text-sm font-medium">
+              <a href="#" class="text-accent hover:underline transition-all"
+                >Live Demo →</a
+              >
+              <a href="#" class="text-gray-400 hover:text-white transition-all"
+                >GitHub</a
+              >
+            </div>
+          </div>
+
+          <!-- Project Card Example #2 -->
+          <div
+            class="relative group bg-black/30 backdrop-blur-md border border-gray-700 p-6 rounded-2xl transition-all hover:shadow-2xl hover:scale-[1.02] duration-300"
+            data-aos="zoom-in-up"
+            data-aos-delay="100"
+          >
+            <div class="relative overflow-hidden rounded-xl mb-6">
+              <img
+                src="https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?auto=format&fit=crop&w=800&q=80"
+                alt="Project Image"
+                class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105 rounded-xl"
+              />
+              <div
+                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              ></div>
+            </div>
+
+            <h3 class="text-xl font-bold text-white mb-2">
+              WordPress Business Sites
+            </h3>
+            <p class="text-sm text-gray-400 mb-4">
+              SEO-optimized responsive site for SaaS startup with React +
+              Tailwind.
+            </p>
+
+            <div class="flex flex-wrap gap-2 text-xs mb-5">
+              <span class="bg-accent/10 text-accent px-3 py-1 rounded-full">
+                React
+              </span>
+              <span class="bg-accent/10 text-accent px-3 py-1 rounded-full">
+                Tailwind
+              </span>
+            </div>
+
+            <div class="flex justify-between items-center text-sm font-medium">
+              <a href="#" class="text-accent hover:underline transition-all"
+                >Live Demo →</a
+              >
+              <a href="#" class="text-gray-400 hover:text-white transition-all"
+                >GitHub</a
+              >
+            </div>
+          </div>
+
+          <!-- Project Card Example #3 -->
+          <div
+            class="relative group bg-black/30 backdrop-blur-md border border-gray-700 p-6 rounded-2xl transition-all hover:shadow-2xl hover:scale-[1.02] duration-300"
+            data-aos="zoom-in-up"
+            data-aos-delay="200"
+          >
+            <div class="relative overflow-hidden rounded-xl mb-6">
+              <img
+                src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80"
+                alt="Project Image"
+                class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105 rounded-xl"
+              />
+              <div
+                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              ></div>
+            </div>
+
+            <h3 class="text-xl font-bold text-white mb-2">C# Internal Tools</h3>
+            <p class="text-sm text-gray-400 mb-4">
+              Admin panel with charts, stats, and responsive layout using
+              Chart.js.
+            </p>
+
+            <div class="flex flex-wrap gap-2 text-xs mb-5">
+              <span class="bg-accent/10 text-accent px-3 py-1 rounded-full">
+                JavaScript
+              </span>
+              <span class="bg-accent/10 text-accent px-3 py-1 rounded-full">
+                Chart.js
+              </span>
+            </div>
+
+            <div class="flex justify-between items-center text-sm font-medium">
+              <a href="#" class="text-accent hover:underline transition-all"
+                >Live Demo →</a
+              >
+              <a href="#" class="text-gray-400 hover:text-white transition-all"
+                >GitHub</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="bg-bg text-white py-24 px-6 md:px-16">
+      <div class="max-w-7xl mx-auto">
+        <!-- Heading -->
+        <div class="text-center mb-20" data-aos="fade-up">
+          <h2 class="text-4xl font-extrabold mb-4 text-accent font-sora">
+            What I Love to Build
+          </h2>
+          <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+            More than just code — I craft digital experiences with performance,
+            accessibility, and scalability in mind.
+          </p>
+        </div>
+
+        <!-- Skills Grid -->
+        <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+          <!-- Card 1 -->
+          <div
+            class="group relative border border-gray-700 bg-black/20 backdrop-blur p-8 rounded-2xl transition-all hover:border-accent hover:shadow-xl hover:-translate-y-2"
+            data-aos="zoom-in"
+            data-aos-delay="100"
+          >
+            <div
+              class="w-12 h-12 flex items-center justify-center bg-accent/20 text-accent rounded-full mb-6 transition group-hover:bg-accent group-hover:text-white"
+            >
+              <i class="fas fa-paint-brush text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Design Thinking</h3>
+            <p class="text-gray-400">
+              I approach UI/UX with empathy and creativity — creating interfaces
+              that are both intuitive and engaging.
+            </p>
+          </div>
+
+          <!-- Card 2 -->
+          <div
+            class="group relative border border-gray-700 bg-black/20 backdrop-blur p-8 rounded-2xl transition-all hover:border-accent hover:shadow-xl hover:-translate-y-2"
+            data-aos="zoom-in"
+            data-aos-delay="200"
+          >
+            <div
+              class="w-12 h-12 flex items-center justify-center bg-accent/20 text-accent rounded-full mb-6 transition group-hover:bg-accent group-hover:text-white"
+            >
+              <i class="fas fa-laptop-code text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Modern Development</h3>
+            <p class="text-gray-400">
+              I build fast, responsive web apps using React, Tailwind CSS, and
+              modern JS — optimized for performance.
+            </p>
+          </div>
+
+          <!-- Card 3 -->
+          <div
+            class="group relative border border-gray-700 bg-black/20 backdrop-blur p-8 rounded-2xl transition-all hover:border-accent hover:shadow-xl hover:-translate-y-2"
+            data-aos="zoom-in"
+            data-aos-delay="300"
+          >
+            <div
+              class="w-12 h-12 flex items-center justify-center bg-accent/20 text-accent rounded-full mb-6 transition group-hover:bg-accent group-hover:text-white"
+            >
+              <i class="fas fa-rocket text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Scalable Execution</h3>
+            <p class="text-gray-400">
+              I bring clean architecture and reusable components that scale with
+              your product as it grows.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section
+      id="contact"
+      class="relative bg-gradient-to-br from-[#0f0f0f] via-[#111111] to-[#1a1a1a] text-white py-28 px-6 sm:px-10 overflow-hidden"
+    >
+      <!-- Floating Background Effects -->
+      <div class="absolute inset-0 -z-10">
+        <div
+          class="absolute w-72 h-72 bg-[#ff004f] opacity-10 rounded-full blur-3xl top-10 left-10 animate-pulse"
+        ></div>
+        <div
+          class="absolute w-96 h-96 bg-[#ff004f] opacity-10 rounded-full blur-2xl bottom-0 right-10 animate-spin-slow"
+        ></div>
+        <div class="absolute top-0 right-0 w-44 h-44 opacity-25">
+          <lottie-player
+            src="https://assets3.lottiefiles.com/packages/lf20_cg3qkhrd.json"
+            background="transparent"
+            speed="1"
+            loop
+            autoplay
+          ></lottie-player>
+        </div>
+      </div>
+
+      <!-- Heading -->
+      <div class="max-w-7xl mx-auto mb-16 text-center" data-aos="fade-up">
+        <h2
+          class="text-4xl md:text-5xl font-extrabold mb-4 text-white tracking-tight"
+        >
+          Let’s Talk
+        </h2>
+        <p class="text-lg text-gray-400 max-w-xl mx-auto">
+          Have a project, idea, or collaboration in mind? Drop a message and
+          let’s make it real.
+        </p>
+      </div>
+
+      <!-- Grid -->
+      <div
+        class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-start relative z-10"
+      >
+        <!-- LEFT -->
+        <div
+          class="p-10 lg:p-14 bg-gradient-to-tr from-[#1f1f1f] to-[#2b2b2b] rounded-3xl text-white shadow-xl h-full"
+          data-aos="fade-right"
+        >
+          <h3 class="text-3xl font-bold mb-6 text-[#ff004f]">
+            Let's Build Something Bold
+          </h3>
+          <p class="text-gray-300 text-lg mb-10">
+            Available for freelance, full-time roles, or creative collaboration.
+          </p>
+          <ul class="space-y-4 text-base font-medium">
+            <!-- Email -->
+            <li>
+              <a
+                href="mailto:royalarm001@gmail.com"
+                class="flex items-center gap-4 p-3 rounded-xl hover:bg-[#1f1f1f] transition group"
+              >
+                <div
+                  class="w-9 h-9 rounded-full bg-[#ff004f] flex items-center justify-center transition group-hover:scale-105"
+                >
+                  <svg
+                    class="w-5 h-5 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M2 4a2 2 0 012-2h16a2 2 0 012 2v16a2 2 0 01-2 2H4a2 2 0 01-2-2V4zm2 0v.01L12 13l8-8.99V4H4zm16 16V8l-8 8-8-8v12h16z"
+                    />
+                  </svg>
+                </div>
+                <span class="text-white group-hover:text-[#ff004f] transition"
+                  >royalarm001@gmail.com</span
+                >
+              </a>
+            </li>
+
+            <!-- Phone -->
+            <li>
+              <div class="flex items-center gap-4 p-3 rounded-xl bg-black/20">
+                <div class="w-9 h-9 rounded-full bg-[#ff004f] flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C10.07 21 3 13.93 3 5a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.2 2.2z"/>
+                  </svg>
+                </div>
+                <span class="text-white">+374 91 733633</span>
+              </div>
+            </li>
+
+            <!-- Location -->
+            <li>
+              <div class="flex items-center gap-4 p-3 rounded-xl bg-black/20">
+                <div class="w-9 h-9 rounded-full bg-[#ff004f] flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
+                  </svg>
+                </div>
+                <span class="text-white">Jermuk, Armenia (Remote)</span>
+              </div>
+            </li>
+
+
+            <!-- LinkedIn -->
+            <li>
+              <a
+                href="#"
+                target="_blank"
+                class="flex items-center gap-4 p-3 rounded-xl hover:bg-[#1f1f1f] transition group"
+              >
+                <div
+                  class="w-9 h-9 rounded-full bg-[#ff004f] flex items-center justify-center transition group-hover:scale-105"
+                >
+                  <svg
+                    class="w-5 h-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 448 512"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M100.28 448H7.4V148.9h92.88zm-46.44-341C24.1 107 0 82.9 0 53.6 0 24.3 24.1 0 53.6 0S107 24.3 107 53.6c0 29.3-24.1 53.4-53.6 53.4zM447.8 448h-92.68V302.4c0-34.7-12.4-58.4-43.4-58.4-23.6 0-37.6 15.9-43.8 31.3-2.3 5.4-2.8 12.9-2.8 20.4V448H172.4s1.2-256.8 0-283.1h92.68v40.1c-.2.3-.5.7-.7 1h.7v-1c12.3-18.9 34.2-45.9 83.4-45.9 60.9 0 106.6 39.7 106.6 125.2V448z"
+                    />
+                  </svg>
+                </div>
+                <span class="text-white group-hover:text-[#ff004f] transition"
+                  >linkedin.com/in/john-doe</span
+                >
+              </a>
+            </li>
+
+            <!-- GitHub -->
+            <li>
+              <a
+                href="#"
+                target="_blank"
+                class="flex items-center gap-4 p-3 rounded-xl hover:bg-[#1f1f1f] transition group"
+              >
+                <div
+                  class="w-9 h-9 rounded-full bg-[#ff004f] flex items-center justify-center transition group-hover:scale-105"
+                >
+                  <svg
+                    class="w-5 h-5 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M12 .5A12 12 0 0 0 .5 12a12 12 0 0 0 8.2 11.5c.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.6-4-1.6-.6-1.5-1.4-2-1.4-2-1.1-.8.1-.8.1-.8 1.2.1 1.8 1.3 1.8 1.3 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.6 11.6 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.9 1.3 1.9 1.3 3.2 0 4.6-2.7 5.6-5.4 5.9.4.3.8 1 .8 2.1v3.1c0 .3.2.7.8.6A12 12 0 0 0 23.5 12 12 12 0 0 0 12 .5z"
+                    />
+                  </svg>
+                </div>
+                <span class="text-white group-hover:text-[#ff004f] transition"
+                  >github.com/john-doe</span
+                >
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- RIGHT -->
+        <div
+          class="bg-[#181818] p-10 lg:p-12 rounded-3xl shadow-2xl border border-[#2a2a2a]"
+          data-aos="fade-left"
+        >
+          <form class="space-y-8">
+            <div class="relative">
+              <input
+                type="text"
+                name="name"
+                id="name"
+                required
+                placeholder=" "
+                class="peer w-full bg-transparent border border-[#333] rounded-md px-4 pt-5 pb-2 text-white placeholder-transparent focus:outline-none focus:ring-2 focus:ring-[#ff004f]"
+              />
+              <label
+                for="name"
+                class="absolute text-sm text-gray-500 transition-all duration-300 transform scale-75 -translate-y-3 top-2 left-4 bg-[#181818] px-1 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-2.5 peer-placeholder-shown:top-4 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-3"
+                >Name</label
+              >
+            </div>
+
+            <div class="relative">
+              <input
+                type="email"
+                name="email"
+                id="email"
+                required
+                placeholder=" "
+                class="peer w-full bg-transparent border border-[#333] rounded-md px-4 pt-5 pb-2 text-white placeholder-transparent focus:outline-none focus:ring-2 focus:ring-[#ff004f]"
+              />
+              <label
+                for="email"
+                class="absolute text-sm text-gray-500 transition-all duration-300 transform scale-75 -translate-y-3 top-2 left-4 bg-[#181818] px-1 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-2.5 peer-placeholder-shown:top-4 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-3"
+                >Email</label
+              >
+            </div>
+
+            <div class="relative">
+              <textarea
+                name="message"
+                id="message"
+                rows="5"
+                required
+                placeholder=" "
+                class="peer w-full bg-transparent border border-[#333] rounded-md px-4 pt-5 pb-2 text-white placeholder-transparent focus:outline-none focus:ring-2 focus:ring-[#ff004f]"
+              ></textarea>
+              <label
+                for="message"
+                class="absolute text-sm text-gray-500 transition-all duration-300 transform scale-75 -translate-y-3 top-2 left-4 bg-[#181818] px-1 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-2.5 peer-placeholder-shown:top-4 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-3"
+                >Message</label
+              >
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-[#ff004f] hover:bg-[#e60045] text-white font-semibold py-3 px-6 rounded-lg transition-all text-lg flex items-center justify-center gap-2"
+            >
+              <!-- Icon -->
+              <svg
+                class="w-5 h-5 text-white"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M4 4h16v16H4V4z" stroke="none" fill="none" />
+                <path d="M4 4l8 8l8 -8" />
+              </svg>
+              Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer
+      class="relative bg-[#0d0d0d] text-gray-400 py-12 px-6 text-center overflow-hidden"
+    >
+      <!-- Subtle Lottie on left corner -->
+      <div
+        class="absolute left-4 bottom-4 w-40 z-0 opacity-10 pointer-events-none"
+      >
+        <lottie-player
+          src="https://assets4.lottiefiles.com/packages/lf20_3rwasyjy.json"
+          background="transparent"
+          speed="1"
+          loop
+          autoplay
+          style="width: 100%; height: 100%"
+        ></lottie-player>
+      </div>
+
+      <!-- Main content -->
+      <div class="relative z-10 max-w-xl mx-auto">
+        <h2 class="text-xl font-semibold text-white mb-1">Sipan Danielyan</h2>
+        <p class="text-sm text-gray-400 mb-4">Front-End Developer</p>
+
+        <!-- Social icons -->
+        <div class="flex justify-center items-center gap-5 mb-6">
+          <!-- Email -->
+          <a href="mailto:royalarm001@gmail.com" class="group">
+            <div
+              class="w-10 h-10 rounded-full bg-[#ff004f] flex items-center justify-center group-hover:scale-110 transition"
+            >
+              <svg
+                class="w-5 h-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M2 4a2 2 0 012-2h16a2 2 0 012 2v16a2 2 0 01-2 2H4a2 2 0 01-2-2V4zm2 0v.01L12 13l8-8.99V4H4zm16 16V8l-8 8-8-8v12h16z"
+                />
+              </svg>
+            </div>
+          </a>
+
+          <!-- LinkedIn -->
+          <a
+            href="#"
+            target="_blank"
+            class="group"
+          >
+            <div
+              class="w-10 h-10 rounded-full bg-[#ff004f] flex items-center justify-center group-hover:scale-110 transition"
+            >
+              <svg
+                class="w-5 h-5 text-white"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M4.98 3.5C3.34 3.5 2 4.84 2 6.5S3.34 9.5 4.98 9.5C6.62 9.5 7.96 8.16 7.96 6.5C7.96 4.84 6.62 3.5 4.98 3.5ZM2.4 21H7.6V10.3H2.4V21ZM10.5 10.3H15.2V11.9H15.3C15.8 10.9 17.1 9.8 18.9 9.8C22 9.8 22.4 11.9 22.4 15.1V21H17.2V15.6C17.2 14.1 17.2 12.2 15.2 12.2C13.1 12.2 12.8 13.9 12.8 15.5V21H10.5V10.3Z"
+                />
+              </svg>
+            </div>
+          </a>
+
+          <!-- GitHub -->
+          <a href="#" target="_blank" class="group">
+            <div
+              class="w-10 h-10 rounded-full bg-[#ff004f] flex items-center justify-center group-hover:scale-110 transition"
+            >
+              <svg
+                class="w-5 h-5 text-white"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M12 .5A12 12 0 0 0 .5 12a12 12 0 0 0 8.2 11.5c.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.6-4-1.6-.6-1.5-1.4-2-1.4-2-1.1-.8.1-.8.1-.8 1.2.1 1.8 1.3 1.8 1.3 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.6 11.6 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.9 1.3 1.9 1.3 3.2 0 4.6-2.7 5.6-5.4 5.9.4.3.8 1 .8 2.1v3.1c0 .3.2.7.8.6A12 12 0 0 0 23.5 12 12 12 0 0 0 12 .5z"
+                />
+              </svg>
+            </div>
+          </a>
+        </div>
+
+        <!-- Copyright -->
+        <p class="text-xs text-gray-500">
+          © 2025  Sipan Danielyan • Built with
+          <span class="text-[#ff004f] font-medium">HTML</span> &
+          <span class="text-[#ff004f] font-medium">Tailwind CSS</span>
+        </p>
+      </div>
+    </footer>
+
+    <!-- Load libraries -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="https://unpkg.com/lottie-web@5.7.4/build/player/lottie.min.js"></script>
+  </body>
+</html>
