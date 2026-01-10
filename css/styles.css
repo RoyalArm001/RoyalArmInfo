@@ -36,3 +36,12 @@
   .cursor-hidden {
     opacity: 0 !important;
   }
+  @keyframes colorShift {
+  0% { color: #38bdf8; }
+  50% { color: #22c55e; }
+  100% { color: #38bdf8; }
+}
+
+.animate-color {
+  animation: colorShift 4s infinite ease-in-out;
+}
