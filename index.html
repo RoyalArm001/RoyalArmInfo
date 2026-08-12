@@ -6,15 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="ClearFolio - Responsive personal portfolio template built with HTML, Tailwind CSS, and JavaScript."
+      content="Portfolio of Sipan Danielyan, an IT specialist and website developer from Armenia building responsive websites, landing pages, and practical internal tools."
     />
     <meta
       name="keywords"
       content="Sipan Danielyan, web developer, landing pages, IT specialist, system administration, Tailwind CSS"
     />
     <meta name="author" content="Sipan Danielyan" />
-    <title>Sipan Danielyan – Personal Portfolio Template</title>
-<link rel="icon" type="image/x-icon" href="assets/LogoArm.png">
+    <meta name="theme-color" content="#111111" />
+    <meta property="og:title" content="Sipan Danielyan | IT Specialist &amp; Website Developer" />
+    <meta property="og:description" content="Responsive websites, landing pages, IT infrastructure, and practical internal tools." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="assets/images/Sipan-Danielyan.jpg" />
+    <title>Sipan Danielyan | IT Specialist &amp; Website Developer</title>
+    <link rel="icon" type="image/png" href="assets/LogoArm.png" />
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -57,85 +62,53 @@
   
    <script src="js/lottie.min.js"></script>
     <!-- Alpine.js (For UI Interactivity like Navbar Toggle) -->
-	<script src="js/cdn.min.js" defer=""></script>
 
   
     <!-- Custom CSS and JS -->
     <link rel="stylesheet" href="css/styles.css" />
-    <script src="js/script.js"></script>
+    <script src="js/script.js" defer></script>
   </head>
 
   <body class="bg-bg text-text">
     <!-- Navbar -->
     <nav
-      x-data="{ open: false, activeSection: 'home' }"
-      x-init="
-    window.addEventListener('scroll', () => {
-      const sections = ['home', 'about', 'skills','resume', 'projects', 'services', 'contact'];
-      const scrollY = window.scrollY + 150;
-      for (const id of sections) {
-        const section = document.getElementById(id);
-        if (section && scrollY >= section.offsetTop && scrollY < section.offsetTop + section.offsetHeight) {
-          activeSection = id;
-        }
-      }
-    });
-  "
       class="fixed w-full top-0 left-0 z-50 bg-[#111111] text-white border-b border-gray-800 shadow-md transition-all duration-500"
     >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
           <!-- Logo -->
           <a
-            href="#"
+            href="#home"
             class="text-xl md:text-3xl font-extrabold text-[#ff004f] tracking-wide font-gloria"
           >
             Sipan Danielyan
           </a>
 
           <!-- Desktop Navigation -->
-          <div
-            class="hidden md:flex items-center space-x-8 text-md font-medium"
-          >
-            <template
-              x-for="link in ['Home', 'About', 'Skills', 'Resume', 'Projects', 'Services', 'Contact']"
-              :key="link"
-            >
-              <a
-                :href="'#' + link.toLowerCase()"
-                class="relative group transition-all duration-300"
-              >
-                <span
-                  :class="activeSection === link.toLowerCase() ? 'text-[#ff004f]' : 'text-white'"
-                  class="transition duration-300"
-                  x-text="link"
-                ></span>
-                <!-- Underline effect -->
-                <span
-                  class="absolute left-0 -bottom-1 h-[2px] bg-[#ff004f] transition-all duration-300"
-                  :class="activeSection === link.toLowerCase() ? 'w-full' : 'w-0 group-hover:w-full'"
-                ></span>
-              </a>
-            </template>
+          <div class="hidden xl:flex items-center space-x-6 text-md font-medium">
+            <a href="#home" data-nav-section="home" class="site-nav-link">Home</a>
+            <a href="#about" data-nav-section="about" class="site-nav-link">About</a>
+            <a href="#skills" data-nav-section="skills" class="site-nav-link">Skills</a>
+            <a href="#resume" data-nav-section="resume" class="site-nav-link">Resume</a>
+            <a href="#projects" data-nav-section="projects" class="site-nav-link">Projects</a>
+            <a href="#services" data-nav-section="services" class="site-nav-link">Services</a>
+            <a href="/it" class="site-nav-link">IT App</a>
           </div>
 
           <!-- Resume Button (Desktop) -->
-          <div class="hidden md:flex">
-            <a
-              href="assets/resume-sipan-danielyan.pdf"
-              target="_blank"
-              class="bg-[#ff004f] hover:bg-[#e60047] text-white px-5 py-2 rounded-lg font-semibold shadow-lg transform hover:scale-105 transition-all duration-300"
-            >
-              Resume
-            </a>
+          <div class="hidden xl:flex">
+            <div class="flex items-center gap-3">
+              <a href="/service-request" class="border border-[#ff004f] text-[#ff4f84] hover:bg-[#ff004f] hover:text-white px-4 py-2 rounded-lg font-semibold transition-all duration-300">Request Service</a>
+              <a href="https://staff.am/en/user/preview/sipan-danielyan-4c71cf520cbb2995" target="_blank" rel="noopener noreferrer" class="bg-[#ff004f] hover:bg-[#e60047] text-white px-5 py-2 rounded-lg font-semibold shadow-lg transform hover:scale-105 transition-all duration-300">View CV</a>
+            </div>
           </div>
 
           <!-- Mobile Menu Button -->
-          <div class="md:hidden flex items-center">
-            <button @click="open = !open" class="focus:outline-none">
+          <div class="xl:hidden flex items-center">
+              <button id="mobile-menu-toggle" type="button" class="focus:outline-none" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-navigation">
               <!-- Menu Icon -->
               <svg
-                x-show="!open"
+                  data-menu-icon="open"
                 xmlns="http://www.w3.org/2000/svg"
                 class="w-7 h-7"
                 fill="none"
@@ -151,8 +124,8 @@
               </svg>
               <!-- Close Icon -->
               <svg
-                x-show="open"
-                x-cloak
+                  data-menu-icon="close"
+                  hidden
                 xmlns="http://www.w3.org/2000/svg"
                 class="w-7 h-7"
                 fill="none"
@@ -173,34 +146,29 @@
 
       <!-- Mobile Navigation Dropdown -->
       <div
-        x-show="open"
-        x-transition:enter="transition ease-out duration-500"
-        x-transition:enter-start="opacity-0 -translate-y-5"
-        x-transition:enter-end="opacity-100 translate-y-0"
-        x-transition:leave="transition ease-in duration-400"
-        x-transition:leave-start="opacity-100 translate-y-0"
-        x-transition:leave-end="opacity-0 -translate-y-5"
-        class="md:hidden bg-[#111111] px-6 py-6 space-y-5 text-center text-base font-medium"
+        id="mobile-navigation"
+        hidden
+        class="mobile-navigation xl:hidden bg-[#111111] px-6 py-6 space-y-5 text-center text-base font-medium max-h-[calc(100dvh-4rem)] overflow-y-auto"
       >
-        <template
-          x-for="link in ['Home', 'About', 'Skills', 'Resume', 'Projects', 'Services', 'Contact']"
-          :key="link"
-        >
-          <a
-            :href="'#' + link.toLowerCase()"
-            :class="activeSection === link.toLowerCase() ? 'text-[#ff004f]' : 'text-white'"
-            class="block hover:text-[#ff004f] transition duration-300"
-            x-text="link"
-          ></a>
-        </template>
+        <a href="#home" data-nav-section="home" class="site-nav-link block">Home</a>
+        <a href="#about" data-nav-section="about" class="site-nav-link block">About</a>
+        <a href="#skills" data-nav-section="skills" class="site-nav-link block">Skills</a>
+        <a href="#resume" data-nav-section="resume" class="site-nav-link block">Resume</a>
+        <a href="#projects" data-nav-section="projects" class="site-nav-link block">Projects</a>
+        <a href="#services" data-nav-section="services" class="site-nav-link block">Services</a>
+        <a href="/it" class="site-nav-link block">IT App</a>
 
         <!-- Resume Button (Mobile) -->
         <a
-          href="assets/resume-sipan-danielyan.pdf"
+          href="https://staff.am/en/user/preview/sipan-danielyan-4c71cf520cbb2995"
           target="_blank"
+          rel="noopener noreferrer"
           class="inline-block bg-[#ff004f] hover:bg-[#e60047] text-white py-2 px-4 rounded-md transition duration-300 shadow-md"
         >
-          Resume
+          View CV
+        </a>
+        <a href="/service-request" class="block rounded-md border border-[#ff004f] px-4 py-2 text-[#ff4f84] transition hover:bg-[#ff004f] hover:text-white">
+          Request Service
         </a>
       </div>
     </nav>
@@ -211,13 +179,13 @@
       id="home"
       class="relative bg-bg text-text min-h-[100vh] flex items-center justify-center overflow-hidden px-4 pt-24"
     >
-      <div class="absolute inset-0">
-        <div
-          class="absolute top-1/3 left-1/4 w-72 h-72 bg-[#ff004f] opacity-20 rounded-full filter blur-3xl"
-        ></div>
-        <div
-          class="absolute bottom-1/4 right-1/4 w-72 h-72 bg-[#ffffff] opacity-10 rounded-full filter blur-3xl"
-        ></div>
+      <div class="matrix-field" aria-hidden="true">
+        <span class="matrix-stream matrix-stream-one">01001001<br>01010100<br>00100000<br>01010011<br>01000101<br>01010010<br>01010110<br>01000101<br>01010010</span>
+        <span class="matrix-stream matrix-stream-two">NETWORK<br>SERVER<br>PROXMOX<br>TRUE NAS<br>NEXTCLOUD<br>MONITORING</span>
+        <span class="matrix-stream matrix-stream-three">{ code }<br>cloud.init()<br>network.ok()<br>cctv.online()<br>deploy.ready()</span>
+        <span class="matrix-stream matrix-stream-four">00110010<br>00110000<br>00110010<br>00110110<br>01000001<br>01001101</span>
+        <div class="circuit-line circuit-line-one"></div>
+        <div class="circuit-line circuit-line-two"></div>
       </div>
 
       <div
@@ -225,6 +193,10 @@
         data-aos="fade-up"
         data-aos-duration="1000"
       >
+        <div class="tech-status" aria-label="System online, IT engineer">
+          <span class="tech-status-dot"></span>
+          SYSTEM ONLINE <span class="tech-status-divider">//</span> IT ENGINEER
+        </div>
         <h1
           class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 font-gloria tracking-tight"
         >
@@ -242,7 +214,7 @@
           data-aos="fade-up"
           data-aos-delay="200"
         >
-          IT Specialist & Website Developer from Armenia 🇦🇲
+          IT Programmer &amp; Network Engineer from Armenia 🇦🇲
         </p>
 
         <p
@@ -250,19 +222,34 @@
           data-aos="fade-up"
           data-aos-delay="400"
         >
-          I specialize in building sleek, responsive, and interactive web
-          interfaces using React, Tailwind CSS, and modern JavaScript
-          frameworks.
+          IT programmer and network engineer with 3 years of hands-on
+          experience in software, servers, networks, and video surveillance.
         </p>
 
-        <a
-          href="#projects"
-          class="inline-block bg-accent hover:bg-[#e60047] text-white px-8 py-3 rounded-full shadow-xl transform hover:scale-105 transition-all duration-300 font-semibold text-lg"
-          data-aos="zoom-in"
-          data-aos-delay="600"
-        >
-          View My Work
-        </a>
+        <div class="flex flex-wrap justify-center gap-3 mb-8" data-aos="fade-up" data-aos-delay="500">
+          <span class="border border-accent/50 bg-accent/10 px-4 py-2 rounded-full text-sm">3 years of experience</span>
+          <span class="border border-gray-700 bg-white/5 px-4 py-2 rounded-full text-sm">IT Programmer</span>
+          <span class="border border-gray-700 bg-white/5 px-4 py-2 rounded-full text-sm">Network Engineer</span>
+        </div>
+
+        <div class="flex flex-wrap justify-center items-center gap-3" data-aos="zoom-in" data-aos-delay="600">
+          <a
+            href="#projects"
+            class="inline-block bg-accent hover:bg-[#e60047] text-white px-8 py-3 rounded-full shadow-xl transform hover:scale-105 transition-all duration-300 font-semibold text-lg"
+          >
+            View My Work
+          </a>
+          <a
+            href="https://staff.am/en/user/preview/sipan-danielyan-4c71cf520cbb2995"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 border border-white/25 bg-white/10 hover:bg-white/20 text-white px-7 py-3 rounded-full shadow-lg transition-all duration-300 font-semibold text-lg backdrop-blur-sm"
+            aria-label="View Sipan Danielyan CV on Staff.am"
+          >
+            <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+            View CV on Staff.am
+          </a>
+        </div>
       </div>
     </section>
 
@@ -312,14 +299,21 @@
           data-aos="fade-up"
           data-aos-delay="100"
         >
-          An IT Specialist and Website Developer from Armenia with hands-on experience building clean, responsive websites and landing pages for real business and internal use.
+          An IT Programmer and Network Engineer from Armenia with 3 years of
+          hands-on experience in web development, networks, servers, and video
+          surveillance systems.
         </p>
         <p
           class="text-base text-gray-400 mb-10 max-w-3xl mx-auto"
           data-aos="fade-up"
           data-aos-delay="200"
         >
-          I focus on performance, usability, and practical solutions. Alongside web development, I work with IT infrastructure, servers, and networks, and build C# desktop tools to support local systems and workflows.
+          I install, configure, and maintain servers, network equipment, and
+          Hikvision camera systems. I also build websites and C# desktop tools
+          that support local systems and everyday business workflows. I work
+          with Proxmox virtual machines, TrueNAS, Nextcloud, private network
+          clouds, and internal messaging systems for local networks. I am also
+          a co-founder and developer of the DitakNet monitoring server.
         </p>
 
         <!-- Tech Stack -->
@@ -501,6 +495,30 @@
             />
             <p class="font-semibold text-white text-lg">MongoDB</p>
           </div>
+
+          <div
+            class="group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="900"
+          >
+            <div class="h-12 flex items-center justify-center mb-4 bg-white rounded-lg px-3">
+              <img
+                src="assets/hikvision-logo.svg"
+                alt="Hikvision"
+                class="w-full h-auto"
+              />
+            </div>
+            <p class="font-semibold text-white text-lg">Hikvision Systems</p>
+          </div>
+        </div>
+
+        <div class="mt-14 text-center" data-aos="fade-up">
+          <p class="text-gray-300 mb-5">
+            I accept remote IT support and installation requests from all regions of Armenia.
+          </p>
+          <a href="/service-request" class="inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3 font-semibold text-white shadow-lg transition hover:-translate-y-1 hover:bg-[#e60047]">
+            Submit a Service Request <span aria-hidden="true">→</span>
+          </a>
         </div>
       </div>
     </section>
@@ -523,15 +541,23 @@
             Resume
           </h2>
           <p class="text-gray-400 text-lg max-w-2xl mx-auto">
-            A quick glance at my education and work experience.
+            A practical overview of the work I do and the value I bring.
           </p>
+          <a
+            href="https://staff.am/en/user/preview/sipan-danielyan-4c71cf520cbb2995"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-6 inline-flex items-center gap-2 rounded-full border border-accent/60 bg-accent/10 px-6 py-3 font-semibold text-accent transition hover:bg-accent hover:text-white"
+          >
+            View full CV on Staff.am <span aria-hidden="true">↗</span>
+          </a>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           <!-- Education Column -->
           <div class="flex flex-col space-y-10">
             <h3 class="text-3xl font-bold text-accent text-center">
-              Education
+              Professional Focus
             </h3>
             <div class="space-y-10">
               <div
@@ -543,14 +569,14 @@
                   class="absolute -left-[10px] top-0 w-5 h-5 bg-accent rounded-full"
                 ></div>
                 <h4 class="text-2xl font-semibold">
-                  B.Tech in Computer Science
+                  Web Development
                 </h4>
                 <p class="text-gray-400 text-sm mb-2">
-                  XYZ University • 2017 – 2021
+                   Responsive websites and landing pages
                 </p>
                 <p class="text-gray-300 text-base">
-                  Specialized in frontend development, data structures, and
-                  full-stack web projects.
+                  Building clear, fast, and mobile-friendly interfaces with
+                  HTML, CSS, JavaScript, React, and Tailwind CSS.
                 </p>
               </div>
               <div
@@ -562,14 +588,14 @@
                   class="absolute -left-[10px] top-0 w-5 h-5 bg-accent rounded-full"
                 ></div>
                 <h4 class="text-2xl font-semibold">
-                  Higher Secondary Education
+                  IT Infrastructure
                 </h4>
                 <p class="text-gray-400 text-sm mb-2">
-                  ABC Senior School • 2015 – 2017
+                   Systems, servers, and networks
                 </p>
                 <p class="text-gray-300 text-base">
-                  Completed with distinction in Science stream with focus on
-                  Mathematics and Computer Science.
+                  Supporting local environments with practical troubleshooting,
+                  administration, and reliable technical solutions.
                 </p>
               </div>
             </div>
@@ -578,7 +604,7 @@
           <!-- Experience Column -->
           <div class="flex flex-col space-y-10">
             <h3 class="text-3xl font-bold text-accent text-center">
-              Work Experience
+              Hands-on Work
             </h3>
             <div class="space-y-10">
               <div
@@ -589,14 +615,13 @@
                 <div
                   class="absolute -left-[10px] top-0 w-5 h-5 bg-accent rounded-full"
                 ></div>
-                <h4 class="text-2xl font-semibold">Frontend Developer</h4>
+                <h4 class="text-2xl font-semibold">Website Developer</h4>
                 <p class="text-gray-400 text-sm mb-2">
-                  WebTech Studio • 2021 – Present
+                   Business websites and digital experiences
                 </p>
                 <p class="text-gray-300 text-base">
-                  Developed and maintained dynamic websites and dashboards using
-                  React, Tailwind CSS, and RESTful APIs with performance and UX
-                  in focus.
+                  Creating responsive websites and landing pages with a focus
+                  on usability, performance, and maintainable code.
                 </p>
               </div>
               <div
@@ -607,13 +632,13 @@
                 <div
                   class="absolute -left-[10px] top-0 w-5 h-5 bg-accent rounded-full"
                 ></div>
-                <h4 class="text-2xl font-semibold">Intern - Web Development</h4>
+                <h4 class="text-2xl font-semibold">Internal Tools</h4>
                 <p class="text-gray-400 text-sm mb-2">
-                  Tech Solutions Pvt Ltd • Jan – Jun 2021
+                   Desktop utilities and workflow support
                 </p>
                 <p class="text-gray-300 text-base">
-                  Worked on client projects and improved UI consistency across
-                  internal tools using HTML, CSS, and JavaScript.
+                  Building C# desktop tools that support local systems, simplify
+                  repetitive tasks, and improve everyday workflows.
                 </p>
               </div>
             </div>
@@ -627,27 +652,132 @@
       <div class="max-w-7xl mx-auto">
         <!-- Section Header -->
         <div class="text-center mb-16" data-aos="fade-up">
-          <h2 class="text-4xl font-extrabold mb-4 text-accent font-sora">
-            My Work Showcase
+          <h2 class="text-4xl font-extrabold mb-4 text-accent font-poppins">
+            Web Projects &amp; Product Work
           </h2>
           <p class="text-gray-400 text-lg max-w-2xl mx-auto">
-            A few of the digital experiences I've crafted — blending
-            performance, precision, and creativity.
+            Real websites and digital products I have launched, developed, and
+            improved for businesses and technical services.
           </p>
+        </div>
+
+        <div class="hidden" aria-hidden="true">
+          <article class="group overflow-hidden bg-[#171717] border border-gray-700 rounded-2xl transition-all duration-300 hover:border-accent hover:-translate-y-1 hover:shadow-[0_18px_50px_#ff004f18]" data-aos="fade-up">
+            <a href="https://smarttechllc.am" target="_blank" rel="noopener noreferrer" class="block">
+              <div class="h-52 bg-white p-8 flex items-center justify-center overflow-hidden">
+                <img src="https://smarttechllc.am/img/smart-tech.png" alt="Smart Tech website" class="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+              </div>
+              <div class="p-7">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                  <h3 class="text-2xl font-bold text-white">Smart Tech LLC</h3>
+                  <span class="text-xs font-semibold text-accent bg-accent/10 px-3 py-1 rounded-full">smarttechllc.am</span>
+                </div>
+                <p class="text-gray-400 leading-relaxed mb-5">
+                  Website for security and smart-system solutions, including CCTV,
+                  fire alarms, access control, networking, electrical work, and automation.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-5 text-xs">
+                  <span class="border border-gray-700 px-3 py-1 rounded-full">Website launch</span>
+                  <span class="border border-gray-700 px-3 py-1 rounded-full">Design refinement</span>
+                  <span class="border border-gray-700 px-3 py-1 rounded-full">Responsive UI</span>
+                </div>
+                <span class="font-semibold text-accent">Visit website ↗</span>
+              </div>
+            </a>
+          </article>
+
+          <article class="group overflow-hidden bg-[#171717] border border-gray-700 rounded-2xl transition-all duration-300 hover:border-accent hover:-translate-y-1 hover:shadow-[0_18px_50px_#ff004f18]" data-aos="fade-up" data-aos-delay="100">
+            <a href="https://sershoney.com" target="_blank" rel="noopener noreferrer" class="block">
+              <div class="h-52 bg-[#f4e4bd] overflow-hidden">
+                <img src="https://sershoney.com/images/og-cover.jpg" alt="Sers Honey website" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+              </div>
+              <div class="p-7">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                  <h3 class="text-2xl font-bold text-white">Sers Honey</h3>
+                  <span class="text-xs font-semibold text-accent bg-accent/10 px-3 py-1 rounded-full">sershoney.com</span>
+                </div>
+                <p class="text-gray-400 leading-relaxed mb-5">
+                  Brand website for 100% natural mountain honey collected in Vayk,
+                  Vayots Dzor, with product sizes and gift packaging presentation.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-5 text-xs">
+                  <span class="border border-gray-700 px-3 py-1 rounded-full">Website launch</span>
+                  <span class="border border-gray-700 px-3 py-1 rounded-full">Visual design</span>
+                  <span class="border border-gray-700 px-3 py-1 rounded-full">Product presentation</span>
+                </div>
+                <span class="font-semibold text-accent">Visit website ↗</span>
+              </div>
+            </a>
+          </article>
+
+          <article class="group overflow-hidden bg-[#171717] border border-gray-700 rounded-2xl transition-all duration-300 hover:border-accent hover:-translate-y-1 hover:shadow-[0_18px_50px_#ff004f18]" data-aos="fade-up">
+            <a href="https://www.ditaknet.com" target="_blank" rel="noopener noreferrer" class="block">
+              <div class="h-52 bg-gradient-to-br from-sky-50 to-blue-100 p-10 flex items-center justify-center overflow-hidden">
+                <img src="https://www.ditaknet.com/images/logo.png" alt="DitakNet monitoring server website" class="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+              </div>
+              <div class="p-7">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                  <h3 class="text-2xl font-bold text-white">DitakNet</h3>
+                  <span class="text-xs font-semibold text-accent bg-accent/10 px-3 py-1 rounded-full">ditaknet.com</span>
+                </div>
+                <p class="text-gray-400 leading-relaxed mb-5">
+                  Self-hosted monitoring platform for home labs and small networks,
+                  covering devices, servers, routers, services, CCTV, and alerts.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-5 text-xs">
+                  <span class="border border-accent/50 text-accent px-3 py-1 rounded-full">Co-founder</span>
+                  <span class="border border-gray-700 px-3 py-1 rounded-full">Developer</span>
+                  <span class="border border-gray-700 px-3 py-1 rounded-full">Monitoring platform</span>
+                </div>
+                <span class="font-semibold text-accent">Visit website ↗</span>
+              </div>
+            </a>
+          </article>
+
+          <article class="group overflow-hidden bg-[#171717] border border-gray-700 rounded-2xl transition-all duration-300 hover:border-accent hover:-translate-y-1 hover:shadow-[0_18px_50px_#ff004f18]" data-aos="fade-up" data-aos-delay="100">
+            <a href="https://gen.royalarm.uk" target="_blank" rel="noopener noreferrer" class="block">
+              <div class="h-52 bg-gradient-to-br from-[#17251c] via-[#25442e] to-[#111a14] flex flex-col items-center justify-center text-center p-8 overflow-hidden">
+                <i class="fas fa-sitemap text-5xl text-green-300 mb-4 transition-transform duration-500 group-hover:scale-110"></i>
+                <span class="text-3xl font-bold text-white">Տոհմածառ</span>
+              </div>
+              <div class="p-7">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                  <h3 class="text-2xl font-bold text-white">Family Tree</h3>
+                  <span class="text-xs font-semibold text-accent bg-accent/10 px-3 py-1 rounded-full">gen.royalarm.uk</span>
+                </div>
+                <p class="text-gray-400 leading-relaxed mb-5">
+                  Armenian family-tree web application for viewing and managing
+                  relatives, generations, photos, notes, social links, and user access.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-5 text-xs">
+                  <span class="border border-gray-700 px-3 py-1 rounded-full">Web application</span>
+                  <span class="border border-gray-700 px-3 py-1 rounded-full">Interface design</span>
+                  <span class="border border-gray-700 px-3 py-1 rounded-full">Data management</span>
+                </div>
+                <span class="font-semibold text-accent">Visit website ↗</span>
+              </div>
+            </a>
+          </article>
+        </div>
+
+        <div class="text-center mb-10" data-aos="fade-up">
+          <h3 class="text-2xl font-bold text-white mb-2">Additional Capabilities</h3>
+          <p class="text-gray-400">Other web and software solutions I can deliver.</p>
         </div>
 
         <!-- Project Grid -->
         <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
           <!-- Project Card -->
-          <div
-            class="relative group bg-black/30 backdrop-blur-md border border-gray-700 p-6 rounded-2xl transition-all hover:shadow-2xl hover:scale-[1.02] duration-300"
+          <details
+            class="web-projects-accordion relative group bg-black/40 backdrop-blur-md border border-gray-700 rounded-2xl transition-all hover:shadow-2xl duration-300"
             data-aos="zoom-in-up"
           >
+            <summary class="web-projects-summary cursor-pointer list-none p-6">
             <!-- Image -->
             <div class="relative overflow-hidden rounded-xl mb-6">
               <img
                 src="devicon/photo-1.jpg"
-                alt="Project Image"
+                alt="Responsive website and landing page project preview"
                 class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105 rounded-xl"
               />
               <div
@@ -658,8 +788,8 @@
             <!-- Text -->
             <h3 class="text-xl font-bold text-white mb-2">Landing Pages & Websites</h3>
             <p class="text-sm text-gray-400 mb-4">
-              A clean, developer-focused portfolio built with vanilla JS and
-              Tailwind CSS.
+              Responsive, conversion-focused pages for businesses and personal
+              brands, designed to work smoothly on every screen size.
             </p>
 
             <!-- Tags -->
@@ -675,16 +805,86 @@
               </span>
             </div>
 
-            <!-- Buttons -->
-            <div class="flex justify-between items-center text-sm font-medium">
-              <a href="#" class="text-accent hover:underline transition-all"
-                >Live Demo →</a
-              >
-              <a href="#" class="text-gray-400 hover:text-white transition-all"
-                >GitHub</a
-              >
+            <div class="flex items-center justify-between gap-3 text-sm font-semibold text-accent">
+              <span>View websites I created</span>
+              <span class="web-projects-chevron" aria-hidden="true">+</span>
             </div>
-          </div>
+            </summary>
+
+            <div class="client-sites-grid border-t border-gray-800 p-6 pt-7">
+              <a href="https://smarttechllc.am" target="_blank" rel="noopener noreferrer" class="client-site-card group/site">
+                <div class="client-site-media bg-white">
+                  <img src="https://smarttechllc.am/img/smart-tech.png" alt="Smart Tech LLC website" loading="lazy" />
+                </div>
+                <div class="client-site-body">
+                  <div class="client-site-heading">
+                    <h4>Smart Tech LLC</h4>
+                    <span>smarttechllc.am</span>
+                  </div>
+                  <p>Security and smart-system solutions website covering CCTV, access control, networking and automation.</p>
+                  <strong>Open website <span aria-hidden="true">↗</span></strong>
+                </div>
+              </a>
+
+              <a href="https://sershoney.com" target="_blank" rel="noopener noreferrer" class="client-site-card group/site">
+                <div class="client-site-media bg-[#f4e4bd]">
+                  <img src="https://sershoney.com/images/og-cover.jpg" alt="Sers Honey website" loading="lazy" />
+                </div>
+                <div class="client-site-body">
+                  <div class="client-site-heading">
+                    <h4>Sers Honey</h4>
+                    <span>sershoney.com</span>
+                  </div>
+                  <p>Brand and product website for natural mountain honey from Vayots Dzor.</p>
+                  <strong>Open website <span aria-hidden="true">↗</span></strong>
+                </div>
+              </a>
+
+              <a href="https://www.ditaknet.com" target="_blank" rel="noopener noreferrer" class="client-site-card group/site">
+                <div class="client-site-media bg-gradient-to-br from-sky-50 to-blue-100">
+                  <img src="https://www.ditaknet.com/images/logo.png" alt="DitakNet monitoring platform" loading="lazy" />
+                </div>
+                <div class="client-site-body">
+                  <div class="client-site-heading">
+                    <h4>DitakNet</h4>
+                    <span>ditaknet.com</span>
+                  </div>
+                  <p>Self-hosted monitoring platform that I develop as co-founder and programmer.</p>
+                  <strong>Open website <span aria-hidden="true">↗</span></strong>
+                </div>
+              </a>
+
+              <a href="https://gen.royalarm.uk" target="_blank" rel="noopener noreferrer" class="client-site-card group/site">
+                <div class="client-site-media family-tree-media">
+                  <i class="fas fa-sitemap" aria-hidden="true"></i>
+                  <span>Family Tree</span>
+                </div>
+                <div class="client-site-body">
+                  <div class="client-site-heading">
+                    <h4>Family Tree</h4>
+                    <span>gen.royalarm.uk</span>
+                  </div>
+                  <p>Armenian family-tree application for relatives, generations, photos and notes.</p>
+                  <strong>Open website <span aria-hidden="true">↗</span></strong>
+                </div>
+              </a>
+
+              <a href="https://jermuktravel.com" target="_blank" rel="noopener noreferrer" class="client-site-card group/site">
+                <div class="client-site-media flex-col gap-3 bg-gradient-to-br from-sky-950 via-cyan-900 to-emerald-950 text-cyan-100 font-bold">
+                  <i class="fas fa-map-marked-alt text-4xl" aria-hidden="true"></i>
+                  <span>Jermuk Travel</span>
+                </div>
+                <div class="client-site-body">
+                  <div class="client-site-heading">
+                    <h4>Jermuk Travel</h4>
+                    <span>jermuktravel.com</span>
+                  </div>
+                  <p>Tourism website for discovering Jermuk, local attractions and useful visitor information.</p>
+                  <strong>Open website <span aria-hidden="true">↗</span></strong>
+                </div>
+              </a>
+            </div>
+          </details>
 
           <!-- Project Card Example #2 -->
           <div
@@ -695,7 +895,7 @@
             <div class="relative overflow-hidden rounded-xl mb-6">
               <img
                 src="devicon/photo-2.jpg"
-                alt="Project Image"
+                alt="WordPress business website project preview"
                 class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105 rounded-xl"
               />
               <div
@@ -707,27 +907,20 @@
               WordPress Business Sites
             </h3>
             <p class="text-sm text-gray-400 mb-4">
-              SEO-optimized responsive site for SaaS startup with React +
-              Tailwind.
+              Manageable business websites with responsive layouts, clear
+              content structure, and a solid foundation for search visibility.
             </p>
 
             <div class="flex flex-wrap gap-2 text-xs mb-5">
               <span class="bg-accent/10 text-accent px-3 py-1 rounded-full">
-                React
+                WordPress
               </span>
               <span class="bg-accent/10 text-accent px-3 py-1 rounded-full">
-                Tailwind
+                Responsive UI
               </span>
             </div>
 
-            <div class="flex justify-between items-center text-sm font-medium">
-              <a href="#" class="text-accent hover:underline transition-all"
-                >Live Demo →</a
-              >
-              <a href="#" class="text-gray-400 hover:text-white transition-all"
-                >GitHub</a
-              >
-            </div>
+            <p class="text-sm font-medium text-accent">Selected capability</p>
           </div>
 
           <!-- Project Card Example #3 -->
@@ -739,7 +932,7 @@
             <div class="relative overflow-hidden rounded-xl mb-6">
               <img
                 src="devicon/photo-3.jpg"
-                alt="Project Image"
+                alt="C sharp internal desktop tool project preview"
                 class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105 rounded-xl"
               />
               <div
@@ -749,27 +942,20 @@
 
             <h3 class="text-xl font-bold text-white mb-2">C# Internal Tools</h3>
             <p class="text-sm text-gray-400 mb-4">
-              Admin panel with charts, stats, and responsive layout using
-              Chart.js.
+              Practical desktop utilities created to support local systems,
+              reduce repetitive work, and simplify internal processes.
             </p>
 
             <div class="flex flex-wrap gap-2 text-xs mb-5">
               <span class="bg-accent/10 text-accent px-3 py-1 rounded-full">
-                JavaScript
+                C#
               </span>
               <span class="bg-accent/10 text-accent px-3 py-1 rounded-full">
-                Chart.js
+                Desktop
               </span>
             </div>
 
-            <div class="flex justify-between items-center text-sm font-medium">
-              <a href="#" class="text-accent hover:underline transition-all"
-                >Live Demo →</a
-              >
-              <a href="#" class="text-gray-400 hover:text-white transition-all"
-                >GitHub</a
-              >
-            </div>
+            <p class="text-sm font-medium text-accent">Selected capability</p>
           </div>
         </div>
       </div>
@@ -780,12 +966,12 @@
       <div class="max-w-7xl mx-auto">
         <!-- Heading -->
         <div class="text-center mb-20" data-aos="fade-up">
-          <h2 class="text-4xl font-extrabold mb-4 text-accent font-sora">
-            What I Love to Build
+          <h2 class="text-4xl font-extrabold mb-4 text-accent font-poppins">
+            IT Services &amp; Solutions
           </h2>
           <p class="text-gray-400 text-lg max-w-2xl mx-auto">
-            More than just code — I craft digital experiences with performance,
-            accessibility, and scalability in mind.
+            Installation, configuration, maintenance, and programming for
+            reliable business technology.
           </p>
         </div>
 
@@ -802,10 +988,10 @@
             >
               <i class="fas fa-paint-brush text-xl"></i>
             </div>
-            <h3 class="text-xl font-bold mb-3">Design Thinking</h3>
+            <h3 class="text-xl font-bold mb-3">Network Installation</h3>
             <p class="text-gray-400">
-              I approach UI/UX with empathy and creativity — creating interfaces
-              that are both intuitive and engaging.
+              I install and configure routers, switches, Wi-Fi, structured
+              cabling, and secure local networks.
             </p>
           </div>
 
@@ -820,10 +1006,11 @@
             >
               <i class="fas fa-laptop-code text-xl"></i>
             </div>
-            <h3 class="text-xl font-bold mb-3">Modern Development</h3>
+            <h3 class="text-xl font-bold mb-3">Server Setup</h3>
             <p class="text-gray-400">
-              I build fast, responsive web apps using React, Tailwind CSS, and
-              modern JS — optimized for performance.
+              I install, configure, update, monitor, and maintain servers and
+              the services used by local business systems, including Proxmox
+              VM, TrueNAS, Nextcloud, private cloud, and local messaging.
             </p>
           </div>
 
@@ -838,11 +1025,122 @@
             >
               <i class="fas fa-rocket text-xl"></i>
             </div>
-            <h3 class="text-xl font-bold mb-3">Scalable Execution</h3>
+            <h3 class="text-xl font-bold mb-3">Hikvision CCTV</h3>
             <p class="text-gray-400">
-              I bring clean architecture and reusable components that scale with
-              your product as it grows.
+              I install and service Hikvision IP cameras, DVR/NVR systems,
+              recording, remote access, and surveillance networks.
             </p>
+          </div>
+
+          <div
+            class="group relative border border-gray-700 bg-black/20 backdrop-blur p-8 rounded-2xl transition-all hover:border-accent hover:shadow-xl hover:-translate-y-2"
+            data-aos="zoom-in"
+            data-aos-delay="100"
+          >
+            <div class="w-12 h-12 flex items-center justify-center bg-accent/20 text-accent rounded-full mb-6 transition group-hover:bg-accent group-hover:text-white">
+              <i class="fas fa-code text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Software Development</h3>
+            <p class="text-gray-400">
+              I create responsive websites, landing pages, and C# desktop tools
+              for practical business and internal workflows.
+            </p>
+          </div>
+
+          <div
+            class="group relative border border-gray-700 bg-black/20 backdrop-blur p-8 rounded-2xl transition-all hover:border-accent hover:shadow-xl hover:-translate-y-2"
+            data-aos="zoom-in"
+            data-aos-delay="200"
+          >
+            <div class="w-12 h-12 flex items-center justify-center bg-accent/20 text-accent rounded-full mb-6 transition group-hover:bg-accent group-hover:text-white">
+              <i class="fas fa-tools text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">IT Maintenance</h3>
+            <p class="text-gray-400">
+              I diagnose technical problems, maintain computers and equipment,
+              install software, and keep systems running reliably.
+            </p>
+          </div>
+
+          <div
+            class="group relative border border-gray-700 bg-black/20 backdrop-blur p-8 rounded-2xl transition-all hover:border-accent hover:shadow-xl hover:-translate-y-2"
+            data-aos="zoom-in"
+            data-aos-delay="300"
+          >
+            <div class="w-12 h-12 flex items-center justify-center bg-accent/20 text-accent rounded-full mb-6 transition group-hover:bg-accent group-hover:text-white">
+              <i class="fas fa-headset text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Technical Support</h3>
+            <p class="text-gray-400">
+              I provide ongoing user support, system troubleshooting, equipment
+              configuration, and preventive maintenance.
+            </p>
+          </div>
+
+          <div
+            class="group relative border border-gray-700 bg-black/20 backdrop-blur p-8 rounded-2xl transition-all hover:border-accent hover:shadow-xl hover:-translate-y-2"
+            data-aos="zoom-in"
+            data-aos-delay="100"
+          >
+            <div class="w-12 h-12 flex items-center justify-center bg-accent/20 text-accent rounded-full mb-6 transition group-hover:bg-accent group-hover:text-white">
+              <i class="fas fa-chart-line text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Monitoring Servers</h3>
+            <p class="text-gray-400 mb-4">
+              I install, configure, and maintain monitoring servers for
+              networks, devices, services, CCTV, and IT infrastructure.
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="bg-white/10 px-3 py-1 rounded-full">DitakNet</span>
+              <span class="bg-white/10 px-3 py-1 rounded-full">Zabbix</span>
+              <span class="bg-white/10 px-3 py-1 rounded-full">Nagios</span>
+              <span class="bg-white/10 px-3 py-1 rounded-full">Netdata</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="armenia-support" class="bg-[#0d0d0d] px-4 py-20 text-white sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-6xl rounded-3xl border border-gray-800 bg-gradient-to-br from-[#181818] to-[#111111] p-6 sm:p-10 lg:p-14" data-aos="fade-up">
+        <div class="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+          <div>
+            <span class="inline-flex rounded-full border border-accent/40 bg-accent/10 px-4 py-2 text-sm font-semibold text-accent">Հեռակա սպասարկում՝ ամբողջ Հայաստանում</span>
+            <h2 class="mt-5 text-3xl font-extrabold leading-tight sm:text-4xl">ՏՏ սպասարկում, սերվերներ, ցանցեր և տեսահսկում Հայաստանում</h2>
+            <p class="mt-5 max-w-3xl leading-7 text-gray-300">
+              Կատարում եմ համակարգիչների և ցանցերի հեռակա ախտորոշում, սերվերների տեղադրում ու սպասարկում,
+              Proxmox VM, TrueNAS, Nextcloud, Hikvision տեսախցիկների և monitoring համակարգերի կարգավորում։
+              Ընդունում եմ սպասարկման և տեղադրման հայտեր Երևանից ու Հայաստանի բոլոր մարզերից։
+            </p>
+            <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+              <a href="/service-request" class="inline-flex min-h-12 items-center justify-center rounded-xl bg-accent px-6 py-3 font-bold transition hover:bg-[#e60047]">Ուղարկել սպասարկման հայտ</a>
+              <a href="tel:+37491733633" class="inline-flex min-h-12 items-center justify-center rounded-xl border border-gray-700 px-6 py-3 font-semibold transition hover:border-accent hover:text-accent">Զանգահարել՝ +374 91 733633</a>
+            </div>
+          </div>
+          <ul class="grid gap-3 text-sm text-gray-200 sm:grid-cols-2 lg:grid-cols-1">
+            <li class="rounded-xl border border-gray-800 bg-black/20 p-4">✓ Ցանցերի տեղադրում և կարգավորում</li>
+            <li class="rounded-xl border border-gray-800 bg-black/20 p-4">✓ Սերվերների և private cloud-ի սպասարկում</li>
+            <li class="rounded-xl border border-gray-800 bg-black/20 p-4">✓ CCTV և Hikvision համակարգեր</li>
+            <li class="rounded-xl border border-gray-800 bg-black/20 p-4">✓ DitakNet, Zabbix, Nagios և Netdata</li>
+            <li class="rounded-xl border border-gray-800 bg-black/20 p-4">✓ Կայքերի և ծրագրերի մշակում</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="it-app" class="app-promo-section px-4 py-16 text-white sm:px-6 lg:px-8">
+      <div class="app-promo mx-auto max-w-6xl overflow-hidden rounded-3xl border border-gray-800 p-6 sm:p-10 lg:p-12" data-aos="fade-up">
+        <div class="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div>
+            <span class="app-promo-kicker">Need IT support or the RoyalArm app?</span>
+            <h2 class="mt-4 text-3xl font-extrabold leading-tight sm:text-4xl">Order a service or contact your specialist in one clear step.</h2>
+            <p class="mt-4 max-w-3xl leading-7 text-gray-300">
+              Open the dedicated app page to access RoyalArm IT, request installation or support, and send a request directly to Sipan Danielyan.
+            </p>
+          </div>
+          <div class="grid gap-3 sm:grid-cols-2 lg:min-w-64 lg:grid-cols-1">
+            <a href="/it" class="inline-flex min-h-12 items-center justify-center rounded-xl bg-accent px-6 py-3 font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#e60047]">Open the app page</a>
+            <a href="/service-request" class="inline-flex min-h-12 items-center justify-center rounded-xl border border-gray-700 px-6 py-3 font-semibold transition hover:border-accent hover:text-accent">Send a request</a>
           </div>
         </div>
       </div>
@@ -853,14 +1151,8 @@
       id="contact"
       class="relative bg-gradient-to-br from-[#0f0f0f] via-[#111111] to-[#1a1a1a] text-white py-28 px-6 sm:px-10 overflow-hidden"
     >
-      <!-- Floating Background Effects -->
+      <!-- Background effects -->
       <div class="absolute inset-0 -z-10">
-        <div
-          class="absolute w-72 h-72 bg-[#ff004f] opacity-10 rounded-full blur-3xl top-10 left-10 animate-pulse"
-        ></div>
-        <div
-          class="absolute w-96 h-96 bg-[#ff004f] opacity-10 rounded-full blur-2xl bottom-0 right-10 animate-spin-slow"
-        ></div>
         <div class="absolute top-0 right-0 w-44 h-44 opacity-25">
           <lottie-player
             src="https://assets3.lottiefiles.com/packages/lf20_cg3qkhrd.json"
@@ -951,8 +1243,8 @@
             </li>
 
 
-            <!-- LinkedIn -->
-            <li>
+            <!-- Add a real LinkedIn URL before making this item visible. -->
+            <li class="hidden">
               <a
                 href="#"
                 target="_blank"
@@ -973,13 +1265,13 @@
                   </svg>
                 </div>
                 <span class="text-white group-hover:text-[#ff004f] transition"
-                  >linkedin.com/in/john-doe</span
+                  >LinkedIn profile</span
                 >
               </a>
             </li>
 
-            <!-- GitHub -->
-            <li>
+            <!-- Add a real GitHub URL before making this item visible. -->
+            <li class="hidden">
               <a
                 href="#"
                 target="_blank"
@@ -1001,7 +1293,7 @@
                   </svg>
                 </div>
                 <span class="text-white group-hover:text-[#ff004f] transition"
-                  >github.com/john-doe</span
+                  >GitHub profile</span
                 >
               </a>
             </li>
@@ -1013,7 +1305,7 @@
           class="bg-[#181818] p-10 lg:p-12 rounded-3xl shadow-2xl border border-[#2a2a2a]"
           data-aos="fade-left"
         >
-          <form class="space-y-8">
+          <form id="contact-form" class="space-y-8">
             <div class="relative">
               <input
                 type="text"
@@ -1079,6 +1371,9 @@
               </svg>
               Send Message
             </button>
+            <p id="form-status" class="text-sm text-gray-400 text-center" aria-live="polite">
+              This opens your email app with the message ready to send.
+            </p>
           </form>
         </div>
       </div>
@@ -1110,7 +1405,7 @@
         <!-- Social icons -->
         <div class="flex justify-center items-center gap-5 mb-6">
           <!-- Email -->
-          <a href="mailto:royalarm001@gmail.com" class="group">
+          <a href="mailto:royalarm001@gmail.com" class="group" aria-label="Email Sipan Danielyan">
             <div
               class="w-10 h-10 rounded-full bg-[#ff004f] flex items-center justify-center group-hover:scale-110 transition"
             >
@@ -1127,11 +1422,11 @@
             </div>
           </a>
 
-          <!-- LinkedIn -->
+          <!-- Add a real LinkedIn URL before making this link visible. -->
           <a
             href="#"
             target="_blank"
-            class="group"
+            class="group hidden"
           >
             <div
               class="w-10 h-10 rounded-full bg-[#ff004f] flex items-center justify-center group-hover:scale-110 transition"
@@ -1148,8 +1443,8 @@
             </div>
           </a>
 
-          <!-- GitHub -->
-          <a href="#" target="_blank" class="group">
+          <!-- Add a real GitHub URL before making this link visible. -->
+          <a href="#" target="_blank" class="group hidden">
             <div
               class="w-10 h-10 rounded-full bg-[#ff004f] flex items-center justify-center group-hover:scale-110 transition"
             >
@@ -1180,6 +1475,5 @@
     <!-- Load libraries -->
     <script src="js/aos.js"></script>
     <script src="js/lottie-player.js"></script>
-    <script src="js/lottie.min.js"></script>
   </body>
 </html>

@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: #111111;
+}
+
+.live-hack-map-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: #02070b;
+  pointer-events: none;
+}
+
+.live-hack-map-frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: max(100vw, 178vh);
+  height: max(100vh, 56.25vw);
+  border: 0;
+  transform: translate(-50%, -50%);
+}
+
+.live-hack-map-frame {
+  opacity: 0;
+  filter: saturate(1.7) contrast(1.35) brightness(1.18);
+  transition: opacity 800ms ease;
+}
+
+.live-hack-map-frame.is-ready {
+  opacity: 1;
+}
+
+.live-hack-map-shade {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 48%, transparent 55%, rgba(2, 7, 11, .05) 78%, rgba(2, 7, 11, .14) 100%);
+}
+
+.live-hack-map-credit {
+  position: fixed;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 45;
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  padding: .45rem .7rem;
+  border: 1px solid rgba(56, 251, 167, .42);
+  border-radius: 999px;
+  color: #a7f3d0;
+  background: rgba(2, 10, 13, .82);
+  font: 600 .68rem/1 "Poppins", sans-serif;
+  letter-spacing: .05em;
+  text-decoration: none;
+  box-shadow: 0 0 20px rgba(56, 251, 167, .14);
+  backdrop-filter: blur(10px);
+}
+
+.live-hack-map-credit span {
+  color: #38fba7;
+  text-shadow: 0 0 8px #38fba7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-hack-map-frame { transition: none; }
+}
+
+@media (max-width: 640px) {
+  .live-hack-map-frame {
+    width: max(185vw, 178vh);
+  }
+
+  .live-hack-map-credit {
+    left: .65rem;
+    bottom: .65rem;
+    max-width: calc(100vw - 9.5rem);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
