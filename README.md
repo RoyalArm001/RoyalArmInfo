@@ -31,10 +31,10 @@ default install, build, and output settings.
 Add these variables in **Vercel → Project Settings → Environment Variables**
 for both Production and Preview:
 
-- `UPSTASH_REDIS_REST_URL`
-- `UPSTASH_REDIS_REST_TOKEN`
-- `ADMIN_PASSWORD`
-- `ADMIN_SESSION_SECRET`
+- `ROYALARM_IT_REDIS_REST_URL`
+- `ROYALARM_IT_REDIS_REST_TOKEN`
+- `ROYALARM_IT_ADMIN_PASSWORD`
+- `ROYALARM_IT_SESSION_SECRET`
 
 Their expected format is documented in `.env.example`. Do not upload a real
 `.env` file or commit production secrets.

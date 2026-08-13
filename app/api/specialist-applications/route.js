@@ -13,6 +13,34 @@ const required = [
   "workFormat",
 ];
 
+const legacyApplicationKey = "royalarm:specialist-applications";
+const applicationIndexKey = "royalarm:specialist-application-ids";
+const reviewStatuses = new Set(["approved", "rejected"]);
+
+function recordKey(id) {
+  return `royalarm:specialist-application:${id}`;
+}
+
+function parseRecord(value) {
+  try {
+    return typeof value === "string" ? JSON.parse(value) : value;
+  } catch {
+    return null;
+  }
+}
+
+async function loadApplications(redis, limit = 500) {
+  const ids = await redis.lrange(applicationIndexKey, 0, limit - 1);
+  const current = ids.length
+    ? await redis.mget(...ids.map((id) => recordKey(id)))
+    : [];
+  const legacy = await redis.lrange(legacyApplicationKey, 0, limit - 1);
+  const records = [...current, ...legacy].map(parseRecord).filter(Boolean);
+  return records.filter((record, index) =>
+    records.findIndex((candidate) => candidate.id === record.id) === index,
+  );
+}
+
 function clean(value, maxLength) {
   return String(value || "").trim().slice(0, maxLength);
 }
@@ -51,7 +79,7 @@ export async function POST(request) {
     const record = {
       id: randomUUID(),
       createdAt: new Date().toISOString(),
-      status: "new",
+      status: "pending",
       name: clean(body.name, 120),
       phone: clean(body.phone, 50),
       email: clean(body.email, 180),
@@ -64,8 +92,16 @@ export async function POST(request) {
       details: clean(body.details, 3000),
     };
 
-    await redis.lpush("royalarm:specialist-applications", JSON.stringify(record));
-    await redis.ltrim("royalarm:specialist-applications", 0, 9999);
+    await redis.set(recordKey(record.id), record);
+    await redis.lpush(applicationIndexKey, record.id);
+    await redis.ltrim(applicationIndexKey, 0, 9999);
+
+    const { notifyAppUsers } = await import("../../../lib/push");
+    await notifyAppUsers({
+      title: "RoyalArm IT",
+      body: `New specialist application from ${record.name}`,
+      url: "https://it.royalarm.uk/",
+    });
 
     return NextResponse.json({ ok: true, id: record.id });
   } catch {
@@ -82,9 +118,62 @@ export async function GET(request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const items = await getRedis().lrange("royalarm:specialist-applications", 0, 499);
+    const applications = await loadApplications(getRedis());
+    return NextResponse.json({ applications });
+  } catch {
+    return NextResponse.json({ error: "Database unavailable" }, { status: 503 });
+  }
+}
+
+export async function PATCH(request) {
+  try {
+    if (!isAdmin(request)) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const body = await request.json();
+    const id = clean(body.id, 100);
+    const status = clean(body.status, 20);
+    if (!id || !reviewStatuses.has(status)) {
+      return NextResponse.json({ error: "Invalid review action" }, { status: 400 });
+    }
+
+    const redis = getRedis();
+    const stored = parseRecord(await redis.get(recordKey(id)));
+    let updated = null;
+
+    if (stored) {
+      updated = { ...stored, status, reviewedAt: new Date().toISOString() };
+      await redis.set(recordKey(id), updated);
+    } else {
+      const legacy = await redis.lrange(legacyApplicationKey, 0, 9999);
+      const legacyIndex = legacy.findIndex((item) => parseRecord(item)?.id === id);
+      if (legacyIndex !== -1) {
+        updated = {
+          ...parseRecord(legacy[legacyIndex]),
+          status,
+          reviewedAt: new Date().toISOString(),
+        };
+        await redis.lset(legacyApplicationKey, legacyIndex, JSON.stringify(updated));
+      }
+    }
+
+    if (!updated) {
+      return NextResponse.json({ error: "Application not found" }, { status: 404 });
+    }
+
+    if (status === "approved") {
+      const { notifyAppUsers } = await import("../../../lib/push");
+      await notifyAppUsers({
+        title: "RoyalArm IT",
+        body: `${updated.name} is now available as an IT specialist.`,
+        url: "https://it.royalarm.uk/specialists",
+      });
+    }
+
     return NextResponse.json({
-      applications: items.map((item) => (typeof item === "string" ? JSON.parse(item) : item)),
+      ok: true,
+      application: updated,
     });
   } catch {
     return NextResponse.json({ error: "Database unavailable" }, { status: 503 });

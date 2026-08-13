@@ -3,6 +3,8 @@
   const originalText = new WeakMap();
   const originalAttributes = new WeakMap();
   let translations = {};
+  let currentLanguage = "en";
+  let refreshTimer = 0;
 
   function normalize(value) {
     return value.replace(/\s+/g, " ").trim();
@@ -50,6 +52,7 @@
 
   function applyLanguage(language) {
     const selected = supportedLanguages.includes(language) ? language : "en";
+    currentLanguage = selected;
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
       acceptNode(node) {
         const parent = node.parentElement;
@@ -82,12 +85,28 @@
     setStatus(selected === "en" ? "English selected" : "Local translation applied");
   }
 
+  function watchDynamicContent() {
+    const observer = new MutationObserver(function (mutations) {
+      const hasNewContent = mutations.some(function (mutation) {
+        return mutation.addedNodes.length > 0
+          && !mutation.target.closest?.("[data-translation-status]");
+      });
+      if (!hasNewContent) return;
+
+      window.clearTimeout(refreshTimer);
+      refreshTimer = window.setTimeout(function () {
+        applyLanguage(currentLanguage);
+      }, 0);
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+
   async function initialize() {
     const selects = Array.from(document.querySelectorAll("[data-language-select]"));
     if (!selects.length) return;
 
     try {
-      const response = await fetch("/i18n/translations.json?v=intermediary-admin-20260812", { cache: "force-cache" });
+      const response = await fetch("/i18n/translations.json?v=request-questionnaire-20260813", { cache: "force-cache" });
       if (!response.ok) throw new Error("Translation file could not be loaded");
       translations = await response.json();
     } catch (_) {
@@ -107,6 +126,12 @@
       });
     });
     applyLanguage(savedLanguage);
+    watchDynamicContent();
+
+    window.setPortfolioLanguage = applyLanguage;
+    window.getPortfolioLanguage = function () {
+      return currentLanguage;
+    };
   }
 
   initialize();

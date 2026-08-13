@@ -196,6 +196,8 @@
 .specialistBadge { flex: 0 0 auto; border-radius: 999px; padding: .35rem .65rem; font-size: .65rem; font-weight: 800; }
 .newBadge { color: #ff7da5; background: rgba(255, 0, 79, .1); }
 .specialistBadge { color: #67e8f9; background: rgba(103, 232, 249, .09); }
+.specialistBadge.approvedBadge { color: #86efac; background: rgba(34, 197, 94, .12); }
+.specialistBadge.rejectedBadge { color: #fda4af; background: rgba(244, 63, 94, .12); }
 .card > time { display: block; margin-top: .6rem; color: #56657a; font-size: .68rem; }
 
 .details { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 1.3rem 0 0; }
@@ -205,6 +207,35 @@
 .details a { color: #ff6b99; text-decoration: none; }
 .wideField { grid-column: 1 / -1; }
 .multiline { white-space: pre-wrap; }
+
+.reviewActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .7rem;
+  margin-top: 1.3rem;
+  padding-top: 1rem;
+  border-top: 1px solid #253142;
+}
+
+.reviewActions button {
+  display: inline-flex;
+  min-height: 2.65rem;
+  align-items: center;
+  justify-content: center;
+  gap: .45rem;
+  border-radius: .75rem;
+  padding: .65rem .9rem;
+  font: inherit;
+  font-size: .72rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 160ms ease, opacity 160ms ease, background 160ms ease;
+}
+
+.reviewActions button:hover:not(:disabled) { transform: translateY(-1px); }
+.reviewActions button:disabled { opacity: .48; cursor: default; }
+.approveButton { border: 1px solid rgba(34, 197, 94, .32); color: #86efac; background: rgba(34, 197, 94, .1); }
+.rejectButton { border: 1px solid rgba(244, 63, 94, .3); color: #fda4af; background: rgba(244, 63, 94, .08); }
 
 .emptyState { display: grid; min-height: 18rem; place-items: center; align-content: center; gap: .65rem; margin-top: 1.3rem; border: 1px dashed #334155; border-radius: 1.2rem; padding: 2rem; text-align: center; }
 .emptyState i { color: #475569; font-size: 2rem; }

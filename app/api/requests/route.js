@@ -34,16 +34,27 @@ export async function POST(request) {
       status: "new",
       name: clean(body.name, 120),
       phone: clean(body.phone, 50),
+      email: clean(body.email, 180),
       location: clean(body.location, 120),
       requestType: clean(body.requestType, 100),
       service: clean(body.service, 180),
       workFormat: clean(body.workFormat, 80),
       contactMethod: clean(body.contactMethod || "Հեռախոսազանգ", 50),
+      urgency: clean(body.urgency, 100),
+      preferredDate: clean(body.preferredDate, 40),
+      budget: clean(body.budget, 100),
       details: clean(body.details, 3000),
     };
 
     await redis.lpush("royalarm:service-requests", JSON.stringify(record));
     await redis.ltrim("royalarm:service-requests", 0, 9999);
+
+    const { notifyAppUsers } = await import("../../../lib/push");
+    await notifyAppUsers({
+      title: "RoyalArm IT",
+      body: `New request from ${record.name}: ${record.service}`,
+      url: "https://it.royalarm.uk/",
+    });
 
     return NextResponse.json({ ok: true, id: record.id });
   } catch {

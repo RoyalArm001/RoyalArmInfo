@@ -1,34 +1,45 @@
-import AppRequestForm from "../app/AppRequestForm";
 import styles from "../app/app.module.css";
-import ItAppNav from "./ItAppNav";
-import SpecialistApplicationForm from "./SpecialistApplicationForm";
+import InstallAppButton from "./InstallAppButton";
+import OpenSpecialistModalButton from "./OpenSpecialistModalButton";
+import OpenRequestModalLink from "./OpenRequestModalLink";
 
 const appDomain = "https://it.royalarm.uk";
 
-const specialistAreas = [
+const serviceCompanies = [
   {
-    icon: "fas fa-headset",
-    title: "IT support",
-    text: "Remote diagnostics, computers, operating systems, and day-to-day technical support.",
+    name: "Smart Tech LLC",
+    url: "https://www.smarttechllc.am/",
+    services: "Security systems, CCTV, structured networks, electrical work, automation, and smart systems.",
+    tags: ["CCTV", "Networks", "Automation"],
   },
   {
-    icon: "fas fa-network-wired",
-    title: "Networks and servers",
-    text: "Network engineers, system administrators, Proxmox, TrueNAS, Nextcloud, and monitoring.",
+    name: "IT Support LLC",
+    url: "https://itsupport.am/",
+    services: "Managed IT support, network maintenance, cybersecurity, cloud integration, backup, and recovery.",
+    tags: ["IT support", "Cloud", "Security"],
   },
   {
-    icon: "fas fa-video",
-    title: "CCTV and security",
-    text: "Hikvision cameras, NVR/DVR, access systems, installation, and maintenance specialists.",
+    name: "GURU",
+    url: "https://www.itguru.am/",
+    services: "Computer support, server installation and maintenance, networks, VPN, Wi-Fi, and monitoring.",
+    tags: ["Servers", "Networks", "Support"],
   },
   {
-    icon: "fas fa-code",
-    title: "Web and software",
-    text: "Websites, business tools, integrations, automation, and custom software development.",
+    name: "DOXX",
+    url: "https://www.doxx.am/services/",
+    services: "Managed business networks, Wi-Fi, firewalls, racks, and infrastructure support services.",
+    tags: ["Managed IT", "Wi-Fi", "Infrastructure"],
+  },
+  {
+    name: "Reset",
+    url: "https://www.reset.am/",
+    services: "Server and storage maintenance, networking, hardware support, IT consulting, and software services.",
+    tags: ["Hardware", "Servers", "Consulting"],
   },
 ];
 
 export const metadata = {
+  applicationName: "RoyalArm IT",
   title: "Find an IT Specialist in Armenia | RoyalArm IT",
   description:
     "Send your IT task to RoyalArm IT and get matched with a suitable support, network, server, CCTV, web, or software specialist in Armenia.",
@@ -43,6 +54,20 @@ export const metadata = {
     "ՏՏ մասնագետ Հայաստան",
   ],
   alternates: { canonical: appDomain },
+  appleWebApp: {
+    capable: true,
+    title: "RoyalArm IT",
+    statusBarStyle: "black-translucent",
+  },
+  icons: {
+    icon: [
+      { url: "/assets/royalarm-logo-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/assets/royalarm-logo-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/assets/royalarm-logo-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    shortcut: "/assets/royalarm-logo-32.png",
+    apple: [{ url: "/assets/royalarm-logo-180.png", sizes: "180x180", type: "image/png" }],
+  },
   openGraph: {
     title: "RoyalArm IT | Find the Right IT Specialist",
     description:
@@ -78,16 +103,13 @@ export default function AppLandingPage() {
   };
 
   return (
-    <main id="main-content" className={`royalarm-it-app ${styles.page}`}>
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
-      <div className={styles.shell}>
-        <ItAppNav />
-
-        <section id="app-top" className={styles.hero} aria-labelledby="app-title">
+      <section id="app-top" className={styles.hero} aria-labelledby="app-title">
           <div className={styles.heroCopy}>
             <span className={styles.eyebrow}>IT specialist matching in Armenia</span>
             <h1 id="app-title">Find the right IT specialist for your work</h1>
@@ -97,10 +119,14 @@ export default function AppLandingPage() {
             </p>
 
             <div className={styles.actions}>
-              <a className={styles.primaryAction} href="#app-request">Request a specialist</a>
-              <a className={styles.secondaryAction} href="#specialist-join">Join as a specialist</a>
+              <OpenRequestModalLink className={styles.primaryAction}>
+                Request a specialist
+              </OpenRequestModalLink>
+              <OpenSpecialistModalButton className={styles.secondaryAction}>
+                Join as a specialist
+              </OpenSpecialistModalButton>
             </div>
-            <p className={styles.appAddress}>Official app domain: <strong>it.royalarm.uk</strong></p>
+            <InstallAppButton />
           </div>
 
           <div className={styles.appPreview} aria-label="RoyalArm IT matching process">
@@ -118,68 +144,48 @@ export default function AppLandingPage() {
               </div>
             </div>
           </div>
-        </section>
+      </section>
 
-        <section id="app-benefits" className={styles.trustStrip} aria-label="Platform benefits">
-          <div><strong>Relevant matching</strong><span>The specialist is selected according to the actual task.</span></div>
-          <div><strong>Two-sided platform</strong><span>Employers send work; IT specialists submit their experience.</span></div>
-          <div><strong>Across Armenia</strong><span>Remote and on-site opportunities are supported.</span></div>
-        </section>
+      <section id="app-benefits" className={styles.trustStrip} aria-label="Platform benefits">
+        <div><strong>Relevant matching</strong><span>The specialist is selected according to the actual task.</span></div>
+        <div><strong>Two-sided platform</strong><span>Employers send work; IT specialists submit their experience.</span></div>
+        <div><strong>Across Armenia</strong><span>Remote and on-site opportunities are supported.</span></div>
+      </section>
 
-        <section id="specialists" className={styles.specialistsSection} aria-labelledby="specialists-title">
-          <div className={styles.sectionHeading}>
-            <span className={styles.eyebrow}>Specialist areas</span>
-            <h2 id="specialists-title">Who can be matched to your task</h2>
-            <p>
-              Send the work requirements first. We review the scope and recommend a relevant
-              specialist instead of showing unverified profiles.
-            </p>
+      <article className={styles.companyPost} aria-labelledby="it-companies-title">
+        <header className={styles.companyPostHeader}>
+          <div>
+            <span className={styles.eyebrow}>IT directory post</span>
+            <h2 id="it-companies-title">IT service companies in Armenia</h2>
           </div>
-          <div className={styles.specialistGrid}>
-            {specialistAreas.map((area) => (
-              <article className={styles.specialistCard} key={area.title}>
-                <span className={styles.specialistIcon} aria-hidden="true">
-                  <i className={area.icon} />
-                </span>
-                <h3>{area.title}</h3>
-                <p>{area.text}</p>
-              </article>
-            ))}
-          </div>
-        </section>
+          <p>
+            A short list of companies with relevant IT infrastructure, support, network, server,
+            or security-system services. Check the official website before ordering.
+          </p>
+        </header>
 
-        <section id="app-request" className={styles.requestSection} aria-labelledby="request-title">
-          <div className={styles.requestIntro}>
-            <span className={styles.eyebrow}>For employers and customers</span>
-            <h2 id="request-title">Request an IT specialist</h2>
-            <p>
-              Tell us what needs to be done, where the work is located, and the preferred format.
-              Your request is saved in the employer section of the RoyalArm admin panel.
-            </p>
-            <a href="tel:+37491733633" className={styles.phoneLink}>+374 91 733633</a>
-          </div>
-          <AppRequestForm />
-        </section>
+        <div className={styles.companyGrid}>
+          {serviceCompanies.map((company, index) => (
+            <section className={styles.companyCard} key={company.name}>
+              <div className={styles.companyCardTop}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <h3>{company.name}</h3>
+              </div>
+              <p>{company.services}</p>
+              <div className={styles.companyTags} aria-label={`${company.name} service areas`}>
+                {company.tags.map((tag) => <span key={tag}>{tag}</span>)}
+              </div>
+              <a href={company.url} target="_blank" rel="noopener noreferrer">
+                Visit official website <span aria-hidden="true">↗</span>
+              </a>
+            </section>
+          ))}
+        </div>
 
-        <section
-          id="specialist-join"
-          className={`${styles.requestSection} ${styles.specialistJoinSection}`}
-          aria-labelledby="join-title"
-        >
-          <div className={styles.requestIntro}>
-            <span className={styles.eyebrow}>For IT professionals</span>
-            <h2 id="join-title">Join the specialist network</h2>
-            <p>
-              Share your specialization, experience, and preferred work format. Your application
-              is kept separately and reviewed when a suitable request is received.
-            </p>
-            <p className={styles.privacyNote}>
-              Your information is visible only in the protected RoyalArm admin panel.
-            </p>
-          </div>
-          <SpecialistApplicationForm />
-        </section>
-      </div>
-    </main>
+        <p className={styles.companyDisclaimer}>
+          Independent informational list. Inclusion does not imply a RoyalArm partnership or endorsement.
+        </p>
+      </article>
+    </>
   );
 }

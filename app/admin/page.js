@@ -44,11 +44,17 @@ function EmployerCard({ item }) {
         <Field label="Հեռախոս">
           <a href={`tel:${item.phone}`}>{item.phone}</a>
         </Field>
+        <Field label="Էլ․ փոստ">
+          {item.email ? <a href={`mailto:${item.email}`}>{item.email}</a> : null}
+        </Field>
         <Field label="Քաղաք / մարզ">{item.location}</Field>
         <Field label="Պահանջվող մասնագետ">{item.service}</Field>
         <Field label="Աշխատանքի ձևաչափ">{item.workFormat}</Field>
         <Field label="Հայտի տեսակ">{item.requestType}</Field>
         <Field label="Կապի եղանակ">{item.contactMethod}</Field>
+        <Field label="Հրատապություն">{item.urgency}</Field>
+        <Field label="Ցանկալի ամսաթիվ">{item.preferredDate}</Field>
+        <Field label="Մոտավոր բյուջե">{item.budget}</Field>
         <Field label="Աշխատանքի նկարագրություն" wide>
           <span className={styles.multiline}>{item.details}</span>
         </Field>
@@ -57,7 +63,14 @@ function EmployerCard({ item }) {
   );
 }
 
-function SpecialistCard({ item }) {
+function SpecialistCard({ item, onStatusChange, updating }) {
+  const status = item.status === "approved" || item.status === "rejected" ? item.status : "pending";
+  const statusLabel = status === "approved"
+    ? "Հաստատված"
+    : status === "rejected"
+      ? "Մերժված"
+      : "Սպասում է հաստատման";
+
   return (
     <article className={styles.card}>
       <div className={styles.cardHeader}>
@@ -65,7 +78,17 @@ function SpecialistCard({ item }) {
           <p className={styles.cardType}>ՏՏ մասնագետ</p>
           <h2>{item.name}</h2>
         </div>
-        <span className={styles.specialistBadge}>Նոր դիմում</span>
+        <span
+          className={`${styles.specialistBadge} ${
+            status === "approved"
+              ? styles.approvedBadge
+              : status === "rejected"
+                ? styles.rejectedBadge
+                : ""
+          }`}
+        >
+          {statusLabel}
+        </span>
       </div>
       <time dateTime={item.createdAt}>{formatDate(item.createdAt)}</time>
       <dl className={styles.details}>
@@ -91,6 +114,26 @@ function SpecialistCard({ item }) {
           <span className={styles.multiline}>{item.details}</span>
         </Field>
       </dl>
+      <div className={styles.reviewActions} aria-label="Դիմումի հաստատում">
+        <button
+          type="button"
+          className={styles.approveButton}
+          disabled={updating || status === "approved"}
+          onClick={() => onStatusChange(item.id, "approved")}
+        >
+          <i className="fas fa-check" aria-hidden="true" />
+          {status === "approved" ? "Հաստատված է" : "Հաստատել և հրապարակել"}
+        </button>
+        <button
+          type="button"
+          className={styles.rejectButton}
+          disabled={updating || status === "rejected"}
+          onClick={() => onStatusChange(item.id, "rejected")}
+        >
+          <i className="fas fa-times" aria-hidden="true" />
+          {status === "rejected" ? "Մերժված է" : "Մերժել"}
+        </button>
+      </div>
     </article>
   );
 }
@@ -102,6 +145,7 @@ export default function AdminPage() {
   const [activeTab, setActiveTab] = useState("employers");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [updatingId, setUpdatingId] = useState("");
 
   const authenticated = employerRequests !== null && specialistApplications !== null;
 
@@ -140,6 +184,31 @@ export default function AdminPage() {
   useEffect(() => {
     load();
   }, []);
+
+  async function updateSpecialistStatus(id, status) {
+    setUpdatingId(id);
+    setMessage("");
+    try {
+      const response = await fetch("/api/specialist-applications", {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ id, status }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || "Կարգավիճակը չհաջողվեց փոխել։");
+
+      setSpecialistApplications((current) =>
+        current.map((item) => (item.id === id ? result.application : item)),
+      );
+      setMessage(status === "approved"
+        ? "Մասնագետը հաստատվեց և այժմ տեսանելի է հանրային բաժնում։"
+        : "Մասնագետի դիմումը մերժվեց և հանրային բաժնում չի երևա։");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Կարգավիճակը չհաջողվեց փոխել։");
+    } finally {
+      setUpdatingId("");
+    }
+  }
 
   async function login(event) {
     event.preventDefault();
@@ -280,7 +349,14 @@ export default function AdminPage() {
             {activeItems.map((item) => (
               activeTab === "employers"
                 ? <EmployerCard key={item.id} item={item} />
-                : <SpecialistCard key={item.id} item={item} />
+                : (
+                  <SpecialistCard
+                    key={item.id}
+                    item={item}
+                    updating={updatingId === item.id}
+                    onStatusChange={updateSpecialistStatus}
+                  />
+                )
             ))}
           </div>
 

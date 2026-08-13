@@ -140,7 +140,7 @@ export default function RootLayout({ children }) {
         />
         <link rel="stylesheet" href="/css/all.min.css" />
         <link rel="stylesheet" href="/css/aos.css" />
-        <link rel="stylesheet" href="/css/styles.css?v=intermediary-admin-20260812" />
+        <link rel="stylesheet" href="/css/styles.css?v=theme-svg-20260813" />
       </head>
       <body className="bg-bg text-text">
         <script
@@ -169,7 +169,7 @@ export default function RootLayout({ children }) {
         <Script src="/js/aos.js" strategy="afterInteractive" />
         <Script src="/js/lottie-player.js" strategy="afterInteractive" />
         <Script src="/js/script.js" strategy="afterInteractive" />
-        <Script src="/js/translate.js?v=intermediary-admin-20260812" strategy="afterInteractive" />
+        <Script src="/js/translate.js?v=request-questionnaire-20260813" strategy="afterInteractive" />
       </body>
     </html>
   );

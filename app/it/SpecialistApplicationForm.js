@@ -30,7 +30,7 @@ export default function SpecialistApplicationForm() {
       form.reset();
       setStatus({
         type: "success",
-        message: "Your application was saved. We will contact you when a suitable opportunity appears.",
+        message: "Application sent for review. Your profile will appear only after administrator approval.",
       });
     } catch (error) {
       setStatus({
@@ -110,7 +110,7 @@ export default function SpecialistApplicationForm() {
         <textarea name="details" rows="4" maxLength="3000" />
       </label>
       <button className={styles.submitButton} type="submit" disabled={submitting}>
-        {submitting ? "Sending…" : "Send specialist application"}
+        {submitting ? "Sending…" : "Send for admin review"}
       </button>
       <p
         className={`${styles.formStatus} ${status.type === "error" ? styles.error : ""}`}
