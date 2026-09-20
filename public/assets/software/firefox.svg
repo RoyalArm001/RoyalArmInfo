@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <defs>
+      <linearGradient id="ffBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ff7139"/><stop offset="50%" stop-color="#ff1d53"/><stop offset="100%" stop-color="#9024ff"/></linearGradient>
+      <linearGradient id="ffGlobe" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0060df"/><stop offset="100%" stop-color="#02bfe7"/></linearGradient>
+    </defs>
+    <circle cx="50" cy="50" r="48" fill="#180036"/>
+    <circle cx="52" cy="50" r="38" fill="url(#ffGlobe)"/>
+    <path d="M22 35 C15 48 20 68 35 78 C50 88 72 85 82 72 C92 59 89 40 76 30 C72 27 67 25 62 25 C68 31 68 40 63 46 C57 52 48 53 43 47 C37 40 39 30 46 24 C36 24 27 28 22 35 Z" fill="url(#ffBg)"/>
+  </svg>

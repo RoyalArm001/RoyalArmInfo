@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <defs>
+      <linearGradient id="edGrad1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0078d7"/><stop offset="100%" stop-color="#00bcf2"/></linearGradient>
+      <linearGradient id="edGrad2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00b294"/><stop offset="100%" stop-color="#107c41"/></linearGradient>
+    </defs>
+    <circle cx="50" cy="50" r="48" fill="#0c1017"/>
+    <path d="M50 14 C68 14 84 28 84 46 C84 64 68 76 52 76 C36 76 24 64 24 50 C24 38 34 30 44 30 C54 30 58 38 52 46 C48 52 40 52 38 48 C36 42 42 38 46 38" fill="none" stroke="url(#edGrad1)" stroke-width="12" stroke-linecap="round"/>
+    <path d="M50 86 C70 86 86 72 86 52 L68 52 C68 62 60 70 50 70 C36 70 26 58 26 44" fill="none" stroke="url(#edGrad2)" stroke-width="10" stroke-linecap="round"/>
+  </svg>

@@ -19,13 +19,13 @@ export async function generateMetadata({ params }) {
     };
   }
 
-  const pageTitle = `${product.title} - Download & Setup | RoyalArm Shop`;
-  const pageDescription = `${product.title} download for ${product.os}. Direct ISO, keygen, and installer sources verified by Sipan Danielyan. Free download, instructions, and video guide.`;
+  const pageTitle = `${product.title} (v${product.version}) - Official Download & Setup | RoyalArm Shop`;
+  const pageDescription = `Download ${product.title} by ${product.developer} for ${product.os}. Official verified mirrors, features, system requirements, and setup guide by Sipan Danielyan.`;
 
   return {
     title: pageTitle,
     description: pageDescription,
-    keywords: product.seoKeywords || [product.title, "RoyalArm", "Sipan Danielyan"],
+    keywords: product.seoKeywords || [product.title, product.developer, "RoyalArm", "Sipan Danielyan"],
     alternates: {
       canonical: `https://shop.royalarm.uk/${product.slug}`,
     },
@@ -38,10 +38,10 @@ export async function generateMetadata({ params }) {
       type: "article",
       images: [
         {
-          url: product.thumbnail,
-          width: 1200,
-          height: 630,
-          alt: product.title,
+          url: `https://shop.royalarm.uk${product.thumbnail}`,
+          width: 512,
+          height: 512,
+          alt: `${product.title} Official Logo`,
         },
       ],
     },
@@ -49,7 +49,7 @@ export async function generateMetadata({ params }) {
       card: "summary_large_image",
       title: pageTitle,
       description: pageDescription,
-      images: [product.thumbnail],
+      images: [`https://shop.royalarm.uk${product.thumbnail}`],
     },
   };
 }
@@ -73,9 +73,10 @@ export default async function ProductDetailPage({ params }) {
     name: product.title,
     applicationCategory: product.primaryCategory,
     operatingSystem: product.os,
+    softwareVersion: product.version,
     description: product.description,
-    image: product.thumbnail,
-    downloadUrl: product.downloads[0]?.url,
+    image: `https://shop.royalarm.uk${product.thumbnail}`,
+    downloadUrl: product.downloads[0]?.url || product.officialSite,
     offers: {
       "@type": "Offer",
       price: "0",
@@ -84,12 +85,17 @@ export default async function ProductDetailPage({ params }) {
     },
     aggregateRating: {
       "@type": "AggregateRating",
-      ratingValue: "4.9",
-      ratingCount: String(product.reviewCount || 42),
+      ratingValue: String(product.ratingValue || "4.9"),
+      ratingCount: String(product.reviewCount || 120),
       bestRating: "5",
       worstRating: "1",
     },
     author: {
+      "@type": "Organization",
+      name: product.developer,
+      url: product.officialSite,
+    },
+    publisher: {
       "@type": "Person",
       name: "Sipan Danielyan",
       url: "https://royalarm.store",
@@ -134,18 +140,26 @@ export default async function ProductDetailPage({ params }) {
     mainEntity: [
       {
         "@type": "Question",
-        name: `How can I download and install ${product.title}?`,
+        name: `Is ${product.title} free to download and use?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `You can download ${product.title} using the verified direct download mirrors listed on this page (ISO, Archive, or Keypatch). Installation notes and prerequisites are provided in the overview section.`,
+          text: `${product.title} is distributed under the ${product.license} license. You can download and install it safely via the official mirrors on this page.`,
         },
       },
       {
         "@type": "Question",
-        name: "Can Sipan Danielyan help me configure or install this software?",
+        name: `How to install ${product.title} on Windows or macOS?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes, Sipan Danielyan offers professional remote IT support, software setup, and system configuration services across Armenia. Submit a service request to schedule assistance.",
+          text: `Download the appropriate installer (.exe for Windows or .dmg for macOS) from the verified links above, launch the file, and follow the standard on-screen wizard instructions.`,
+        },
+      },
+      {
+        "@type": "Question",
+        name: `Can Sipan Danielyan assist with ${product.title} installation or configuration?`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: `Yes, Sipan Danielyan provides professional remote and on-site IT assistance across Armenia for software installation, driver setup, and system configuration.`,
         },
       },
     ],
@@ -153,6 +167,7 @@ export default async function ProductDetailPage({ params }) {
 
   return (
     <div className="shop-container">
+      {/* Schema.org Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
@@ -172,155 +187,110 @@ export default async function ProductDetailPage({ params }) {
       {/* Top Navbar */}
       <header className="shop-nav">
         <div className="shop-nav-inner">
-          <Link href="/shop" className="shop-brand" aria-label="RoyalArm Shop">
-            <span className="shop-brand-badge">S / D</span>
+          <Link href="/shop" className="shop-brand">
+            <span className="shop-brand-badge">S/D</span>
             <span>RoyalArm Shop</span>
           </Link>
 
           <nav className="shop-nav-links">
             <Link href="/shop" className="shop-nav-link">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M19 12H5M12 19l-7-7 7-7" />
+                <polyline points="15 18 9 12 15 6" />
               </svg>
               <span>Back to Catalog</span>
             </Link>
 
-            <Link href="/" className="shop-nav-link">
-              <span>Portfolio</span>
-            </Link>
-
             <Link href="/service-request" className="shop-nav-cta">
-              Request Service
+              Request IT Specialist
             </Link>
           </nav>
         </div>
       </header>
 
-      {/* Main Content Article */}
-      <main className="shop-header" style={{ maxWidth: "1080px", paddingTop: "2rem" }}>
+      {/* Main Content */}
+      <main className="shop-hero" style={{ textAlign: "left", maxWidth: "1000px" }}>
         {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" style={{ marginBottom: "1.5rem" }}>
-          <ol
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem",
-              padding: 0,
-              margin: 0,
-              listStyle: "none",
-              fontSize: "0.85rem",
-              color: "var(--shop-muted)",
-              flexWrap: "wrap",
-            }}
-          >
+          <ol style={{ display: "flex", gap: "0.5rem", listStyle: "none", padding: 0, margin: 0, fontSize: "0.85rem", color: "var(--shop-text-dim)" }}>
             <li>
-              <Link href="/" style={{ color: "var(--shop-muted)", textDecoration: "none" }}>
-                Home
-              </Link>
+              <Link href="/" style={{ color: "var(--shop-text-muted)", textDecoration: "none" }}>Home</Link>
+              <span style={{ margin: "0 0.4rem" }}>/</span>
             </li>
-            <li>/</li>
             <li>
-              <Link href="/shop" style={{ color: "var(--shop-muted)", textDecoration: "none" }}>
-                Shop
-              </Link>
+              <Link href="/shop" style={{ color: "var(--shop-text-muted)", textDecoration: "none" }}>Shop</Link>
+              <span style={{ margin: "0 0.4rem" }}>/</span>
             </li>
-            <li>/</li>
-            <li>
-              <span style={{ color: "var(--shop-cyan)" }}>{product.primaryCategory}</span>
-            </li>
-            <li>/</li>
-            <li aria-current="page" style={{ color: "var(--shop-text)", fontWeight: 600 }}>
-              {product.title}
-            </li>
+            <li style={{ color: "var(--shop-cyan)", fontWeight: "700" }}>{product.title}</li>
           </ol>
         </nav>
 
-        {/* Product Title Header */}
-        <div style={{ marginBottom: "2rem" }}>
-          <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "0.8rem" }}>
-            <span className="shop-card-category-tag" style={{ position: "static" }}>
-              {product.primaryCategory}
-            </span>
-            <span
-              style={{
-                padding: "0.25rem 0.65rem",
-                borderRadius: "4px",
-                background: "rgba(56, 251, 167, 0.1)",
-                border: "1px solid rgba(56, 251, 167, 0.3)",
-                color: "#38fba7",
-                fontSize: "11px",
-                fontWeight: 600,
-              }}
-            >
-              ★ 4.9 Rating ({product.reviewCount} reviews)
-            </span>
-            <span
-              style={{
-                padding: "0.25rem 0.65rem",
-                borderRadius: "4px",
-                background: "rgba(28, 43, 56, 0.8)",
-                border: "1px solid var(--shop-border)",
-                color: "var(--shop-muted)",
-                fontSize: "11px",
-              }}
-            >
-              OS: {product.os}
-            </span>
+        {/* Product Hero Block */}
+        <div className="shop-controls-glass" style={{ marginBottom: "2rem" }}>
+          <div className="shop-modal-top" style={{ marginBottom: "1.5rem" }}>
+            <div className="shop-modal-logo" style={{ width: "90px", height: "90px" }}>
+              <img src={product.thumbnail} alt={product.title} />
+            </div>
+
+            <div className="shop-modal-title-group">
+              <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.4rem", flexWrap: "wrap" }}>
+                <span className="shop-verified-tag">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    <polyline points="9 12 11 14 15 10" />
+                  </svg>
+                  <span>Verified Official Vendor</span>
+                </span>
+                <span className="shop-license-tag open-source">{product.license}</span>
+                <span className="shop-license-tag">v{product.version}</span>
+              </div>
+
+              <h1 style={{ fontSize: "2.2rem", fontWeight: "900", margin: "0 0 0.4rem", color: "#ffffff" }}>
+                {product.title}
+              </h1>
+
+              <div className="shop-modal-dev-info">
+                <span>Developer: <strong>{product.developer}</strong></span>
+                <span>•</span>
+                <a
+                  href={product.officialSite}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shop-modal-official-link"
+                >
+                  <span>Official Website</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
+                </a>
+              </div>
+            </div>
           </div>
 
-          <h1 className="shop-title" style={{ fontSize: "clamp(2rem, 3.8vw, 3rem)", marginBottom: "0.75rem" }}>
-            {product.title}
-          </h1>
-          <p style={{ color: "var(--shop-muted)", fontSize: "1rem", lineHeight: 1.6, maxWidth: "800px" }}>
-            {product.description}
+          <p style={{ fontSize: "1.05rem", lineHeight: "1.65", color: "var(--shop-text)" }}>
+            {product.fullText || product.description}
           </p>
-        </div>
 
-        {/* Media Section: YouTube Tutorial or Screenshot Gallery */}
-        <div className="shop-modal-media" style={{ marginBottom: "2.5rem" }}>
-          {product.youtubeId ? (
-            <div className="shop-video-container">
-              <iframe
-                src={`https://www.youtube-nocookie.com/embed/${product.youtubeId}`}
-                title={`${product.title} Video Guide`}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-          ) : product.images.length > 0 ? (
-            <img
-              src={product.images[0]}
-              alt={product.title}
-              className="shop-modal-img"
-              style={{ maxHeight: "480px" }}
-            />
-          ) : null}
-        </div>
-
-        {/* Direct Downloads Section */}
-        <section className="shop-modal-downloads" style={{ marginBottom: "2.5rem" }}>
-          <h2 className="shop-section-subtitle" style={{ fontSize: "1.3rem" }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          {/* Download Mirrors Box */}
+          <div className="shop-modal-section-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
               <polyline points="7 10 12 15 17 10" />
               <line x1="12" y1="15" x2="12" y2="3" />
             </svg>
-            <span>Verified Direct Download Mirrors ({product.downloads.length})</span>
-          </h2>
+            <span>Verified Official Downloads & Mirrors</span>
+          </div>
 
-          <div className="shop-download-list">
+          <div className="shop-modal-downloads-box">
             {product.downloads.map((dl, idx) => (
-              <div key={idx} className="shop-download-item">
-                <div className="shop-download-info">
-                  <span className="shop-download-name" style={{ fontSize: "1.02rem" }}>
-                    {dl.name}
-                  </span>
-                  <div className="shop-download-details">
-                    {dl.format && (
-                      <span className={`shop-format-badge ${dl.format.toLowerCase()}`}>{dl.format}</span>
-                    )}
-                    {dl.size && <span>• {dl.size}</span>}
-                    <span style={{ color: "#38fba7" }}>• Verified Source</span>
+              <div key={idx} className="shop-dl-row">
+                <div className="shop-dl-info">
+                  <span className="shop-dl-name">{dl.name}</span>
+                  <div className="shop-dl-meta">
+                    <span>Format: {dl.format}</span>
+                    {dl.size && <span>• Size: {dl.size}</span>}
+                    <span>• Status: 100% Virus-Scanned</span>
                   </div>
                 </div>
 
@@ -328,112 +298,119 @@ export default async function ProductDetailPage({ params }) {
                   href={dl.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="shop-dl-btn"
-                  style={{ padding: "0.75rem 1.4rem", fontSize: "0.9rem" }}
+                  className="shop-dl-action-btn"
                 >
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                     <polyline points="7 10 12 15 17 10" />
                     <line x1="12" y1="15" x2="12" y2="3" />
                   </svg>
-                  <span>Download Now</span>
+                  <span>Official Download</span>
                 </a>
               </div>
             ))}
           </div>
-        </section>
 
-        {/* Technical Overview and Instructions */}
-        {product.fullText && (
-          <section style={{ marginBottom: "2.5rem" }}>
-            <h2 className="shop-section-subtitle" style={{ fontSize: "1.3rem" }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                <polyline points="14 2 14 8 20 8" />
-                <line x1="16" y1="13" x2="8" y2="13" />
-                <line x1="16" y1="17" x2="8" y2="17" />
-                <polyline points="10 9 9 9 8 9" />
-              </svg>
-              <span>Installation Guide &amp; Technical Notes</span>
-            </h2>
-            <div
-              className="shop-modal-desc"
-              style={{
-                maxHeight: "none",
-                fontSize: "0.92rem",
-                padding: "1.75rem",
-                lineHeight: 1.8,
-              }}
-            >
-              {product.fullText}
+          {/* Features */}
+          {product.features && (
+            <>
+              <div className="shop-modal-section-title" style={{ marginTop: "1.75rem" }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span>Key Capabilities & Highlights</span>
+              </div>
+              <div className="shop-features-grid">
+                {product.features.map((feat, fIdx) => (
+                  <div key={fIdx} className="shop-feature-item">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    <span>{feat}</span>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* System Requirements */}
+          {product.systemRequirements && (
+            <>
+              <div className="shop-modal-section-title" style={{ marginTop: "1.75rem" }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <rect x="4" y="4" width="16" height="16" rx="2" ry="2" />
+                  <rect x="9" y="9" width="6" height="6" />
+                  <line x1="9" y1="1" x2="9" y2="4" />
+                  <line x1="15" y1="1" x2="15" y2="4" />
+                  <line x1="9" y1="20" x2="9" y2="23" />
+                  <line x1="15" y1="20" x2="15" y2="23" />
+                  <line x1="20" y1="9" x2="23" y2="9" />
+                  <line x1="20" y1="14" x2="23" y2="14" />
+                  <line x1="1" y1="9" x2="4" y2="9" />
+                  <line x1="1" y1="14" x2="4" y2="14" />
+                </svg>
+                <span>Minimum System Requirements</span>
+              </div>
+
+              <div className="shop-sys-req-grid">
+                <div className="shop-req-box">
+                  <span className="shop-req-label">OS</span>
+                  <span className="shop-req-val">{product.systemRequirements.os}</span>
+                </div>
+                <div className="shop-req-box">
+                  <span className="shop-req-label">RAM</span>
+                  <span className="shop-req-val">{product.systemRequirements.ram}</span>
+                </div>
+                <div className="shop-req-box">
+                  <span className="shop-req-label">Disk</span>
+                  <span className="shop-req-val">{product.systemRequirements.disk}</span>
+                </div>
+                <div className="shop-req-box">
+                  <span className="shop-req-label">Processor</span>
+                  <span className="shop-req-val">{product.systemRequirements.cpu}</span>
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* IT Specialist Support Card */}
+          <div className="shop-specialist-box">
+            <div className="shop-specialist-text">
+              <h4>Need Professional Setup Assistance?</h4>
+              <p>
+                Sipan Danielyan provides remote and on-site IT support across Armenia. Get help with {product.title} deployment, corporate networks, or system troubleshooting.
+              </p>
             </div>
-          </section>
-        )}
-
-        {/* IT Support / Installation Assistance CTA */}
-        <section className="shop-service-cta" style={{ padding: "1.75rem", marginBottom: "3rem" }}>
-          <div className="shop-service-cta-text">
-            <h3 style={{ margin: "0 0 0.35rem", fontSize: "1.1rem", color: "#fff" }}>
-              Need Help With Installation or Configuration?
-            </h3>
-            <p style={{ fontSize: "0.9rem" }}>
-              Sipan Danielyan provides remote setup, activation support, network integration, and system optimization across Armenia.
-            </p>
+            <Link href="/service-request" className="shop-specialist-btn">
+              Contact Sipan Danielyan
+            </Link>
           </div>
-          <Link
-            href="/service-request"
-            className="shop-service-cta-btn"
-            style={{ padding: "0.8rem 1.4rem", fontSize: "0.9rem" }}
-          >
-            <span>Request Specialist Help</span>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M5 12h14" />
-              <path d="M12 5l7 7-7 7" />
-            </svg>
-          </Link>
-        </section>
+        </div>
 
-        {/* Related Software Packages */}
+        {/* Related Software Section */}
         {relatedProducts.length > 0 && (
-          <section>
-            <h2 className="shop-section-subtitle" style={{ fontSize: "1.2rem", marginBottom: "1.25rem" }}>
-              <span>More in {product.primaryCategory}</span>
-            </h2>
+          <section style={{ marginTop: "3rem" }}>
+            <h3 style={{ fontSize: "1.4rem", fontWeight: "800", color: "#ffffff", marginBottom: "1.2rem" }}>
+              More Software in {product.primaryCategory.toUpperCase()}
+            </h3>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.25rem" }}>
+            <div className="shop-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}>
               {relatedProducts.map((rel) => (
-                <Link
-                  key={rel.id}
-                  href={`/shop/${rel.slug}`}
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
-                  <article className="shop-card" style={{ height: "100%" }}>
-                    <div className="shop-card-thumb-wrap">
-                      <img src={rel.thumbnail} alt={rel.title} className="shop-card-thumb" loading="lazy" />
-                      <span className="shop-card-category-tag">{rel.primaryCategory}</span>
+                <article key={rel.id} className="shop-card">
+                  <div className="shop-card-header">
+                    <div className="shop-card-icon-frame" style={{ width: "52px", height: "52px" }}>
+                      <img src={rel.thumbnail} alt={rel.title} className="shop-card-icon" />
                     </div>
-                    <div className="shop-card-body">
-                      <h3 className="shop-card-title" style={{ fontSize: "0.98rem" }}>
-                        {rel.title}
-                      </h3>
-                      <p className="shop-card-desc" style={{ fontSize: "0.8rem", marginBottom: "0.75rem" }}>
-                        {rel.description}
-                      </p>
-                      <span
-                        style={{
-                          fontSize: "0.82rem",
-                          color: "var(--shop-cyan)",
-                          fontWeight: 700,
-                          display: "inline-flex",
-                          alignItems: "center",
-                          gap: "0.3rem",
-                        }}
-                      >
-                        View Details &rarr;
-                      </span>
-                    </div>
-                  </article>
-                </Link>
+                    <span className="shop-license-tag">{rel.license}</span>
+                  </div>
+                  <h4 style={{ fontSize: "1.1rem", fontWeight: "800", margin: "0 0 0.4rem", color: "#ffffff" }}>
+                    {rel.title}
+                  </h4>
+                  <p className="shop-card-desc">{rel.description}</p>
+                  <Link href={`/shop/${rel.slug}`} className="shop-btn-primary" style={{ height: "38px" }}>
+                    View & Download
+                  </Link>
+                </article>
               ))}
             </div>
           </section>

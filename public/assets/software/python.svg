@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <defs>
+      <linearGradient id="pyBlue" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#387eb8"/><stop offset="100%" stop-color="#366994"/></linearGradient>
+      <linearGradient id="pyYellow" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffe873"/><stop offset="100%" stop-color="#ffd43b"/></linearGradient>
+    </defs>
+    <rect width="100" height="100" rx="24" fill="#1a1c23"/>
+    <path d="M49 20 C36 20 37 25 37 25 L37 32 L51 32 L51 34 L30 34 C24 34 20 39 20 47 C20 55 25 56 25 56 L30 56 L30 50 C30 42 36 42 36 42 L51 42 C56 42 61 37 61 32 C61 27 61 20 49 20 Z M43 25 C45 25 46 26 46 28 C46 29 45 30 43 30 C42 30 41 29 41 28 C41 26 42 25 43 25 Z" fill="url(#pyBlue)"/>
+    <path d="M51 80 C64 80 63 75 63 75 L63 68 L49 68 L49 66 L70 66 C76 66 80 61 80 53 C80 45 75 44 75 44 L70 44 L70 50 C70 58 64 58 64 58 L49 58 C44 58 39 63 39 68 C39 73 39 80 51 80 Z M57 75 C55 75 54 74 54 72 C54 71 55 70 57 70 C58 70 59 71 59 72 C59 74 58 75 57 75 Z" fill="url(#pyYellow)"/>
+  </svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <defs>
+      <linearGradient id="crRed" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ea4335"/><stop offset="100%" stop-color="#c5221f"/></linearGradient>
+      <linearGradient id="crGreen" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#34a853"/><stop offset="100%" stop-color="#188038"/></linearGradient>
+      <linearGradient id="crYellow" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fbbc04"/><stop offset="100%" stop-color="#f29900"/></linearGradient>
+      <linearGradient id="crBlue" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4285f4"/><stop offset="100%" stop-color="#1a73e8"/></linearGradient>
+    </defs>
+    <circle cx="50" cy="50" r="48" fill="#ffffff" filter="drop-shadow(0 2px 8px rgba(0,0,0,0.15))"/>
+    <path d="M50 6 A44 44 0 0 1 93.3 45 L55 45 A22 22 0 0 0 50 28 Z" fill="url(#crRed)"/>
+    <path d="M93.3 45 A44 44 0 0 1 31.7 88.1 L50.8 55 A22 22 0 0 0 71 52.8 Z" fill="url(#crGreen)"/>
+    <path d="M31.7 88.1 A44 44 0 0 1 6.7 45 L44.2 45 A22 22 0 0 0 50 72 Z" fill="url(#crYellow)"/>
+    <circle cx="50" cy="50" r="22" fill="#ffffff"/>
+    <circle cx="50" cy="50" r="18" fill="url(#crBlue)"/>
+  </svg>
