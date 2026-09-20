@@ -170,6 +170,34 @@
   box-shadow: 0 6px 20px rgba(0, 242, 254, 0.45);
 }
 
+.shop-nav-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: 0.5rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  padding-left: 1.25rem;
+}
+
+.shop-lang-select {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--shop-text);
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0.35rem 0.5rem;
+  border-radius: var(--shop-radius-sm);
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.shop-lang-select:hover,
+.shop-lang-select:focus {
+  border-color: var(--shop-cyan);
+  background: rgba(0, 242, 254, 0.05);
+}
+
 /* ==========================================================================
    Hero Section & Stats Bar
    ========================================================================== */
@@ -1309,53 +1337,6 @@
   white-space: nowrap;
 }
 
-/* Armenian Legal & Safety Disclaimer (Network.am Style) */
-.shop-disclaimer-section {
-  max-width: 1440px;
-  margin: 4rem auto 0;
-  padding: 0 1.5rem;
-  position: relative;
-  z-index: 1;
-}
-
-.shop-disclaimer-box {
-  background: rgba(14, 21, 34, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: var(--shop-radius-lg);
-  padding: 1.5rem 1.75rem;
-  display: flex;
-  align-items: flex-start;
-  gap: 1.25rem;
-}
-
-.shop-disclaimer-icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 10px;
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  color: var(--shop-green);
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-}
-
-.shop-disclaimer-title {
-  font-size: 0.95rem;
-  font-weight: 800;
-  color: #ffffff;
-  margin: 0 0 0.4rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.shop-disclaimer-text {
-  font-size: 0.82rem;
-  color: var(--shop-text-muted);
-  line-height: 1.6;
-  margin: 0;
-}
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
@@ -1381,10 +1362,6 @@
   .shop-specialist-box {
     flex-direction: column;
     align-items: flex-start;
-  }
-  .shop-disclaimer-box {
-    flex-direction: column;
-    padding: 1.25rem;
   }
 }
 

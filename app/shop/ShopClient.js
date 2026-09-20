@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { PRODUCTS, SHOP_CATEGORIES } from "../../lib/shopData";
+import ThemeToggle from "../ThemeToggle";
 import "./shop.css";
 
 const ALPHABET = ["ALL", ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""), "#"];
@@ -329,6 +330,26 @@ export default function ShopClient() {
               </svg>
               <span>{t.requestSpecialist}</span>
             </Link>
+
+            <div className="shop-nav-tools">
+              <select
+                className="shop-lang-select"
+                value={lang}
+                onChange={(e) => {
+                  const newLang = e.target.value;
+                  setLang(newLang);
+                  localStorage.setItem("portfolio-language", newLang);
+                  document.documentElement.lang = newLang;
+                  window.dispatchEvent(new Event("storage"));
+                }}
+                aria-label="Select Language"
+              >
+                <option value="en">EN</option>
+                <option value="hy">HY</option>
+                <option value="ru">RU</option>
+              </select>
+              <ThemeToggle variant="icon" />
+            </div>
           </nav>
         </div>
       </header>
@@ -745,22 +766,7 @@ export default function ShopClient() {
         </div>
       </section>
 
-      {/* Armenian Legal & Safety Disclaimer (Network.am Style) */}
-      <section className="shop-disclaimer-section">
-        <div className="shop-disclaimer-box">
-          <div className="shop-disclaimer-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-              <line x1="12" y1="8" x2="12" y2="12" />
-              <line x1="12" y1="16" x2="12.01" y2="16" />
-            </svg>
-          </div>
-          <div>
-            <h4 className="shop-disclaimer-title">{t.disclaimerTitle}</h4>
-            <p className="shop-disclaimer-text">{t.disclaimerText}</p>
-          </div>
-        </div>
-      </section>
+
 
       {/* Product Detail Modal */}
       {activeModalProduct && (
