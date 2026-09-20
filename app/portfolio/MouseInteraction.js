@@ -1,13 +1,14 @@
 import { Vector2 } from "three";
 
-export function createMouseInteraction(element) {
+export function createMouseInteraction(element, boundsElement = element) {
   const target = new Vector2(0, 0);
   const current = new Vector2(0, 0);
   const ripple = new Vector2(0, 0);
   let active = 0;
   let clicked = false;
   function move(event) {
-    const rect = element.getBoundingClientRect();
+    // The event target may span the entire document; the canvas spans the viewport.
+    const rect = boundsElement.getBoundingClientRect();
     target.set((event.clientX - rect.left) / rect.width * 2 - 1, 1 - (event.clientY - rect.top) / rect.height * 2);
     active = 1;
   }

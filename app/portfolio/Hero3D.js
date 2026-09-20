@@ -25,7 +25,7 @@ export default function Hero3D({ fixed = false }) {
       }
     }).catch(() => container.current?.setAttribute("data-renderer", "fallback"));
     return () => { disposed = true; disposeScene?.(); sceneApi.current = null; };
-  }, []);
+  }, [fixed]);
 
   return (
     <>

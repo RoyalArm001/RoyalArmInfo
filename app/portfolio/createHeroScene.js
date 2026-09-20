@@ -4,7 +4,9 @@ import { createNetworkSphere } from "./NetworkSphere";
 import { createMouseInteraction } from "./MouseInteraction";
 
 export function createHeroScene(container, interactionTarget = null) {
-  const hero = interactionTarget || container.closest("section") || container.parentElement;
+  const page = interactionTarget || container.closest("section") || container.parentElement;
+  const hero = page.querySelector("#home") || page;
+  const fixed = container.classList.contains("portfolio-background");
   const motion = matchMedia("(prefers-reduced-motion: reduce)");
   const compact = matchMedia("(max-width: 767px)");
   const constrained = (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4 || navigator.connection?.saveData;
@@ -22,7 +24,7 @@ export function createHeroScene(container, interactionTarget = null) {
   const particles = createParticleField(maxCount);
   const network = createNetworkSphere();
   scene.add(particles.object, network.object);
-  const mouse = createMouseInteraction(hero);
+  const mouse = createMouseInteraction(page, container);
   let frame = 0;
   let lastTime = 0;
   let elapsed = 0;
@@ -36,26 +38,28 @@ export function createHeroScene(container, interactionTarget = null) {
   let sampleFrames = 0;
   let activeCount = 0;
 
-  /* --- Scroll-reactive state --- */
-  let scrollTarget = 0;   // raw scroll progress 0→1
-  let scrollSmooth = 0;   // smoothly interpolated value sent to the GPU
+  let scrollTarget = 0;
+  let scrollSmooth = 0;
+  let revealTarget = 0;
+  let revealSmooth = 0;
+  let heroHeight = hero.offsetHeight;
   const baseNetworkOpacity = network.object.children[0]?.material?.opacity ?? .13;
   const baseCameraZ = 10;
   const baseCameraZMobile = 11.5;
 
-  /**
-   * Compute scroll progress. We use the hero element (portfolio-page) scroll height
-   * so the effect spans the full page. Clamp to 0–1.
-   */
   function updateScrollTarget() {
-    const scrollEl = hero === document.documentElement ? document.documentElement : hero;
-    const scrollTop = scrollEl === document.documentElement ? window.scrollY : scrollEl.scrollTop;
-    const scrollMax = scrollEl.scrollHeight - scrollEl.clientHeight;
-    scrollTarget = scrollMax > 0 ? Math.min(1, Math.max(0, scrollTop / scrollMax)) : 0;
+    // The document scrolls, not <main>. Reading main.scrollTop always returned zero.
+    const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
+    scrollTarget = scrollMax > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollMax)) : 0;
+    revealTarget = fixed ? Math.min(1, Math.max(0, window.scrollY / Math.max(heroHeight * .75, 1))) : 0;
+    revealTarget = revealTarget * revealTarget * (3 - 2 * revealTarget);
+    container.style.setProperty("--scene-reveal", revealTarget.toFixed(3));
   }
 
-  // Listen on window (covers all cases since the hero is fixed and the page itself scrolls).
-  const scrollHandler = () => updateScrollTarget();
+  const scrollHandler = () => {
+    updateScrollTarget();
+    if (!shouldAnimate() && !contextLost && !disposed) render(performance.now(), false);
+  };
   window.addEventListener("scroll", scrollHandler, { passive: true });
   updateScrollTarget();
 
@@ -63,6 +67,8 @@ export function createHeroScene(container, interactionTarget = null) {
     const width = container.clientWidth;
     const height = container.clientHeight;
     if (!width || !height) return;
+    heroHeight = hero.offsetHeight;
+    updateScrollTarget();
     const mobile = compact.matches;
     const ratio = Math.min(devicePixelRatio || 1, constrained ? 1 : mobile ? 1.25 : 1.6) * quality;
     renderer.setPixelRatio(ratio);
@@ -72,8 +78,6 @@ export function createHeroScene(container, interactionTarget = null) {
     camera.updateProjectionMatrix();
     particles.uniforms.uAspect.value = camera.aspect;
     particles.uniforms.uPixelRatio.value = ratio;
-    particles.uniforms.uOffset.value.set(mobile ? .8 : Math.min(3.0, camera.aspect * 1.48), mobile ? -.45 : .05);
-    network.object.position.set(particles.uniforms.uOffset.value.x, particles.uniforms.uOffset.value.y, 0);
     activeCount = Math.floor(Math.min(maxCount, mobile ? 5000 : maxCount) * quality);
     particles.setCount(activeCount);
     container.dataset.particles = String(activeCount);
@@ -92,14 +96,24 @@ export function createHeroScene(container, interactionTarget = null) {
     particles.uniforms.uTime.value = elapsed;
     particles.uniforms.uRippleAge.value = elapsed - rippleStart;
 
-    /* --- Smooth-lerp scroll progress into the GPU uniform --- */
-    scrollSmooth += (scrollTarget - scrollSmooth) * (1 - Math.exp(-(delta || .016) * 3.5));
+    const blend = interactive ? 1 - Math.exp(-delta * 4) : 1;
+    scrollSmooth += (scrollTarget - scrollSmooth) * blend;
+    revealSmooth += (revealTarget - revealSmooth) * blend;
     particles.uniforms.uScroll.value = scrollSmooth;
 
-    /* --- Scroll-reactive camera depth: camera pulls back slightly as you scroll --- */
+    // Center the scene as the hero leaves. Fit the entire expanding orbital field
+    // inside the narrower viewport dimension, including portrait phone screens.
     const mobile = compact.matches;
     const baseZ = mobile ? baseCameraZMobile : baseCameraZ;
-    camera.position.z = baseZ + scrollSmooth * 2.5;
+    const halfAngle = Math.atan(Math.tan(camera.fov * Math.PI / 360) * Math.min(camera.aspect, 1));
+    const fieldRadius = 4 * (1 + scrollSmooth * .35);
+    const fitZ = fieldRadius / Math.sin(halfAngle) * 1.08;
+    camera.position.z = baseZ + (Math.max(baseZ, fitZ) - baseZ) * revealSmooth;
+    particles.uniforms.uOffset.value.set(
+      (mobile ? .8 : Math.min(3.0, camera.aspect * 1.48)) * (1 - revealSmooth),
+      (mobile ? -.45 : .05) * (1 - revealSmooth),
+    );
+    network.object.position.set(particles.uniforms.uOffset.value.x, particles.uniforms.uOffset.value.y, 0);
 
     /* --- Scroll-reactive network sphere: fades and grows with scroll --- */
     if (network.object.children[0]?.material) {
@@ -145,7 +159,7 @@ export function createHeroScene(container, interactionTarget = null) {
   const resizeObserver = new ResizeObserver(resize);
   resizeObserver.observe(container);
   const visibilityObserver = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; sync(); }, { threshold: 0 });
-  visibilityObserver.observe(hero);
+  visibilityObserver.observe(fixed ? container : hero);
   document.addEventListener("visibilitychange", sync);
   motion.addEventListener("change", sync);
   renderer.domElement.addEventListener("webglcontextlost", lost);

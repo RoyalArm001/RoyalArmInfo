@@ -102,9 +102,6 @@
   }
 
   async function initialize() {
-    const selects = Array.from(document.querySelectorAll("[data-language-select]"));
-    if (!selects.length) return;
-
     try {
       const response = await fetch("/i18n/translations.json?v=portfolio-3d-20260920", { cache: "force-cache" });
       if (!response.ok) throw new Error("Translation file could not be loaded");
@@ -120,10 +117,11 @@
     } catch (_) {}
     if (!supportedLanguages.includes(savedLanguage)) savedLanguage = "en";
 
-    selects.forEach(function (select) {
-      select.addEventListener("change", function () {
-        applyLanguage(select.value);
-      });
+    // Header controls can be mounted by a client-side navigation.
+    document.addEventListener("change", function (event) {
+      if (event.target.matches("[data-language-select]")) {
+        applyLanguage(event.target.value);
+      }
     });
     applyLanguage(savedLanguage);
     watchDynamicContent();

@@ -60,8 +60,10 @@ draw calls, without a full-screen bloom pass or particle DOM elements.
 The scene uses up to 16,000 particles on desktop and 5,000 on mobile, caps pixel
 density, and reduces quality after sustained slow frames. The particle scene is
 rendered as a fixed background across the full homepage, remaining visible behind
-the sections while scrolling. Rendering stops when the homepage leaves the
-viewport or the browser tab is hidden. Reduced-motion users get a static scene;
+translucent sections while scrolling. As the hero scrolls away, the orbital field
+centers and fits the viewport. Pointer coordinates use the canvas bounds and
+scroll progress uses the document, so both work throughout the page. Rendering
+stops when the canvas leaves the viewport or the browser tab is hidden. Reduced-motion users get a static scene;
 a pause control is available otherwise. A CSS illustration remains visible if
 WebGL2 is unavailable or its context is lost.
 

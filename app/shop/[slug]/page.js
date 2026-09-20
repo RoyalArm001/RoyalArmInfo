@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PRODUCTS } from "../../../lib/shopData";
+import HeaderControls from "../../HeaderControls";
 import "../shop.css";
 
 export async function generateStaticParams() {
@@ -204,6 +205,7 @@ export default async function ProductDetailPage({ params }) {
               Request IT Specialist
             </Link>
           </nav>
+          <HeaderControls />
         </div>
       </header>
 
@@ -244,7 +246,7 @@ export default async function ProductDetailPage({ params }) {
                 <span className="shop-license-tag">v{product.version}</span>
               </div>
 
-              <h1 style={{ fontSize: "2.2rem", fontWeight: "900", margin: "0 0 0.4rem", color: "#ffffff" }}>
+              <h1 id="main-content" tabIndex={-1} style={{ fontSize: "2.2rem", fontWeight: "900", margin: "0 0 0.4rem", color: "#ffffff" }}>
                 {product.title}
               </h1>
 

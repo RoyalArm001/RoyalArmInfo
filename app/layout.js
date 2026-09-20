@@ -1,6 +1,5 @@
 import Script from "next/script";
 import "./globals.css";
-import ThemeToggle from "./ThemeToggle";
 
 export const metadata = {
   metadataBase: new URL("https://royalarm.store"),
@@ -152,24 +151,8 @@ export default function RootLayout({ children }) {
         />
         <a href="#main-content" className="skip-link">Skip to main content</a>
         {children}
-        <div className="site-controls">
-          <ThemeToggle />
-          <div className="language-switcher" aria-label="Translate page">
-            <i className="fas fa-language" aria-hidden="true" />
-            <span className="language-label">Translate</span>
-            <label className="language-control" htmlFor="site-language-select">
-              <span className="sr-only">Choose page language</span>
-              <select id="site-language-select" className="site-language-select" data-language-select defaultValue="en">
-                <option value="en">EN · English</option>
-                <option value="hy">HY · Հայերեն</option>
-                <option value="ru">RU · Русский</option>
-              </select>
-            </label>
-            <span id="translation-status" data-translation-status className="sr-only" aria-live="polite" />
-          </div>
-        </div>
-        <Script src="/js/script.js?v=portfolio-3d-20260920" strategy="afterInteractive" />
-        <Script src="/js/translate.js?v=portfolio-3d-20260920" strategy="afterInteractive" />
+        <Script src="/js/script.js?v=portfolio-navigation-20260920" strategy="afterInteractive" />
+        <Script src="/js/translate.js?v=header-controls-20260920" strategy="afterInteractive" />
       </body>
     </html>
   );

@@ -1,0 +1,152 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build Next.js app",
+			"type": "shell",
+			"command": "npm run build",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Start sitemap preview server",
+			"type": "shell",
+			"command": "npm start",
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Verify shop sitemap route",
+			"type": "shell",
+			"command": "curl.exe -sS -D - -H \"Host: shop.royalarm.uk\" http://127.0.0.1:3000/sitemap.xml",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Review sitemap change",
+			"type": "shell",
+			"command": "git diff -- proxy.js; git status --short; git remote -v; git branch --show-current",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Check git branch",
+			"type": "shell",
+			"command": "git status --short; git branch --show-current; git remote -v",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Commit sitemap fix",
+			"type": "shell",
+			"command": "git add -- proxy.js; git commit -m \"Fix shop sitemap routing\" -m \"Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\"",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Commit sitemap fix",
+			"type": "shell",
+			"command": "git add -- proxy.js; git commit -m 'Fix shop sitemap routing' -m 'Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>'",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Commit sitemap fix",
+			"type": "shell",
+			"command": "git add -- proxy.js; $trailer = 'Co-authored-by: Copilot ' + [char]60 + '223556219+Copilot@users.noreply.github.com' + [char]62; git commit -m 'Fix shop sitemap routing' -m $trailer",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Commit sitemap fix",
+			"type": "shell",
+			"command": "git add -- proxy.js; Set-Content -Path commit-message.txt -Value @('Fix shop sitemap routing','',('Co-authored-by: Copilot ' + [char]60 + '223556219+Copilot@users.noreply.github.com' + [char]62)); git commit -F commit-message.txt; Remove-Item commit-message.txt",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Commit sitemap route change",
+			"type": "shell",
+			"command": "git add -- proxy.js; Set-Content -Path commit-message.txt -Value @('Fix shop sitemap routing','',('Co-authored-by: Copilot ' + [char]60 + '223556219+Copilot@users.noreply.github.com' + [char]62)); git commit -F commit-message.txt; Remove-Item commit-message.txt",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Push sitemap fix",
+			"type": "shell",
+			"command": "git push origin main",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Verify pushed commit",
+			"type": "shell",
+			"command": "git show --stat --oneline --decorate HEAD; git status --short",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Check current git state",
+			"type": "shell",
+			"command": "git status --short; git log -1 --oneline",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Build SEO routes",
+			"type": "shell",
+			"command": "npm run build",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Commit SEO sitemap updates",
+			"type": "shell",
+			"command": "git add -- app/robots.js app/sitemap.js app/shop/sitemap.js proxy.js; Set-Content -Path commit-message.txt -Value @('Improve crawler discovery and sitemap SEO','',('Co-authored-by: Copilot ' + [char]60 + '223556219+Copilot@users.noreply.github.com' + [char]62)); git commit -F commit-message.txt; Remove-Item commit-message.txt",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Push SEO sitemap updates",
+			"type": "shell",
+			"command": "git push origin main",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Verify SEO commit",
+			"type": "shell",
+			"command": "git show --stat --oneline --decorate HEAD; git status --short",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Inspect all pending changes",
+			"type": "shell",
+			"command": "git status --short; git diff --stat; git ls-files --others --exclude-standard",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Summarize full diff",
+			"type": "shell",
+			"command": "git diff --stat; git diff --numstat",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Validate complete project",
+			"type": "shell",
+			"command": "npm run build",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Commit all project changes",
+			"type": "shell",
+			"command": "git add -A; Set-Content -Path commit-message.txt -Value @('Complete project update and SEO improvements','',('Co-authored-by: Copilot ' + [char]60 + '223556219+Copilot@users.noreply.github.com' + [char]62)); git commit -F commit-message.txt; Remove-Item commit-message.txt",
+			"isBackground": false,
+			"problemMatcher": []
+		}
+	]
+}

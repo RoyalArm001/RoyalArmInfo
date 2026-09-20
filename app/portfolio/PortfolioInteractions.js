@@ -18,6 +18,15 @@ export default function PortfolioInteractions() {
       if (target.getBoundingClientRect().top < innerHeight || reduced.matches) target.classList.add("is-revealed");
       else { target.classList.add("reveal-ready"); observer.observe(target); }
     });
+    // Animate reading-sized blocks once, without splitting words into DOM nodes.
+    const textTargets = [...root.querySelectorAll("section:not(#home) h2, section:not(#home) h3, section:not(#home) p")]
+      .filter((target) => !target.closest("[data-aos], [hidden], .hidden, details"));
+    textTargets.forEach((target, index) => {
+      if (reduced.matches || target.getBoundingClientRect().top < innerHeight) return;
+      target.classList.add("text-reveal");
+      target.style.setProperty("--reveal-delay", `${(index % 3) * 65}ms`);
+      observer.observe(target);
+    });
     const buttons = [...root.querySelectorAll("[data-magnetic]")];
     const cleanups = buttons.map((button) => {
       const move = (event) => {
@@ -41,7 +50,12 @@ export default function PortfolioInteractions() {
     window.addEventListener("scroll", updateScrollGlow, { passive: true });
     updateScrollGlow();
 
-    return () => { observer.disconnect(); cleanups.forEach((cleanup) => cleanup()); window.removeEventListener("scroll", updateScrollGlow); };
+    return () => {
+      observer.disconnect();
+      cleanups.forEach((cleanup) => cleanup());
+      textTargets.forEach((target) => { target.classList.remove("text-reveal"); target.style.removeProperty("--reveal-delay"); });
+      window.removeEventListener("scroll", updateScrollGlow);
+    };
   }, []);
   return null;
 }

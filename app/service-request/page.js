@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import HeaderControls from "../HeaderControls";
 
 const serviceOptions = [
   "Ցանցային և ՏՏ սպասարկում",
@@ -69,9 +70,12 @@ export default function ServiceRequestPage() {
   return (
     <main id="main-content" className="min-h-screen bg-[#0d0d0d] text-white px-3 pb-28 pt-7 sm:px-6 sm:pt-10">
       <div className="mx-auto max-w-4xl">
-        <Link href="/" className="inline-flex items-center gap-2 text-gray-400 transition hover:text-[#ff004f]">
-          <span aria-hidden="true">←</span> Վերադառնալ գլխավոր էջ
-        </Link>
+        <header className="flex flex-wrap items-center justify-between gap-4">
+          <Link href="/" className="inline-flex items-center gap-2 text-gray-400 transition hover:text-[#ff004f]">
+            <span aria-hidden="true">←</span> Վերադառնալ գլխավոր էջ
+          </Link>
+          <HeaderControls />
+        </header>
 
         <section className="mt-6 overflow-hidden rounded-2xl border border-gray-800 bg-[#151515] shadow-2xl sm:mt-8 sm:rounded-3xl">
           <div className="border-b border-gray-800 bg-gradient-to-r from-[#ff004f]/20 to-transparent p-7 sm:p-10">

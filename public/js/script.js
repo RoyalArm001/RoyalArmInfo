@@ -19,6 +19,10 @@ function initializePortfolio() {
     window.location.href = `mailto:royalarm001@gmail.com?subject=${subject}&body=${body}`;
   });
 
+  // The Next.js navigation owns its listeners and cleans them up on route changes.
+  // Keep the handlers below for the standalone HTML page only.
+  if (document.querySelector("[data-portfolio-navigation]")) return;
+
   const menuToggle = document.getElementById("mobile-menu-toggle");
   const mobileNavigation = document.getElementById("mobile-navigation");
   const openIcon = menuToggle?.querySelector('[data-menu-icon="open"]');
