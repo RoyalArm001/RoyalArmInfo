@@ -71,6 +71,8 @@ export function proxy(request) {
     const destination = request.nextUrl.clone();
     if (pathname === "/") {
       destination.pathname = "/shop";
+    } else if (pathname === "/sitemap.xml") {
+      destination.pathname = "/shop/sitemap.xml";
     } else if (!pathname.startsWith("/shop")) {
       // e.g. /some-product → /shop/some-product
       destination.pathname = `/shop${pathname}`;
@@ -93,8 +95,7 @@ export const config = {
     "/request",
     "/robots.txt",
     "/sitemap.xml",
-    // Catch-all for shop.royalarm.uk subdomain paths (any pathname)
-    "/((?!_next/static|_next/image|favicon.ico|assets/).*)",
+    // Rewrite page routes, while keeping shared assets and APIs on their original paths.
+    "/((?!(?:_next|api|assets|css|js|i18n|cv|devicon)(?:/|$)|favicon\\.ico$|sw\\.js$|manifest\\.webmanifest$).*)",
   ],
 };
-
