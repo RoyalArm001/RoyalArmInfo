@@ -179,23 +179,31 @@
   padding-left: 1.25rem;
 }
 
-.shop-lang-select {
+.shop-lang-toggle {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--shop-text);
   font-size: 0.82rem;
-  font-weight: 700;
-  padding: 0.35rem 0.5rem;
+  font-weight: 800;
+  padding: 0.35rem 0.65rem;
   border-radius: var(--shop-radius-sm);
   cursor: pointer;
   outline: none;
   transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
 }
 
-.shop-lang-select:hover,
-.shop-lang-select:focus {
+.shop-lang-toggle:hover,
+.shop-lang-toggle:focus {
   border-color: var(--shop-cyan);
-  background: rgba(0, 242, 254, 0.05);
+  background: rgba(0, 242, 254, 0.08);
+  color: #ffffff;
+}
+
+.shop-lang-toggle svg {
+  color: var(--shop-cyan);
 }
 
 /* ==========================================================================

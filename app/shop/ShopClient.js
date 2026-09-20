@@ -332,22 +332,26 @@ export default function ShopClient() {
             </Link>
 
             <div className="shop-nav-tools">
-              <select
-                className="shop-lang-select"
-                value={lang}
-                onChange={(e) => {
-                  const newLang = e.target.value;
-                  setLang(newLang);
-                  localStorage.setItem("portfolio-language", newLang);
-                  document.documentElement.lang = newLang;
+              <button
+                type="button"
+                className="shop-lang-toggle"
+                onClick={() => {
+                  const langs = ["hy", "en", "ru"];
+                  const nextLang = langs[(langs.indexOf(lang) + 1) % langs.length];
+                  setLang(nextLang);
+                  localStorage.setItem("portfolio-language", nextLang);
+                  document.documentElement.lang = nextLang;
                   window.dispatchEvent(new Event("storage"));
                 }}
-                aria-label="Select Language"
+                title="Toggle Language"
               >
-                <option value="en">EN</option>
-                <option value="hy">HY</option>
-                <option value="ru">RU</option>
-              </select>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="2" y1="12" x2="22" y2="12" />
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                </svg>
+                <span>{lang.toUpperCase()}</span>
+              </button>
               <ThemeToggle variant="icon" />
             </div>
           </nav>
