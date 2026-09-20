@@ -13,6 +13,69 @@ body {
   background: #111111;
 }
 
+/* Keep this essential navigation style in the bundled stylesheet on every route. */
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  transform: translateY(calc(-100% - 1rem));
+  border-radius: 0.6rem;
+  background: #ff004f;
+  padding: 0.7rem 1rem;
+  color: white;
+  font-weight: 700;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 3px solid white;
+  outline-offset: 3px;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.header-language-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 38px;
+  padding: 0 0.75rem;
+  border: 1px solid #314452;
+  border-radius: 8px;
+  background: #101c27;
+  color: #bde8ed;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.header-language-toggle:hover {
+  background: #152433;
+  border-color: #3b5668;
+}
+
+.header-controls .theme-icon-toggle {
+  width: 38px;
+  height: 38px;
+}
+
+html[data-theme="light"] .header-language-toggle {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #234450;
+}
+
+html[data-theme="light"] .header-language-toggle:hover {
+  background: #f1f5f9;
+}
+
 .site-map-loader {
   position: fixed;
   inset: 0;
