@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+  <head>
+    <!-- Meta Tags -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Portfolio of Sipan Danielyan, an IT specialist and website developer from Armenia building responsive websites, landing pages, and practical internal tools."
+    />
+    <meta
+      name="keywords"
+      content="Sipan Danielyan, web developer, landing pages, IT specialist, system administration, Tailwind CSS"
+    />
+    <meta name="author" content="Sipan Danielyan" />
+    <meta name="theme-color" content="#111111" />
+    <meta property="og:title" content="Sipan Danielyan | IT Specialist &amp; Website Developer" />
+    <meta property="og:description" content="Responsive websites, landing pages, IT infrastructure, and practical internal tools." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="assets/images/Sipan-Danielyan-2026.jpg" />
+    <title>Sipan Danielyan | IT Specialist &amp; Website Developer</title>
+    <link rel="icon" type="image/png" href="assets/LogoArm.png" />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              bg: "#111111", // Custom dark background
+              text: "#ffffff", // Primary text color
+              accent: "#ff004f", // Highlight/Accent color
+            },
+            fontFamily: {
+              poppins: ["Poppins", "sans-serif"],
+              gloria: ['"Gloria Hallelujah"', "cursive"],
+              tangerine: ['"Tangerine"', "cursive"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Merienda:wght@300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tangerine:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome Icons -->
+	<link rel="stylesheet" href="css/all.min.css" />
+   
+
+    <!-- Animate On Scroll (AOS) Library -->
+	<link rel="stylesheet" href="css/aos.css" />
+   
+
+    <!-- Lottie Animation Library -->
+  
+   <script src="js/lottie.min.js"></script>
+    <!-- Alpine.js (For UI Interactivity like Navbar Toggle) -->
+
+  
+    <!-- Custom CSS and JS -->
+    <link rel="stylesheet" href="css/styles.css" />
+    <script src="js/script.js" defer></script>
+  </head>
+
+  <body class="bg-bg text-text">
+    <!-- Navbar -->
+    <nav
+      class="fixed w-full top-0 left-0 z-50 bg-[#111111] text-white border-b border-gray-800 shadow-md transition-all duration-500"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <!-- Logo -->
+          <a
+            href="#home"
+            class="text-xl md:text-3xl font-extrabold text-[#ff004f] tracking-wide font-poppins"
+          >
+            Sipan Danielyan
+          </a>
+
+          <!-- Desktop Navigation -->
+          <div class="hidden xl:flex items-center space-x-6 text-md font-medium">
+            <a href="#home" data-nav-section="home" class="site-nav-link">Home</a>
+            <a href="#about" data-nav-section="about" class="site-nav-link">About</a>
+            <a href="#skills" data-nav-section="skills" class="site-nav-link">Skills</a>
+            <a href="#resume" data-nav-section="resume" class="site-nav-link">Resume</a>
+            <a href="#projects" data-nav-section="projects" class="site-nav-link">Projects</a>
+            <a href="#services" data-nav-section="services" class="site-nav-link">Services</a>
+            <a href="https://it.royalarm.uk/" class="site-nav-link">IT App</a>
+            <a href="https://shop.royalarm.uk/" class="site-nav-link">Shop</a>
+          </div>
+
+          <!-- Resume Button (Desktop) -->
+          <div class="hidden xl:flex">
+            <div class="flex items-center gap-3">
+              <a href="/service-request" class="border border-[#ff004f] text-[#ff4f84] hover:bg-[#ff004f] hover:text-white px-4 py-2 rounded-lg font-semibold transition-all duration-300">Request Service</a>
+              <a href="#resume" class="bg-[#ff004f] hover:bg-[#e60047] text-white px-5 py-2 rounded-lg font-semibold shadow-lg transform hover:scale-105 transition-all duration-300">View CV</a>
+            </div>
+          </div>
+
+          <!-- Mobile Menu Button -->
+          <div class="xl:hidden flex items-center">
+              <button id="mobile-menu-toggle" type="button" class="focus:outline-none" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-navigation">
+              <!-- Menu Icon -->
+              <svg
+                  data-menu-icon="open"
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-7 h-7"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 8h16M4 16h16"
+                />
+              </svg>
+              <!-- Close Icon -->
+              <svg
+                  data-menu-icon="close"
+                  hidden
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-7 h-7"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation Dropdown -->
+      <div
+        id="mobile-navigation"
+        hidden
+        class="mobile-navigation xl:hidden bg-[#111111] px-6 py-6 space-y-5 text-center text-base font-medium max-h-[calc(100dvh-4rem)] overflow-y-auto"
+      >
+        <a href="#home" data-nav-section="home" class="site-nav-link block">Home</a>
+        <a href="#about" data-nav-section="about" class="site-nav-link block">About</a>
+        <a href="#skills" data-nav-section="skills" class="site-nav-link block">Skills</a>
+        <a href="#resume" data-nav-section="resume" class="site-nav-link block">Resume</a>
+        <a href="#projects" data-nav-section="projects" class="site-nav-link block">Projects</a>
+        <a href="#services" data-nav-section="services" class="site-nav-link block">Services</a>
+        <a href="https://it.royalarm.uk/" class="site-nav-link block">IT App</a>
+        <a href="https://shop.royalarm.uk/" class="site-nav-link block">Shop</a>
+
+        <!-- Resume Button (Mobile) -->
+        <a
+          href="#resume"
+          class="inline-block bg-[#ff004f] hover:bg-[#e60047] text-white py-2 px-4 rounded-md transition duration-300 shadow-md"
+        >
+          View CV
+        </a>
+        <a href="/service-request" class="block rounded-md border border-[#ff004f] px-4 py-2 text-[#ff4f84] transition hover:bg-[#ff004f] hover:text-white">
+          Request Service
+        </a>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <!-- Rendered by app/portfolio/Hero.js in the Next.js homepage. -->
+
+    <!-- About Me Section -->
+    <section
+      id="about"
+      class="relative bg-bg text-text py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
+    >
+      <!-- Background Effects -->
+      <div
+        class="absolute top-0 left-0 w-80 h-80 bg-accent opacity-20 blur-[100px] rounded-full"
+      ></div>
+      <div
+        class="absolute bottom-0 right-0 w-72 h-72 bg-white opacity-10 blur-[80px] rounded-full"
+      ></div>
+
+      <div class="relative max-w-4xl mx-auto text-center z-10">
+        <div class="mb-10" data-aos="fade-down">
+          <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-accent">
+            About Me
+          </h2>
+          <div class="mx-auto mt-2 h-1 w-40 bg-accent rounded-full"></div>
+        </div>
+        <!-- Profile Image -->
+        <div
+          class="relative mx-auto w-44 h-44 rounded-full overflow-hidden border-[3px] border-accent shadow-xl mb-10"
+          data-aos="zoom-in"
+        >
+          <img
+            src="assets/images/Sipan-Danielyan-2026.jpg"
+            alt="Sipan Danielyan"
+            width="1200"
+            height="1600"
+            loading="lazy"
+            decoding="async"
+            class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700"
+          />
+        </div>
+
+        <!-- Heading -->
+        <h2
+          class="text-4xl sm:text-5xl font-extrabold mb-4 leading-tight"
+          data-aos="fade-up"
+        >
+          Hello, I’m <span class="text-accent">Sipan Danielyan</span>
+        </h2>
+
+        <!-- Description -->
+        <p
+          class="text-lg text-gray-300 mb-5 leading-relaxed max-w-3xl mx-auto"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          An IT Programmer and Network Engineer from Armenia with 3 years of
+          hands-on experience in web development, networks, servers, and video
+          surveillance systems.
+        </p>
+        <p
+          class="text-base text-gray-400 mb-10 max-w-3xl mx-auto"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
+          I install, configure, and maintain servers, network equipment, and
+          Hikvision camera systems. I also build websites and C# desktop tools
+          that support local systems and everyday business workflows. I work
+          with Proxmox virtual machines, TrueNAS, Nextcloud, private network
+          clouds, and internal messaging systems for local networks. I am also
+          a co-founder and developer of the DitakNet monitoring server.
+        </p>
+
+        <!-- Tech Stack -->
+        <div class="mb-10" data-aos="fade-up" data-aos-delay="100">
+          <h3
+            class="text-sm font-bold text-accent tracking-widest uppercase mb-4"
+          >
+            Tech Stack
+          </h3>
+          <div class="flex flex-wrap justify-center gap-3">
+            <span class="bg-white/10 text-white px-4 py-1 rounded-full text-sm"
+              >HTML</span
+            >
+            <span class="bg-white/10 text-white px-4 py-1 rounded-full text-sm"
+              >Tailwind CSS</span
+            >
+            <span class="bg-white/10 text-white px-4 py-1 rounded-full text-sm"
+              >JavaScript</span
+            >
+            <span class="bg-white/10 text-white px-4 py-1 rounded-full text-sm"
+              >ReactJS</span
+            >
+            <span class="bg-white/10 text-white px-4 py-1 rounded-full text-sm"
+              >Node.js</span
+            >
+            <span class="bg-white/10 text-white px-4 py-1 rounded-full text-sm"
+              >Express.js</span
+            >
+            <span class="bg-white/10 text-white px-4 py-1 rounded-full text-sm"
+              >MongoDB</span
+            >
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <a
+          href="#projects"
+          class="inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-[#e60047] text-white text-sm font-semibold rounded-full shadow-lg transition-transform transform hover:scale-105"
+          data-aos="zoom-in-up"
+          data-aos-delay="300"
+        >
+          View My Work
+        </a>
+      </div>
+    </section>
+
+    <!-- 6️⃣ Skills Section -->
+    <section
+      id="skills"
+      class="relative bg-bg text-white py-24 px-6 md:px-16 overflow-hidden"
+    >
+      <!-- Accent Glow Background -->
+      <div
+        class="absolute top-0 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-accent opacity-10 rounded-full blur-[120px] pointer-events-none"
+      ></div>
+
+      <div class="max-w-7xl mx-auto relative z-10">
+        <!-- Section Header -->
+        <div
+          class="text-center mb-16"
+          data-aos="fade-up"
+          data-aos-duration="800"
+        >
+          <h2
+            class="text-5xl font-extrabold text-accent mb-4 font-poppins tracking-tight"
+          >
+            Tech Stack
+          </h2>
+          <p class="text-gray-400 text-lg max-w-xl mx-auto">
+            Web development, servers, virtualization, storage, private cloud,
+            networks, and monitoring tools.
+          </p>
+        </div>
+
+        <!-- Skills Grid -->
+        <div
+          class="skills-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 text-center"
+        >
+          <!-- Skill Card -->
+          <div
+            class="skill-card group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="100"
+          >
+            <img
+              src="devicon/icons/html5/html5-original.svg"
+              alt="HTML5"
+              class="h-12 mx-auto mb-4 transition-transform group-hover:scale-110 group-hover:-rotate-6"
+            />
+            <p class="font-semibold text-white text-lg">HTML5</p>
+          </div>
+
+          <div
+            class="skill-card group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="200"
+          >
+            <img
+              src="devicon/icons/css3/css3-original.svg"
+              alt="CSS3"
+              class="h-12 mx-auto mb-4 transition-transform group-hover:scale-110 group-hover:rotate-6"
+            />
+            <p class="font-semibold text-white text-lg">CSS3</p>
+          </div>
+
+          <div
+            class="skill-card group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="300"
+          >
+            <img
+              src="devicon/icons/javascript/javascript-original.svg"
+              alt="JavaScript"
+              class="h-12 mx-auto mb-4 transition-transform group-hover:scale-110 group-hover:-rotate-6"
+            />
+            <p class="font-semibold text-white text-lg">JavaScript</p>
+          </div>
+
+          <div
+            class="skill-card group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="400"
+          >
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg"
+              alt="Tailwind"
+              class="h-12 mx-auto mb-4 transition-transform group-hover:scale-110 group-hover:rotate-6"
+            />
+            <p class="font-semibold text-white text-lg">Tailwind CSS</p>
+          </div>
+
+          <div
+            class="skill-card group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="500"
+          >
+            <img
+              src="devicon/icons/react/react-original.svg"
+              alt="React"
+              class="h-12 mx-auto mb-4 transition-transform group-hover:scale-110 group-hover:-rotate-6"
+            />
+            <p class="font-semibold text-white text-lg">React</p>
+          </div>
+
+          <div
+            class="skill-card group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="600"
+          >
+            <img
+              src="devicon/icons/nodejs/nodejs-original.svg"
+              alt="Node.js"
+              class="h-12 mx-auto mb-4 transition-transform group-hover:scale-110 group-hover:rotate-6"
+            />
+            <p class="font-semibold text-white text-lg">Node.js</p>
+          </div>
+
+          <div
+            class="skill-card group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="700"
+          >
+            <img
+              src="devicon/icons/express/express-original.svg"
+              alt="Express.js"
+              class="h-12 mx-auto mb-4 bg-white p-1 rounded transition-transform group-hover:scale-110 group-hover:-rotate-6"
+            />
+            <p class="font-semibold text-white text-lg">Express.js</p>
+          </div>
+
+          <div
+            class="skill-card group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="800"
+          >
+            <img
+              src="devicon/icons/mongodb/mongodb-original.svg"
+              alt="MongoDB"
+              class="h-12 mx-auto mb-4 transition-transform group-hover:scale-110 group-hover:rotate-6"
+            />
+            <p class="font-semibold text-white text-lg">MongoDB</p>
+          </div>
+
+          <a
+            href="https://www.hikvision.com/en/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="skill-card group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="900"
+          >
+            <div class="h-12 flex items-center justify-center mb-4 bg-white rounded-lg px-3">
+              <img
+                src="assets/hikvision-logo.svg"
+                alt="Hikvision"
+                class="w-full h-auto"
+              />
+            </div>
+            <p class="font-semibold text-white text-lg">Hikvision Systems</p>
+            <span class="tech-skill-link">Official site <i class="fas fa-external-link-alt" aria-hidden="true"></i></span>
+          </a>
+
+          <a
+            href="https://proxmox.com/en/products/proxmox-virtual-environment/features"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="skill-card tech-skill-card group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="100"
+          >
+            <span class="tech-skill-mark" aria-hidden="true"><i class="fas fa-server"></i></span>
+            <p class="font-semibold text-white text-lg">Proxmox VE / VM</p>
+            <span class="tech-skill-link">Official site <i class="fas fa-external-link-alt" aria-hidden="true"></i></span>
+          </a>
+
+          <a
+            href="https://www.truenas.com/truenas-community-edition/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="skill-card tech-skill-card group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="200"
+          >
+            <span class="tech-skill-mark" aria-hidden="true"><i class="fas fa-database"></i></span>
+            <p class="font-semibold text-white text-lg">TrueNAS</p>
+            <span class="tech-skill-link">Official site <i class="fas fa-external-link-alt" aria-hidden="true"></i></span>
+          </a>
+
+          <a
+            href="https://nextcloud.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="skill-card tech-skill-card group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="300"
+          >
+            <span class="tech-skill-mark" aria-hidden="true"><i class="fas fa-cloud"></i></span>
+            <p class="font-semibold text-white text-lg">Nextcloud</p>
+            <span class="tech-skill-link">Official site <i class="fas fa-external-link-alt" aria-hidden="true"></i></span>
+          </a>
+
+          <a
+            href="https://www.zabbix.com/documentation/current/en/manual/introduction"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="skill-card tech-skill-card group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="400"
+          >
+            <span class="tech-skill-mark" aria-hidden="true"><i class="fas fa-chart-line"></i></span>
+            <p class="font-semibold text-white text-lg">Zabbix Monitoring</p>
+            <span class="tech-skill-link">Official site <i class="fas fa-external-link-alt" aria-hidden="true"></i></span>
+          </a>
+
+          <a
+            href="https://www.nagios.org/projects/nagios-core/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="skill-card tech-skill-card group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="500"
+          >
+            <span class="tech-skill-mark" aria-hidden="true"><i class="fas fa-network-wired"></i></span>
+            <p class="font-semibold text-white text-lg">Nagios Core</p>
+            <span class="tech-skill-link">Official site <i class="fas fa-external-link-alt" aria-hidden="true"></i></span>
+          </a>
+
+          <a
+            href="https://www.netdata.cloud/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="skill-card tech-skill-card group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="600"
+          >
+            <span class="tech-skill-mark" aria-hidden="true"><i class="fas fa-chart-area"></i></span>
+            <p class="font-semibold text-white text-lg">Netdata</p>
+            <span class="tech-skill-link">Official site <i class="fas fa-external-link-alt" aria-hidden="true"></i></span>
+          </a>
+
+          <a
+            href="https://docs.docker.com/get-started/docker-overview/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="skill-card tech-skill-card group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="700"
+          >
+            <span class="tech-skill-mark" aria-hidden="true"><i class="fab fa-docker"></i></span>
+            <p class="font-semibold text-white text-lg">Docker</p>
+            <span class="tech-skill-link">Official docs <i class="fas fa-external-link-alt" aria-hidden="true"></i></span>
+          </a>
+
+          <a
+            href="https://www.debian.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="skill-card tech-skill-card group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="800"
+          >
+            <span class="tech-skill-mark" aria-hidden="true"><i class="fab fa-linux"></i></span>
+            <p class="font-semibold text-white text-lg">Linux Servers</p>
+            <span class="tech-skill-link">Official site <i class="fas fa-external-link-alt" aria-hidden="true"></i></span>
+          </a>
+
+          <a
+            href="https://learn.microsoft.com/en-us/dotnet/csharp/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="skill-card tech-skill-card group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="900"
+          >
+            <span class="tech-skill-mark" aria-hidden="true"><i class="fas fa-code"></i></span>
+            <p class="font-semibold text-white text-lg">C# / .NET</p>
+            <span class="tech-skill-link">Official docs <i class="fas fa-external-link-alt" aria-hidden="true"></i></span>
+          </a>
+
+          <a
+            href="https://ditaknet.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="skill-card tech-skill-card group bg-[#1a1a1a] border border-gray-700 rounded-xl p-8 shadow-md transition-all duration-300 transform hover:scale-105 hover:border-accent hover:shadow-[0_0_20px_#ff004f44]"
+            data-aos="zoom-in"
+            data-aos-delay="1000"
+          >
+            <span class="tech-skill-mark" aria-hidden="true"><i class="fas fa-satellite-dish"></i></span>
+            <p class="font-semibold text-white text-lg">DitakNet Monitoring</p>
+            <span class="tech-skill-link">Project site <i class="fas fa-external-link-alt" aria-hidden="true"></i></span>
+          </a>
+        </div>
+
+        <div class="mt-14 text-center" data-aos="fade-up">
+          <p class="text-gray-300 mb-5">
+            I accept remote IT support and installation requests from all regions of Armenia.
+          </p>
+          <a href="/service-request" class="inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3 font-semibold text-white shadow-lg transition hover:-translate-y-1 hover:bg-[#e60047]">
+            Submit a Service Request <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resume Section -->
+    <section
+      id="resume"
+      class="bg-bg text-white py-24 px-6 md:px-16 overflow-hidden relative"
+    >
+      <!-- Background Glow -->
+      <div
+        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent opacity-10 rounded-full blur-[140px] pointer-events-none"
+      ></div>
+
+      <div class="max-w-7xl mx-auto relative z-10">
+        <div class="text-center mb-16" data-aos="fade-up">
+          <h2
+            class="text-5xl font-extrabold text-accent mb-4 font-poppins tracking-tight"
+          >
+            Resume
+          </h2>
+          <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+            A practical overview of the work I do and the value I bring.
+          </p>
+          <div class="cv-library">
+            <h3>My CV</h3>
+            <p>Choose your preferred language. Both versions are available as PDF.</p>
+            <div class="cv-document">
+              <div class="cv-document-name"><span>EN</span><span>English CV (PDF)</span></div>
+              <div class="cv-document-actions">
+                <a href="/cv/Sipan-Danielyan-CV-EN.pdf" target="_blank" rel="noopener noreferrer" type="application/pdf" hreflang="en" aria-label="View English CV">View <span aria-hidden="true">&#8599;</span></a>
+                <a href="/cv/Sipan-Danielyan-CV-EN.pdf" download="Sipan-Danielyan-CV-EN.pdf" type="application/pdf" hreflang="en" aria-label="Download English CV"><span aria-hidden="true">&#8595;</span><span class="sr-only">Download English CV</span></a>
+              </div>
+            </div>
+            <div class="cv-document">
+              <div class="cv-document-name"><span>HY</span><span>Armenian CV (PDF)</span></div>
+              <div class="cv-document-actions">
+                <a href="/cv/Sipan-Danielyan-CV-HY.pdf" target="_blank" rel="noopener noreferrer" type="application/pdf" hreflang="hy" aria-label="View Armenian CV">View <span aria-hidden="true">&#8599;</span></a>
+                <a href="/cv/Sipan-Danielyan-CV-HY.pdf" download="Sipan-Danielyan-CV-HY.pdf" type="application/pdf" hreflang="hy" aria-label="Download Armenian CV"><span aria-hidden="true">&#8595;</span><span class="sr-only">Download Armenian CV</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          <!-- Education Column -->
+          <div class="flex flex-col space-y-10">
+            <h3 class="text-3xl font-bold text-accent text-center">
+              Professional Focus
+            </h3>
+            <div class="space-y-10">
+              <div
+                class="border-l-4 border-accent pl-6 relative"
+                data-aos="fade-up"
+                data-aos-delay="100"
+              >
+                <div
+                  class="absolute -left-[10px] top-0 w-5 h-5 bg-accent rounded-full"
+                ></div>
+                <h4 class="text-2xl font-semibold">
+                  Web Development
+                </h4>
+                <p class="text-gray-400 text-sm mb-2">
+                   Responsive websites and landing pages
+                </p>
+                <p class="text-gray-300 text-base">
+                  Building clear, fast, and mobile-friendly interfaces with
+                  HTML, CSS, JavaScript, React, and Tailwind CSS.
+                </p>
+              </div>
+              <div
+                class="border-l-4 border-accent pl-6 relative"
+                data-aos="fade-up"
+                data-aos-delay="200"
+              >
+                <div
+                  class="absolute -left-[10px] top-0 w-5 h-5 bg-accent rounded-full"
+                ></div>
+                <h4 class="text-2xl font-semibold">
+                  IT Infrastructure
+                </h4>
+                <p class="text-gray-400 text-sm mb-2">
+                   Systems, servers, and networks
+                </p>
+                <p class="text-gray-300 text-base">
+                  Supporting local environments with practical troubleshooting,
+                  administration, and reliable technical solutions.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Experience Column -->
+          <div class="flex flex-col space-y-10">
+            <h3 class="text-3xl font-bold text-accent text-center">
+              Hands-on Work
+            </h3>
+            <div class="space-y-10">
+              <div
+                class="border-l-4 border-accent pl-6 relative"
+                data-aos="fade-up"
+                data-aos-delay="100"
+              >
+                <div
+                  class="absolute -left-[10px] top-0 w-5 h-5 bg-accent rounded-full"
+                ></div>
+                <h4 class="text-2xl font-semibold">Website Developer</h4>
+                <p class="text-gray-400 text-sm mb-2">
+                   Business websites and digital experiences
+                </p>
+                <p class="text-gray-300 text-base">
+                  Creating responsive websites and landing pages with a focus
+                  on usability, performance, and maintainable code.
+                </p>
+              </div>
+              <div
+                class="border-l-4 border-accent pl-6 relative"
+                data-aos="fade-up"
+                data-aos-delay="200"
+              >
+                <div
+                  class="absolute -left-[10px] top-0 w-5 h-5 bg-accent rounded-full"
+                ></div>
+                <h4 class="text-2xl font-semibold">Internal Tools</h4>
+                <p class="text-gray-400 text-sm mb-2">
+                   Desktop utilities and workflow support
+                </p>
+                <p class="text-gray-300 text-base">
+                  Building C# desktop tools that support local systems, simplify
+                  repetitive tasks, and improve everyday workflows.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="bg-bg text-white py-24 px-6 md:px-16">
+      <div class="max-w-7xl mx-auto">
+        <!-- Section Header -->
+        <div class="text-center mb-16" data-aos="fade-up">
+          <h2 class="text-4xl font-extrabold mb-4 text-accent font-poppins">
+            Web Projects &amp; Product Work
+          </h2>
+          <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+            Real websites and digital products I have launched, developed, and
+            improved for businesses and technical services.
+          </p>
+        </div>
+
+        <div class="hidden" aria-hidden="true">
+          <article class="group overflow-hidden bg-[#171717] border border-gray-700 rounded-2xl transition-all duration-300 hover:border-accent hover:-translate-y-1 hover:shadow-[0_18px_50px_#ff004f18]" data-aos="fade-up">
+            <a href="https://smarttechllc.am" target="_blank" rel="noopener noreferrer" class="block">
+              <div class="h-52 bg-white p-8 flex items-center justify-center overflow-hidden">
+                <img src="https://smarttechllc.am/img/smart-tech.png" alt="Smart Tech website" class="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+              </div>
+              <div class="p-7">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                  <h3 class="text-2xl font-bold text-white">Smart Tech LLC</h3>
+                  <span class="text-xs font-semibold text-accent bg-accent/10 px-3 py-1 rounded-full">smarttechllc.am</span>
+                </div>
+                <p class="text-gray-400 leading-relaxed mb-5">
+                  Website for security and smart-system solutions, including CCTV,
+                  fire alarms, access control, networking, electrical work, and automation.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-5 text-xs">
+                  <span class="border border-gray-700 px-3 py-1 rounded-full">Website launch</span>
+                  <span class="border border-gray-700 px-3 py-1 rounded-full">Design refinement</span>
+                  <span class="border border-gray-700 px-3 py-1 rounded-full">Responsive UI</span>
+                </div>
+                <span class="font-semibold text-accent">Visit website ↗</span>
+              </div>
+            </a>
+          </article>
+
+          <article class="group overflow-hidden bg-[#171717] border border-gray-700 rounded-2xl transition-all duration-300 hover:border-accent hover:-translate-y-1 hover:shadow-[0_18px_50px_#ff004f18]" data-aos="fade-up" data-aos-delay="100">
+            <a href="https://sershoney.com" target="_blank" rel="noopener noreferrer" class="block">
+              <div class="h-52 bg-[#f4e4bd] overflow-hidden">
+                <img src="https://sershoney.com/images/og-cover.jpg" alt="Sers Honey website" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+              </div>
+              <div class="p-7">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                  <h3 class="text-2xl font-bold text-white">Sers Honey</h3>
+                  <span class="text-xs font-semibold text-accent bg-accent/10 px-3 py-1 rounded-full">sershoney.com</span>
+                </div>
+                <p class="text-gray-400 leading-relaxed mb-5">
+                  Brand website for 100% natural mountain honey collected in Vayk,
+                  Vayots Dzor, with product sizes and gift packaging presentation.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-5 text-xs">
+                  <span class="border border-gray-700 px-3 py-1 rounded-full">Website launch</span>
+                  <span class="border border-gray-700 px-3 py-1 rounded-full">Visual design</span>
+                  <span class="border border-gray-700 px-3 py-1 rounded-full">Product presentation</span>
+                </div>
+                <span class="font-semibold text-accent">Visit website ↗</span>
+              </div>
+            </a>
+          </article>
+
+          <article class="group overflow-hidden bg-[#171717] border border-gray-700 rounded-2xl transition-all duration-300 hover:border-accent hover:-translate-y-1 hover:shadow-[0_18px_50px_#ff004f18]" data-aos="fade-up">
+            <a href="https://www.ditaknet.com" target="_blank" rel="noopener noreferrer" class="block">
+              <div class="h-52 bg-gradient-to-br from-sky-50 to-blue-100 p-10 flex items-center justify-center overflow-hidden">
+                <img src="https://www.ditaknet.com/images/logo.png" alt="DitakNet monitoring server website" class="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+              </div>
+              <div class="p-7">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                  <h3 class="text-2xl font-bold text-white">DitakNet</h3>
+                  <span class="text-xs font-semibold text-accent bg-accent/10 px-3 py-1 rounded-full">ditaknet.com</span>
+                </div>
+                <p class="text-gray-400 leading-relaxed mb-5">
+                  Self-hosted monitoring platform for home labs and small networks,
+                  covering devices, servers, routers, services, CCTV, and alerts.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-5 text-xs">
+                  <span class="border border-accent/50 text-accent px-3 py-1 rounded-full">Co-founder</span>
+                  <span class="border border-gray-700 px-3 py-1 rounded-full">Developer</span>
+                  <span class="border border-gray-700 px-3 py-1 rounded-full">Monitoring platform</span>
+                </div>
+                <span class="font-semibold text-accent">Visit website ↗</span>
+              </div>
+            </a>
+          </article>
+
+          <article class="group overflow-hidden bg-[#171717] border border-gray-700 rounded-2xl transition-all duration-300 hover:border-accent hover:-translate-y-1 hover:shadow-[0_18px_50px_#ff004f18]" data-aos="fade-up" data-aos-delay="100">
+            <a href="https://gen.royalarm.uk" target="_blank" rel="noopener noreferrer" class="block">
+              <div class="h-52 bg-gradient-to-br from-[#17251c] via-[#25442e] to-[#111a14] flex flex-col items-center justify-center text-center p-8 overflow-hidden">
+                <i class="fas fa-sitemap text-5xl text-green-300 mb-4 transition-transform duration-500 group-hover:scale-110"></i>
+                <span class="text-3xl font-bold text-white">Տոհմածառ</span>
+              </div>
+              <div class="p-7">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                  <h3 class="text-2xl font-bold text-white">Family Tree</h3>
+                  <span class="text-xs font-semibold text-accent bg-accent/10 px-3 py-1 rounded-full">gen.royalarm.uk</span>
+                </div>
+                <p class="text-gray-400 leading-relaxed mb-5">
+                  Armenian family-tree web application for viewing and managing
+                  relatives, generations, photos, notes, social links, and user access.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-5 text-xs">
+                  <span class="border border-gray-700 px-3 py-1 rounded-full">Web application</span>
+                  <span class="border border-gray-700 px-3 py-1 rounded-full">Interface design</span>
+                  <span class="border border-gray-700 px-3 py-1 rounded-full">Data management</span>
+                </div>
+                <span class="font-semibold text-accent">Visit website ↗</span>
+              </div>
+            </a>
+          </article>
+        </div>
+
+        <div class="text-center mb-10" data-aos="fade-up">
+          <h3 class="text-2xl font-bold text-white mb-2">Additional Capabilities</h3>
+          <p class="text-gray-400">Other web and software solutions I can deliver.</p>
+        </div>
+
+        <!-- Project Grid -->
+        <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
+          <!-- Project Card -->
+          <details
+            class="web-projects-accordion relative group bg-black/40 backdrop-blur-md border border-gray-700 rounded-2xl transition-all hover:shadow-2xl duration-300"
+            data-aos="zoom-in-up"
+          >
+            <summary class="web-projects-summary cursor-pointer list-none p-6">
+            <!-- Image -->
+            <div class="relative overflow-hidden rounded-xl mb-6">
+              <img
+                src="devicon/photo-1.jpg"
+                alt="Responsive website and landing page project preview"
+                class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105 rounded-xl"
+              />
+              <div
+                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              ></div>
+            </div>
+
+            <!-- Text -->
+            <h3 class="text-xl font-bold text-white mb-2">Landing Pages & Websites</h3>
+            <p class="text-sm text-gray-400 mb-4">
+              Responsive, conversion-focused pages for businesses and personal
+              brands, designed to work smoothly on every screen size.
+            </p>
+
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-2 text-xs mb-5">
+              <span class="bg-accent/10 text-accent px-3 py-1 rounded-full">
+                HTML
+              </span>
+              <span class="bg-accent/10 text-accent px-3 py-1 rounded-full">
+                Tailwind
+              </span>
+              <span class="bg-accent/10 text-accent px-3 py-1 rounded-full">
+                JavaScript
+              </span>
+            </div>
+
+            <div class="flex items-center justify-between gap-3 text-sm font-semibold text-accent">
+              <span>View websites I created</span>
+              <span class="web-projects-chevron" aria-hidden="true">+</span>
+            </div>
+            </summary>
+
+            <div class="client-sites-grid border-t border-gray-800 p-6 pt-7">
+              <a href="https://smarttechllc.am" target="_blank" rel="noopener noreferrer" class="client-site-card group/site">
+                <div class="client-site-media bg-white">
+                  <img src="https://smarttechllc.am/img/smart-tech.png" alt="Smart Tech LLC website" loading="lazy" />
+                </div>
+                <div class="client-site-body">
+                  <div class="client-site-heading">
+                    <h4>Smart Tech LLC</h4>
+                    <span>smarttechllc.am</span>
+                  </div>
+                  <p>Security and smart-system solutions website covering CCTV, access control, networking and automation.</p>
+                  <strong>Open website <span aria-hidden="true">↗</span></strong>
+                </div>
+              </a>
+
+              <a href="https://sershoney.com" target="_blank" rel="noopener noreferrer" class="client-site-card group/site">
+                <div class="client-site-media bg-[#f4e4bd]">
+                  <img src="https://sershoney.com/images/og-cover.jpg" alt="Sers Honey website" loading="lazy" />
+                </div>
+                <div class="client-site-body">
+                  <div class="client-site-heading">
+                    <h4>Sers Honey</h4>
+                    <span>sershoney.com</span>
+                  </div>
+                  <p>Brand and product website for natural mountain honey from Vayots Dzor.</p>
+                  <strong>Open website <span aria-hidden="true">↗</span></strong>
+                </div>
+              </a>
+
+              <a href="https://www.ditaknet.com" target="_blank" rel="noopener noreferrer" class="client-site-card group/site">
+                <div class="client-site-media bg-gradient-to-br from-sky-50 to-blue-100">
+                  <img src="https://www.ditaknet.com/images/logo.png" alt="DitakNet monitoring platform" loading="lazy" />
+                </div>
+                <div class="client-site-body">
+                  <div class="client-site-heading">
+                    <h4>DitakNet</h4>
+                    <span>ditaknet.com</span>
+                  </div>
+                  <p>Self-hosted monitoring platform that I develop as co-founder and programmer.</p>
+                  <strong>Open website <span aria-hidden="true">↗</span></strong>
+                </div>
+              </a>
+
+              <a href="https://gen.royalarm.uk" target="_blank" rel="noopener noreferrer" class="client-site-card group/site">
+                <div class="client-site-media family-tree-media">
+                  <i class="fas fa-sitemap" aria-hidden="true"></i>
+                  <span>Family Tree</span>
+                </div>
+                <div class="client-site-body">
+                  <div class="client-site-heading">
+                    <h4>Family Tree</h4>
+                    <span>gen.royalarm.uk</span>
+                  </div>
+                  <p>Armenian family-tree application for relatives, generations, photos and notes.</p>
+                  <strong>Open website <span aria-hidden="true">↗</span></strong>
+                </div>
+              </a>
+
+              <a href="https://jermuktravel.com" target="_blank" rel="noopener noreferrer" class="client-site-card group/site">
+                <div class="client-site-media flex-col gap-3 bg-gradient-to-br from-sky-950 via-cyan-900 to-emerald-950 text-cyan-100 font-bold">
+                  <i class="fas fa-map-marked-alt text-4xl" aria-hidden="true"></i>
+                  <span>Jermuk Travel</span>
+                </div>
+                <div class="client-site-body">
+                  <div class="client-site-heading">
+                    <h4>Jermuk Travel</h4>
+                    <span>jermuktravel.com</span>
+                  </div>
+                  <p>Tourism website for discovering Jermuk, local attractions and useful visitor information.</p>
+                  <strong>Open website <span aria-hidden="true">↗</span></strong>
+                </div>
+              </a>
+            </div>
+          </details>
+
+          <!-- Project Card Example #2 -->
+          <div
+            class="relative group bg-black/30 backdrop-blur-md border border-gray-700 p-6 rounded-2xl transition-all hover:shadow-2xl hover:scale-[1.02] duration-300"
+            data-aos="zoom-in-up"
+            data-aos-delay="100"
+          >
+            <div class="relative overflow-hidden rounded-xl mb-6">
+              <img
+                src="devicon/photo-2.jpg"
+                alt="WordPress business website project preview"
+                class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105 rounded-xl"
+              />
+              <div
+                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              ></div>
+            </div>
+
+            <h3 class="text-xl font-bold text-white mb-2">
+              WordPress Business Sites
+            </h3>
+            <p class="text-sm text-gray-400 mb-4">
+              Manageable business websites with responsive layouts, clear
+              content structure, and a solid foundation for search visibility.
+            </p>
+
+            <div class="flex flex-wrap gap-2 text-xs mb-5">
+              <span class="bg-accent/10 text-accent px-3 py-1 rounded-full">
+                WordPress
+              </span>
+              <span class="bg-accent/10 text-accent px-3 py-1 rounded-full">
+                Responsive UI
+              </span>
+            </div>
+
+            <p class="text-sm font-medium text-accent">Selected capability</p>
+          </div>
+
+          <!-- Project Card Example #3 -->
+          <div
+            class="relative group bg-black/30 backdrop-blur-md border border-gray-700 p-6 rounded-2xl transition-all hover:shadow-2xl hover:scale-[1.02] duration-300"
+            data-aos="zoom-in-up"
+            data-aos-delay="200"
+          >
+            <div class="relative overflow-hidden rounded-xl mb-6">
+              <img
+                src="devicon/photo-3.jpg"
+                alt="C sharp internal desktop tool project preview"
+                class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105 rounded-xl"
+              />
+              <div
+                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              ></div>
+            </div>
+
+            <h3 class="text-xl font-bold text-white mb-2">C# Internal Tools</h3>
+            <p class="text-sm text-gray-400 mb-4">
+              Practical desktop utilities created to support local systems,
+              reduce repetitive work, and simplify internal processes.
+            </p>
+
+            <div class="flex flex-wrap gap-2 text-xs mb-5">
+              <span class="bg-accent/10 text-accent px-3 py-1 rounded-full">
+                C#
+              </span>
+              <span class="bg-accent/10 text-accent px-3 py-1 rounded-full">
+                Desktop
+              </span>
+            </div>
+
+            <p class="text-sm font-medium text-accent">Selected capability</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="bg-bg text-white py-24 px-6 md:px-16">
+      <div class="max-w-7xl mx-auto">
+        <!-- Heading -->
+        <div class="text-center mb-20" data-aos="fade-up">
+          <h2 class="text-4xl font-extrabold mb-4 text-accent font-poppins">
+            IT Services &amp; Solutions
+          </h2>
+          <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+            Installation, configuration, maintenance, and programming for
+            reliable business technology.
+          </p>
+        </div>
+
+        <!-- Skills Grid -->
+        <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+          <!-- Card 1 -->
+          <div
+            class="group relative border border-gray-700 bg-black/20 backdrop-blur p-8 rounded-2xl transition-all hover:border-accent hover:shadow-xl hover:-translate-y-2"
+            data-aos="zoom-in"
+            data-aos-delay="100"
+          >
+            <div
+              class="w-12 h-12 flex items-center justify-center bg-accent/20 text-accent rounded-full mb-6 transition group-hover:bg-accent group-hover:text-white"
+            >
+              <i class="fas fa-paint-brush text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Network Installation</h3>
+            <p class="text-gray-400">
+              I install and configure routers, switches, Wi-Fi, structured
+              cabling, and secure local networks.
+            </p>
+          </div>
+
+          <!-- Card 2 -->
+          <div
+            class="group relative border border-gray-700 bg-black/20 backdrop-blur p-8 rounded-2xl transition-all hover:border-accent hover:shadow-xl hover:-translate-y-2"
+            data-aos="zoom-in"
+            data-aos-delay="200"
+          >
+            <div
+              class="w-12 h-12 flex items-center justify-center bg-accent/20 text-accent rounded-full mb-6 transition group-hover:bg-accent group-hover:text-white"
+            >
+              <i class="fas fa-laptop-code text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Server Setup</h3>
+            <p class="text-gray-400">
+              I install, configure, update, monitor, and maintain servers and
+              the services used by local business systems, including Proxmox
+              VM, TrueNAS, Nextcloud, private cloud, and local messaging.
+            </p>
+          </div>
+
+          <!-- Card 3 -->
+          <div
+            class="group relative border border-gray-700 bg-black/20 backdrop-blur p-8 rounded-2xl transition-all hover:border-accent hover:shadow-xl hover:-translate-y-2"
+            data-aos="zoom-in"
+            data-aos-delay="300"
+          >
+            <div
+              class="w-12 h-12 flex items-center justify-center bg-accent/20 text-accent rounded-full mb-6 transition group-hover:bg-accent group-hover:text-white"
+            >
+              <i class="fas fa-rocket text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Hikvision CCTV</h3>
+            <p class="text-gray-400">
+              I install and service Hikvision IP cameras, DVR/NVR systems,
+              recording, remote access, and surveillance networks.
+            </p>
+          </div>
+
+          <div
+            class="group relative border border-gray-700 bg-black/20 backdrop-blur p-8 rounded-2xl transition-all hover:border-accent hover:shadow-xl hover:-translate-y-2"
+            data-aos="zoom-in"
+            data-aos-delay="100"
+          >
+            <div class="w-12 h-12 flex items-center justify-center bg-accent/20 text-accent rounded-full mb-6 transition group-hover:bg-accent group-hover:text-white">
+              <i class="fas fa-code text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Software Development</h3>
+            <p class="text-gray-400">
+              I create responsive websites, landing pages, and C# desktop tools
+              for practical business and internal workflows.
+            </p>
+          </div>
+
+          <div
+            class="group relative border border-gray-700 bg-black/20 backdrop-blur p-8 rounded-2xl transition-all hover:border-accent hover:shadow-xl hover:-translate-y-2"
+            data-aos="zoom-in"
+            data-aos-delay="200"
+          >
+            <div class="w-12 h-12 flex items-center justify-center bg-accent/20 text-accent rounded-full mb-6 transition group-hover:bg-accent group-hover:text-white">
+              <i class="fas fa-tools text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">IT Maintenance</h3>
+            <p class="text-gray-400">
+              I diagnose technical problems, maintain computers and equipment,
+              install software, and keep systems running reliably.
+            </p>
+          </div>
+
+          <div
+            class="group relative border border-gray-700 bg-black/20 backdrop-blur p-8 rounded-2xl transition-all hover:border-accent hover:shadow-xl hover:-translate-y-2"
+            data-aos="zoom-in"
+            data-aos-delay="300"
+          >
+            <div class="w-12 h-12 flex items-center justify-center bg-accent/20 text-accent rounded-full mb-6 transition group-hover:bg-accent group-hover:text-white">
+              <i class="fas fa-headset text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Technical Support</h3>
+            <p class="text-gray-400">
+              I provide ongoing user support, system troubleshooting, equipment
+              configuration, and preventive maintenance.
+            </p>
+          </div>
+
+          <div
+            class="group relative border border-gray-700 bg-black/20 backdrop-blur p-8 rounded-2xl transition-all hover:border-accent hover:shadow-xl hover:-translate-y-2"
+            data-aos="zoom-in"
+            data-aos-delay="100"
+          >
+            <div class="w-12 h-12 flex items-center justify-center bg-accent/20 text-accent rounded-full mb-6 transition group-hover:bg-accent group-hover:text-white">
+              <i class="fas fa-chart-line text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Monitoring Servers</h3>
+            <p class="text-gray-400 mb-4">
+              I install, configure, and maintain monitoring servers for
+              networks, devices, services, CCTV, and IT infrastructure.
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="bg-white/10 px-3 py-1 rounded-full">DitakNet</span>
+              <span class="bg-white/10 px-3 py-1 rounded-full">Zabbix</span>
+              <span class="bg-white/10 px-3 py-1 rounded-full">Nagios</span>
+              <span class="bg-white/10 px-3 py-1 rounded-full">Netdata</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="armenia-support" class="bg-[#0d0d0d] px-4 py-20 text-white sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-6xl rounded-3xl border border-gray-800 bg-gradient-to-br from-[#181818] to-[#111111] p-6 sm:p-10 lg:p-14" data-aos="fade-up">
+        <div class="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+          <div>
+            <span class="inline-flex rounded-full border border-accent/40 bg-accent/10 px-4 py-2 text-sm font-semibold text-accent">Հեռակա սպասարկում՝ ամբողջ Հայաստանում</span>
+            <h2 class="mt-5 text-3xl font-extrabold leading-tight sm:text-4xl">ՏՏ սպասարկում, սերվերներ, ցանցեր և տեսահսկում Հայաստանում</h2>
+            <p class="mt-5 max-w-3xl leading-7 text-gray-300">
+              Կատարում եմ համակարգիչների և ցանցերի հեռակա ախտորոշում, սերվերների տեղադրում ու սպասարկում,
+              Proxmox VM, TrueNAS, Nextcloud, Hikvision տեսախցիկների և monitoring համակարգերի կարգավորում։
+              Ընդունում եմ սպասարկման և տեղադրման հայտեր Երևանից ու Հայաստանի բոլոր մարզերից։
+            </p>
+            <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+              <a href="/service-request" class="inline-flex min-h-12 items-center justify-center rounded-xl bg-accent px-6 py-3 font-bold transition hover:bg-[#e60047]">Ուղարկել սպասարկման հայտ</a>
+              <a href="tel:+37491733633" class="inline-flex min-h-12 items-center justify-center rounded-xl border border-gray-700 px-6 py-3 font-semibold transition hover:border-accent hover:text-accent">Զանգահարել՝ +374 91 733633</a>
+            </div>
+          </div>
+          <ul class="grid gap-3 text-sm text-gray-200 sm:grid-cols-2 lg:grid-cols-1">
+            <li class="rounded-xl border border-gray-800 bg-black/20 p-4">✓ Ցանցերի տեղադրում և կարգավորում</li>
+            <li class="rounded-xl border border-gray-800 bg-black/20 p-4">✓ Սերվերների և private cloud-ի սպասարկում</li>
+            <li class="rounded-xl border border-gray-800 bg-black/20 p-4">✓ CCTV և Hikvision համակարգեր</li>
+            <li class="rounded-xl border border-gray-800 bg-black/20 p-4">✓ DitakNet, Zabbix, Nagios և Netdata</li>
+            <li class="rounded-xl border border-gray-800 bg-black/20 p-4">✓ Կայքերի և ծրագրերի մշակում</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="it-app" class="app-promo-section px-4 py-16 text-white sm:px-6 lg:px-8">
+      <div class="app-promo mx-auto max-w-6xl overflow-hidden rounded-3xl border border-gray-800 p-6 sm:p-10 lg:p-12" data-aos="fade-up">
+        <div class="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div>
+            <span class="app-promo-kicker">RoyalArm IT mobile web app</span>
+            <h2 class="mt-4 text-3xl font-extrabold leading-tight sm:text-4xl">Find an IT specialist from your phone.</h2>
+            <p class="mt-4 max-w-3xl leading-7 text-gray-300">
+              Open the separate RoyalArm IT app, install it on your home screen, and send an employer request or join as a specialist.
+            </p>
+          </div>
+          <div class="grid gap-3 sm:grid-cols-2 lg:min-w-64 lg:grid-cols-1">
+            <a href="https://it.royalarm.uk/" class="inline-flex min-h-12 items-center justify-center rounded-xl bg-accent px-6 py-3 font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#e60047]">Open and install app</a>
+            <a href="/service-request" class="inline-flex min-h-12 items-center justify-center rounded-xl border border-gray-700 px-6 py-3 font-semibold transition hover:border-accent hover:text-accent">Send a request</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section
+      id="contact"
+      class="relative bg-gradient-to-br from-[#0f0f0f] via-[#111111] to-[#1a1a1a] text-white py-28 px-6 sm:px-10 overflow-hidden"
+    >
+      <!-- Background effects -->
+      <div class="absolute inset-0 -z-10">
+        <div class="absolute top-0 right-0 w-44 h-44 opacity-25">
+          
+        </div>
+      </div>
+
+      <!-- Heading -->
+      <div class="max-w-7xl mx-auto mb-16 text-center" data-aos="fade-up">
+        <h2
+          class="text-4xl md:text-5xl font-extrabold mb-4 text-white tracking-tight"
+        >
+          Let’s Talk
+        </h2>
+        <p class="text-lg text-gray-400 max-w-xl mx-auto">
+          Have a project, idea, or collaboration in mind? Drop a message and
+          let’s make it real.
+        </p>
+      </div>
+
+      <!-- Grid -->
+      <div
+        class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-start relative z-10"
+      >
+        <!-- LEFT -->
+        <div
+          class="p-10 lg:p-14 bg-gradient-to-tr from-[#1f1f1f] to-[#2b2b2b] rounded-3xl text-white shadow-xl h-full"
+          data-aos="fade-right"
+        >
+          <h3 class="text-3xl font-bold mb-6 text-[#ff004f]">
+            Let's Build Something Bold
+          </h3>
+          <p class="text-gray-300 text-lg mb-10">
+            Available for freelance, full-time roles, or creative collaboration.
+          </p>
+          <ul class="space-y-4 text-base font-medium">
+            <!-- Email -->
+            <li>
+              <a
+                href="mailto:royalarm001@gmail.com"
+                class="flex items-center gap-4 p-3 rounded-xl hover:bg-[#1f1f1f] transition group"
+              >
+                <div
+                  class="w-9 h-9 rounded-full bg-[#ff004f] flex items-center justify-center transition group-hover:scale-105"
+                >
+                  <svg
+                    class="w-5 h-5 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M2 4a2 2 0 012-2h16a2 2 0 012 2v16a2 2 0 01-2 2H4a2 2 0 01-2-2V4zm2 0v.01L12 13l8-8.99V4H4zm16 16V8l-8 8-8-8v12h16z"
+                    />
+                  </svg>
+                </div>
+                <span class="text-white group-hover:text-[#ff004f] transition"
+                  >royalarm001@gmail.com</span
+                >
+              </a>
+            </li>
+
+            <!-- Phone -->
+            <li>
+              <div class="flex items-center gap-4 p-3 rounded-xl bg-black/20">
+                <div class="w-9 h-9 rounded-full bg-[#ff004f] flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C10.07 21 3 13.93 3 5a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.2 2.2z"/>
+                  </svg>
+                </div>
+                <span class="text-white">+374 91 733633</span>
+              </div>
+            </li>
+
+            <!-- Location -->
+            <li>
+              <div class="flex items-center gap-4 p-3 rounded-xl bg-black/20">
+                <div class="w-9 h-9 rounded-full bg-[#ff004f] flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
+                  </svg>
+                </div>
+                <span class="text-white">Jermuk, Armenia (Remote)</span>
+              </div>
+            </li>
+
+
+            <!-- Add a real LinkedIn URL before making this item visible. -->
+            <li class="hidden">
+              <a
+                href="#"
+                target="_blank"
+                class="flex items-center gap-4 p-3 rounded-xl hover:bg-[#1f1f1f] transition group"
+              >
+                <div
+                  class="w-9 h-9 rounded-full bg-[#ff004f] flex items-center justify-center transition group-hover:scale-105"
+                >
+                  <svg
+                    class="w-5 h-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 448 512"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M100.28 448H7.4V148.9h92.88zm-46.44-341C24.1 107 0 82.9 0 53.6 0 24.3 24.1 0 53.6 0S107 24.3 107 53.6c0 29.3-24.1 53.4-53.6 53.4zM447.8 448h-92.68V302.4c0-34.7-12.4-58.4-43.4-58.4-23.6 0-37.6 15.9-43.8 31.3-2.3 5.4-2.8 12.9-2.8 20.4V448H172.4s1.2-256.8 0-283.1h92.68v40.1c-.2.3-.5.7-.7 1h.7v-1c12.3-18.9 34.2-45.9 83.4-45.9 60.9 0 106.6 39.7 106.6 125.2V448z"
+                    />
+                  </svg>
+                </div>
+                <span class="text-white group-hover:text-[#ff004f] transition"
+                  >LinkedIn profile</span
+                >
+              </a>
+            </li>
+
+            <!-- Add a real GitHub URL before making this item visible. -->
+            <li class="hidden">
+              <a
+                href="#"
+                target="_blank"
+                class="flex items-center gap-4 p-3 rounded-xl hover:bg-[#1f1f1f] transition group"
+              >
+                <div
+                  class="w-9 h-9 rounded-full bg-[#ff004f] flex items-center justify-center transition group-hover:scale-105"
+                >
+                  <svg
+                    class="w-5 h-5 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M12 .5A12 12 0 0 0 .5 12a12 12 0 0 0 8.2 11.5c.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.6-4-1.6-.6-1.5-1.4-2-1.4-2-1.1-.8.1-.8.1-.8 1.2.1 1.8 1.3 1.8 1.3 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.6 11.6 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.9 1.3 1.9 1.3 3.2 0 4.6-2.7 5.6-5.4 5.9.4.3.8 1 .8 2.1v3.1c0 .3.2.7.8.6A12 12 0 0 0 23.5 12 12 12 0 0 0 12 .5z"
+                    />
+                  </svg>
+                </div>
+                <span class="text-white group-hover:text-[#ff004f] transition"
+                  >GitHub profile</span
+                >
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- RIGHT -->
+        <div
+          class="bg-[#181818] p-10 lg:p-12 rounded-3xl shadow-2xl border border-[#2a2a2a]"
+          data-aos="fade-left"
+        >
+          <form id="contact-form" class="space-y-8">
+            <div class="relative">
+              <input
+                type="text"
+                name="name"
+                id="name"
+                required
+                placeholder=" "
+                class="peer w-full bg-transparent border border-[#333] rounded-md px-4 pt-5 pb-2 text-white placeholder-transparent focus:outline-none focus:ring-2 focus:ring-[#ff004f]"
+              />
+              <label
+                for="name"
+                class="absolute text-sm text-gray-500 transition-all duration-300 transform scale-75 -translate-y-3 top-2 left-4 bg-[#181818] px-1 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-2.5 peer-placeholder-shown:top-4 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-3"
+                >Name</label
+              >
+            </div>
+
+            <div class="relative">
+              <input
+                type="email"
+                name="email"
+                id="email"
+                required
+                placeholder=" "
+                class="peer w-full bg-transparent border border-[#333] rounded-md px-4 pt-5 pb-2 text-white placeholder-transparent focus:outline-none focus:ring-2 focus:ring-[#ff004f]"
+              />
+              <label
+                for="email"
+                class="absolute text-sm text-gray-500 transition-all duration-300 transform scale-75 -translate-y-3 top-2 left-4 bg-[#181818] px-1 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-2.5 peer-placeholder-shown:top-4 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-3"
+                >Email</label
+              >
+            </div>
+
+            <div class="relative">
+              <textarea
+                name="message"
+                id="message"
+                rows="5"
+                required
+                placeholder=" "
+                class="peer w-full bg-transparent border border-[#333] rounded-md px-4 pt-5 pb-2 text-white placeholder-transparent focus:outline-none focus:ring-2 focus:ring-[#ff004f]"
+              ></textarea>
+              <label
+                for="message"
+                class="absolute text-sm text-gray-500 transition-all duration-300 transform scale-75 -translate-y-3 top-2 left-4 bg-[#181818] px-1 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-2.5 peer-placeholder-shown:top-4 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-3"
+                >Message</label
+              >
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-[#ff004f] hover:bg-[#e60045] text-white font-semibold py-3 px-6 rounded-lg transition-all text-lg flex items-center justify-center gap-2"
+            >
+              <!-- Icon -->
+              <svg
+                class="w-5 h-5 text-white"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M4 4h16v16H4V4z" stroke="none" fill="none" />
+                <path d="M4 4l8 8l8 -8" />
+              </svg>
+              Send Message
+            </button>
+            <p id="form-status" class="text-sm text-gray-400 text-center" aria-live="polite">
+              This opens your email app with the message ready to send.
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer
+      class="relative bg-[#0d0d0d] text-gray-400 py-12 px-6 text-center overflow-hidden"
+    >
+      <!-- Subtle Lottie on left corner -->
+      <div
+        class="absolute left-4 bottom-4 w-40 z-0 opacity-10 pointer-events-none"
+      >
+        
+      </div>
+
+      <!-- Main content -->
+      <div class="relative z-10 max-w-xl mx-auto">
+        <h2 class="text-xl font-semibold text-white mb-1">Sipan Danielyan</h2>
+        <p class="text-sm text-gray-400 mb-4">Front-End Developer</p>
+
+        <!-- Social icons -->
+        <div class="flex justify-center items-center gap-5 mb-6">
+          <!-- Email -->
+          <a href="mailto:royalarm001@gmail.com" class="group" aria-label="Email Sipan Danielyan">
+            <div
+              class="w-10 h-10 rounded-full bg-[#ff004f] flex items-center justify-center group-hover:scale-110 transition"
+            >
+              <svg
+                class="w-5 h-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M2 4a2 2 0 012-2h16a2 2 0 012 2v16a2 2 0 01-2 2H4a2 2 0 01-2-2V4zm2 0v.01L12 13l8-8.99V4H4zm16 16V8l-8 8-8-8v12h16z"
+                />
+              </svg>
+            </div>
+          </a>
+
+          <!-- Add a real LinkedIn URL before making this link visible. -->
+          <a
+            href="#"
+            target="_blank"
+            class="group hidden"
+          >
+            <div
+              class="w-10 h-10 rounded-full bg-[#ff004f] flex items-center justify-center group-hover:scale-110 transition"
+            >
+              <svg
+                class="w-5 h-5 text-white"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M4.98 3.5C3.34 3.5 2 4.84 2 6.5S3.34 9.5 4.98 9.5C6.62 9.5 7.96 8.16 7.96 6.5C7.96 4.84 6.62 3.5 4.98 3.5ZM2.4 21H7.6V10.3H2.4V21ZM10.5 10.3H15.2V11.9H15.3C15.8 10.9 17.1 9.8 18.9 9.8C22 9.8 22.4 11.9 22.4 15.1V21H17.2V15.6C17.2 14.1 17.2 12.2 15.2 12.2C13.1 12.2 12.8 13.9 12.8 15.5V21H10.5V10.3Z"
+                />
+              </svg>
+            </div>
+          </a>
+
+          <!-- Add a real GitHub URL before making this link visible. -->
+          <a href="#" target="_blank" class="group hidden">
+            <div
+              class="w-10 h-10 rounded-full bg-[#ff004f] flex items-center justify-center group-hover:scale-110 transition"
+            >
+              <svg
+                class="w-5 h-5 text-white"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M12 .5A12 12 0 0 0 .5 12a12 12 0 0 0 8.2 11.5c.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.6-4-1.6-.6-1.5-1.4-2-1.4-2-1.1-.8.1-.8.1-.8 1.2.1 1.8 1.3 1.8 1.3 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.6 11.6 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.9 1.3 1.9 1.3 3.2 0 4.6-2.7 5.6-5.4 5.9.4.3.8 1 .8 2.1v3.1c0 .3.2.7.8.6A12 12 0 0 0 23.5 12 12 12 0 0 0 12 .5z"
+                />
+              </svg>
+            </div>
+          </a>
+        </div>
+
+        <a class="threat-map-link" href="https://cybermap.kaspersky.com/" target="_blank" rel="noopener noreferrer">Live threat map &#8599;</a>
+
+        <!-- Copyright -->
+        <p class="text-xs text-gray-500">
+          © 2026  Sipan Danielyan • Built with
+          <span class="text-[#ff004f] font-medium">HTML</span> &
+          <span class="text-[#ff004f] font-medium">Tailwind CSS</span>
+        </p>
+      </div>
+    </footer>
+
+    <!-- Load libraries -->
+    <script src="js/aos.js"></script>
+    <script src="js/lottie-player.js"></script>
+  </body>
+</html>

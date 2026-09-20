@@ -1,0 +1,291 @@
+/* Homepage-only design system. Service requests, admin and the IT app keep their styles. */
+.portfolio-page {
+  --surface: #080d13;
+  --panel: #0c131b;
+  --ink: #edf3f7;
+  --muted: #93a3b3;
+  --line: #1e2d39;
+  --cyan: #73e5e2;
+  color: var(--ink);
+  background: #05090e;
+  font-family: "Manrope", "Poppins", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+body:has(.portfolio-page) { background: #05090e !important; }
+.portfolio-page { position: relative; isolation: isolate; }
+.portfolio-page > .portfolio-markup,
+.portfolio-page > .portfolio-hero,
+.portfolio-page > :not(.portfolio-background) { position: relative; z-index: 1; }
+.portfolio-page section:not(#home) { background: rgba(5,9,14,.58) !important; }
+
+/* Scroll-reactive ambient glow overlay */
+.portfolio-page::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 70% 40%, rgba(115, 229, 226, calc(var(--scroll-glow, 0) * .06)), transparent 55%),
+    radial-gradient(ellipse at 30% 70%, rgba(242, 184, 72, calc(var(--scroll-glow, 0) * .04)), transparent 50%);
+  opacity: var(--scroll-glow, 0);
+  transition: opacity .6s ease-out;
+  mix-blend-mode: screen;
+}
+.portfolio-page > .portfolio-background { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.portfolio-page > .portfolio-background + .portfolio-markup,
+.portfolio-page > .portfolio-background + .portfolio-markup nav { position: relative; z-index: 2; }
+.portfolio-background .scene-motion-control { pointer-events: auto; }
+.portfolio-background .scene-fallback { width: min(58vw, 900px); height: min(58vw, 900px); right: 5%; top: 16%; }
+.portfolio-markup { display: contents; }
+.portfolio-page :is(h1,h2,h3,h4,a,p,span) { font-family: inherit; }
+.portfolio-page :is(h1,h2,h3,h4) { letter-spacing: -.045em; }
+.portfolio-page section { scroll-margin-top: 6rem; }
+.portfolio-page :is(a,button,summary):focus-visible { outline: 2px solid var(--cyan); outline-offset: 5px; }
+.portfolio-page ::selection { background: #73e5e2; color: #071019; }
+
+/* Navigation */
+#main-content.portfolio-page nav { height: 88px; background: rgba(5,9,14,.85) !important; border-color: rgba(157,184,205,.12) !important; box-shadow: none !important; backdrop-filter: blur(18px); }
+.portfolio-page nav > div:first-child { max-width: 1480px; padding: 0 5.2%; }
+.portfolio-page nav > div:first-child > div { height: 88px; gap: 20px; }
+.portfolio-page nav > div:first-child > div > a { color: var(--ink) !important; font-size: 16px; letter-spacing: -.035em; font-weight: 800; white-space: nowrap; }
+.portfolio-page nav > div:first-child > div > a::before { content: "S / D"; display: inline-grid; place-items: center; width: 41px; height: 38px; margin-right: 12px; font: 600 11px ui-monospace, monospace; letter-spacing: -.06em; color: var(--cyan); border: 1px solid #365057; border-radius: 8px; }
+.portfolio-page .site-nav-link { font-size: 12px; font-weight: 500; color: #95a5b4 !important; }
+.portfolio-page .site-nav-link.is-active,.portfolio-page .site-nav-link:hover { color: var(--ink) !important; }
+.portfolio-page .site-nav-link::after { background: var(--cyan); height: 2px; bottom: -10px; }
+.portfolio-page nav a[href="/service-request"] { border-color: #31414d; color: #b1bec9 !important; padding: 10px 13px; font-size: 11px; border-radius: 6px; background: transparent; }
+.portfolio-page nav a[href="#resume"]:not(.site-nav-link) { color: #081014 !important; background: var(--cyan) !important; padding: 11px 18px; font-size: 11px; border-radius: 6px; box-shadow: none; }
+.portfolio-page #mobile-navigation { background: #080e15 !important; border-bottom: 1px solid var(--line); }
+
+/* A full-bleed scene with an intentionally quiet reading area. */
+#main-content.portfolio-page #home { position: relative; display: flex; align-items: center; min-height: max(860px, 100svh); padding: 145px 7.2% 150px; overflow: hidden; isolation: isolate; color: #edf3f7 !important; background: rgba(3,7,11,.52) !important; }
+.hero-scene { position: absolute; inset: 0; z-index: -3; overflow: hidden; background: radial-gradient(ellipse at 76% 45%, #092531 0, #040c14 31%, #03070b 66%); }
+.portfolio-background.hero-scene { position: fixed; z-index: 0; }
+.hero-scene canvas { display: block; width: 100%; height: 100%; opacity: 1; }
+.hero-scene[data-renderer="fallback"] canvas { visibility: hidden; }
+.hero-vignette { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(90deg, rgba(3,7,11,.98), rgba(3,7,11,.91) 24%, rgba(3,7,11,.56) 42%, transparent 68%), linear-gradient(0deg,#03070b 0%, transparent 22%,transparent 80%,rgba(3,7,11,.5)); }
+.hero-topline { position: absolute; top: 122px; right: 5.2%; left: 5.2%; display: flex; justify-content: space-between; color: #5e7789; font: 10px/1.4 ui-monospace, monospace; letter-spacing: .16em; }
+.hero-copy { position: relative; width: min(650px, 56%); z-index: 1; padding-top: 25px; }
+.hero-status { display: flex; align-items: center; gap: 9px; color: #95c4c4; font: 10px/1.4 ui-monospace, monospace; letter-spacing: .14em; margin-bottom: 28px; }
+.hero-status > span { width: 6px; height: 6px; border-radius: 50%; background: #65ebaa; box-shadow: 0 0 12px #65ebaa80; }
+.hero-status b { font-weight: 400; color: #42535f; margin: 0 3px; }
+#main-content.portfolio-page #home h1 { margin: 0 0 25px; font-size: clamp(64px, 6.8vw, 108px); font-weight: 600; line-height: .98; letter-spacing: -.072em; color: #f0f5f7 !important; }
+.hero-copy h1 > span { display: block; }
+#main-content.portfolio-page #home h1 .hero-greeting { margin-bottom: 18px; color: #a3b0ba; font-size: 20px; font-weight: 400; letter-spacing: -.02em; line-height: 1.2; }
+.hero-surname { color: #a7bec8; }
+.hero-period { color: var(--cyan); }
+#main-content.portfolio-page #home .hero-role { max-width: 470px; margin: 0 0 20px; color: #dce6ed; font-size: clamp(15px, 1.35vw, 20px); font-weight: 500; line-height: 1.65; letter-spacing: -.02em; }
+.hero-role > span { display: block; color: #8296a7; }
+.armenia-flag { display: inline-block; width: 16px; height: 10px; margin-left: 5px; border-radius: 1px; background: linear-gradient(#d66464 33.3%, #5c72ba 33.3% 66.6%, #d8a55d 66.6%); }
+#main-content.portfolio-page #home .hero-description { max-width: 455px; margin: 0 0 25px; font-size: 13px; line-height: 1.85; color: #91a3b4; }
+.hero-tags { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 31px; }
+.hero-tags > span { display: inline-flex; align-items: center; gap: 7px; font-size: 10px; color: #9aabb9; border: 1px solid #24343f; padding: 7px 10px; border-radius: 4px; background: #0c141b80; }
+.hero-tags b { color: var(--cyan); font: 11px ui-monospace, monospace; }
+.hero-actions { display: flex; gap: 12px; }
+.hero-button { display: inline-flex; align-items: center; justify-content: space-between; gap: 28px; min-height: 52px; padding: 0 22px; border: 1px solid #32434e; border-radius: 6px; font-size: 12px; font-weight: 700; transition: background .25s, border-color .25s, box-shadow .25s, translate .25s; }
+.hero-button-primary { color: #071316 !important; border-color: var(--cyan); background: var(--cyan); }
+.hero-button-primary:hover { background: #b1fff7; box-shadow: 0 0 32px #73e5e220; }
+.hero-button-secondary { color: #dce6ed; background: #101a2180; }
+.hero-button-secondary:hover { border-color: #73e5e2; background: #182a34; }
+.hero-button svg { width: 16px; height: 16px; }
+.hero-button-primary > span:last-child { font-size: 20px; font-weight: 400; }
+.scene-caption { position: absolute; right: 10%; bottom: 24%; display: flex; align-items: center; gap: 12px; color: #8db0bb; font: 9px/1.6 ui-monospace,monospace; letter-spacing: .17em; }
+.scene-caption-cross { color: var(--cyan); font-size: 26px; font-weight: 200; }
+.scene-caption small { display: block; font-size: 7px; color: #4f6c7b; margin-top: 3px; }
+.hero-bottomline { position: absolute; bottom: 42px; left: 5.2%; right: 5.2%; display: flex; align-items: center; justify-content: space-between; padding-top: 24px; border-top: 1px solid #20303a; font: 9px/1.5 ui-monospace,monospace; letter-spacing: .09em; color: #7e929f; gap: 16px; }
+.hero-bottomline > a { display: flex; align-items: center; gap: 12px; }
+.scroll-indicator { display: grid; width: 27px; height: 35px; place-items: center; border: 1px solid #30424d; border-radius: 15px; color: var(--cyan); font-size: 16px; }
+.hero-discipline { display: flex; align-items: center; gap: 14px; font-size: 8px; color: #4e6b7b; }
+.hero-discipline i { width: 3px; height: 3px; border-radius: 50%; background: #59838e; }
+.hero-location span { color: var(--cyan); margin-left: 10px; }
+.scene-motion-control { position: absolute; z-index: 3; right: 5.2%; bottom: 108px; display: flex; align-items: center; gap: 7px; min-height: 32px; padding: 5px 8px; color: #849ba9; background: #07101880; border: 1px solid #263946; border-radius: 4px; font: 9px ui-monospace,monospace; }
+.scene-motion-control:hover { color: #c4eeec; border-color: #598d93; }
+.scene-fallback { position: absolute; width: 39vw; height: 39vw; right: 5%; top: 24%; border-radius: 50%; border: 1px solid #15333f; box-shadow: inset -40px -25px 80px #092530, 0 0 80px #0c243450; background: radial-gradient(ellipse at 30% 25%, #14343c30, transparent 70%); }
+.scene-fallback > span { position: absolute; inset: 0; border: 1px solid #26515d; border-radius: 50%; transform: rotate(-24deg) scaleY(.38) scaleX(1.35); }
+.scene-fallback > span:nth-child(2) { transform: rotate(42deg) scaleY(.5) scaleX(1.25); }
+.scene-fallback > span:nth-child(3) { transform: rotate(83deg) scaleY(.6); }
+.hero-scene[data-renderer="webgl"] .scene-fallback { display: none; }
+
+/* Existing content, refined in place. */
+#main-content.portfolio-page :is(#about,#skills,#resume,#projects,#services,.app-promo-section,footer) { color: var(--ink) !important; background: var(--surface) !important; border-top: 1px solid var(--line); }
+#main-content.portfolio-page :is(#about,#skills,#resume,#projects,#services) { padding: 100px 7.2%; overflow: hidden; }
+.portfolio-page :is(#about,#skills,#resume,#projects,#services) > .absolute { display: none; }
+.portfolio-page :is(#skills,#resume,#projects,#services) > div:not(.absolute) { max-width: 1260px; }
+.portfolio-page :is(#skills,#resume,#projects,#services) .text-center:has(> h2) { text-align: left; margin-bottom: 48px; }
+.portfolio-page :is(#skills,#resume,#projects,#services) .text-center:has(> h2) > p { margin-left: 0; font-size: 15px; line-height: 1.8; max-width: 590px; }
+#main-content.portfolio-page :is(#about,#skills,#resume,#projects,#services) h2 { color: var(--ink) !important; font-size: clamp(32px,3.5vw,49px); line-height: 1.2; font-weight: 500; }
+.portfolio-page :is(#about,#skills,#resume,#projects,#services) h2::before { display: block; color: var(--cyan); margin-bottom: 16px; letter-spacing: .2em; font: 10px ui-monospace,monospace; }
+.portfolio-page #about h2:first-child::before { content: "01 / THE ENGINEER"; }
+.portfolio-page #skills h2::before { content: "02 / TOOLKIT"; }
+.portfolio-page #resume h2::before { content: "03 / EXPERIENCE"; }
+.portfolio-page #projects h2::before { content: "04 / SELECTED WORK"; }
+.portfolio-page #services h2::before { content: "05 / WHAT I DO"; }
+#main-content.portfolio-page .text-accent,#main-content.portfolio-page [class*="text-[#ff"] { color: var(--cyan) !important; }
+#main-content.portfolio-page .text-gray-300 { color: #bbc8d2 !important; }
+#main-content.portfolio-page .text-gray-400 { color: var(--muted) !important; }
+#main-content.portfolio-page .text-gray-500 { color: #758b9b !important; }
+.portfolio-page :is(.border-gray-700,.border-gray-800) { border-color: var(--line) !important; }
+.portfolio-page [class*="bg-accent/"] { background-color: #73e5e210 !important; }
+.portfolio-page [class*="border-accent"] { border-color: #36595e !important; }
+.portfolio-page :is(a,button)[class~="bg-accent"],.portfolio-page a > [class*="bg-[#ff004f]"] { color: #051318 !important; background: var(--cyan) !important; box-shadow: none !important; border-radius: 6px; }
+.portfolio-page :is(a,button)[class~="bg-accent"]:hover { background: #b2fff7 !important; }
+.portfolio-page [class~="bg-accent"]:not(a):not(button) { background-color: #73e5e2; }
+.portfolio-page [class*="border-l-"] { border-color: #365b65 !important; }
+.portfolio-page h3 { font-weight: 600; letter-spacing: -.025em; }
+
+.portfolio-page #about > div.relative { max-width: 1260px; text-align: left; display: grid; grid-template-columns: 1fr 2fr; gap: 0 70px; }
+.portfolio-page #about > div.relative > div:first-child { grid-column: 1 / -1; }
+.portfolio-page #about > div.relative > div:first-child > div { display: none; }
+.portfolio-page #about > div.relative > div:nth-child(2) { grid-column: 1; grid-row: 2 / 7; width: 100%; height: 100%; min-height: 350px; max-height: 520px; margin: 0; border: 1px solid var(--line); border-radius: 12px; box-shadow: none; }
+.portfolio-page #about img { object-position: center 55%; filter: none; }
+.portfolio-page #about > div.relative > :is(h2,p,div:nth-last-child(2),a) { grid-column: 2; margin-left: 0; margin-right: 0; }
+.portfolio-page #about > div.relative > h2 { font-size: 30px !important; margin-bottom: 20px; }
+.portfolio-page #about > div.relative > p { font-size: 14px; line-height: 1.9; }
+.portfolio-page #about .flex-wrap { justify-content: flex-start; gap: 8px; }
+.portfolio-page #about .flex-wrap span { border: 1px solid var(--line); background: #12202a; border-radius: 4px; font-size: 11px; padding: 6px 10px; }
+.portfolio-page #about > div.relative > a { width: fit-content; }
+.portfolio-page #about h3 { text-align: left; font: 10px ui-monospace,monospace; }
+
+.portfolio-page #skills .skills-grid { grid-template-columns: repeat(5, minmax(0,1fr)); gap: 12px; }
+#main-content.portfolio-page #skills .skill-card { min-height: 160px; padding: 24px 12px; border-radius: 8px; background: var(--panel) !important; box-shadow: none; transition: transform .25s,border-color .25s,background .25s; }
+.portfolio-page #skills .skill-card:hover { transform: translateY(-4px); border-color: #57838b !important; }
+.portfolio-page #skills .skill-card p { font-size: 12px; color: var(--ink) !important; letter-spacing: -.01em; }
+.portfolio-page #skills .skill-card img { max-height: 32px; }
+.portfolio-page .tech-skill-mark { width: 42px; height: 42px; border-radius: 8px; border-color: #29404c; background: #12252e; color: var(--cyan); font-size: 20px; box-shadow: none; }
+.portfolio-page .tech-skill-link { color: #7897a8; font: 8px ui-monospace,monospace; letter-spacing: .05em; }
+.portfolio-page .tech-skill-card:hover .tech-skill-mark { background: #163640; color: #d0ffff; }
+
+.portfolio-page #resume .text-center:has(> h2) { display: grid; grid-template-columns: 1fr 1.1fr; gap: 0 70px; }
+.portfolio-page #resume .text-center:has(> h2) > :is(h2,p) { grid-column: 1; }
+.portfolio-page #resume .cv-library { grid-column: 2; grid-row: 1 / 4; padding: 26px; border: 1px solid #29414c; border-radius: 10px; background: linear-gradient(125deg,#12232a,#0c131b); }
+.portfolio-page #resume .cv-library h3 { font-size: 17px; margin-bottom: 7px; color: var(--ink); }
+.portfolio-page .cv-library > p { font-size: 12px; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+.portfolio-page .cv-document { display: flex; align-items: center; justify-content: space-between; gap: 12px; border-top: 1px solid #2b3e48; padding-top: 15px; margin-top: 15px; }
+.portfolio-page .cv-document-name { display: flex; align-items: center; gap: 12px; font-size: 12px; color: #d1e0e8; }
+.portfolio-page .cv-document-name > span:first-child { padding: 8px; border-radius: 5px; border: 1px solid #34505c; color: var(--cyan); font: 9px ui-monospace,monospace; }
+.portfolio-page .cv-document-actions { display: flex; gap: 8px; }
+.portfolio-page .cv-document-actions a { display: inline-flex; align-items: center; min-height: 38px; padding: 8px 11px; border: 1px solid #35545e; border-radius: 4px; font-size: 11px; color: var(--cyan); transition: background .2s; }
+.portfolio-page .cv-document-actions a:hover { background: #20414c; }
+.portfolio-page #resume > div > .grid { gap: 50px; padding-top: 35px; border-top: 1px solid var(--line); }
+.portfolio-page #resume h3.text-center { text-align: left; font-size: 20px; color: var(--ink) !important; }
+.portfolio-page #resume h4 { font-size: 19px; }
+.portfolio-page #resume .border-l-4 { border-left-width: 1px; }
+.portfolio-page #resume .border-l-4 > .absolute { width: 7px; height: 7px; left: -4px; top: 9px; }
+.portfolio-page #resume .text-base { font-size: 13px; line-height: 1.8; }
+
+.portfolio-page #projects .grid { gap: 20px; }
+.portfolio-page #projects :is(.web-projects-accordion,.grid > div:not(.absolute),article) { border-radius: 10px; background: var(--panel); box-shadow: none !important; }
+.portfolio-page #projects :is(.web-projects-accordion,.grid > div):hover { border-color: #3b626d !important; }
+.portfolio-page #projects img { border-radius: 5px; filter: saturate(.6); }
+.portfolio-page #projects .group:hover img { filter: saturate(1); }
+.portfolio-page .web-projects-chevron { border-color: #416370; background: #142831; color: var(--cyan); }
+.portfolio-page .web-projects-accordion[open] { border-color: #416370; }
+.portfolio-page .client-sites-grid { background: #08121a; }
+.portfolio-page .client-site-card { background: #101c26; border-color: #2b404d; border-radius: 6px; }
+.portfolio-page .client-site-card:hover { border-color: #73e5e2; box-shadow: none; }
+.portfolio-page .client-site-heading span,.portfolio-page .client-site-body strong { color: var(--cyan); }
+.portfolio-page #services .grid { gap: 14px; counter-reset: services; }
+.portfolio-page #services .grid > div { background: var(--panel); border-radius: 8px; box-shadow: none; padding: 30px; counter-increment: services; }
+.portfolio-page #services .grid > div::after { content: "0" counter(services); position: absolute; top: 30px; right: 26px; font: 10px ui-monospace,monospace; color: #577182; }
+.portfolio-page #services .grid > div > div { border-radius: 8px; background: #162932 !important; color: var(--cyan) !important; }
+.portfolio-page #services .grid h3 { font-size: 18px; color: var(--ink); }
+.portfolio-page #services .grid p { font-size: 13px; line-height: 1.85; }
+.portfolio-page #services .grid > div:hover { transform: translateY(-4px); border-color: #456e78 !important; }
+.portfolio-page footer { padding-bottom: 95px; }
+.portfolio-page footer lottie-player { display: none; }
+.portfolio-page footer h2 { font-size: 23px; }
+.portfolio-page footer > div.relative::before { content: "LET’S BUILD SOMETHING THAT WORKS."; display: block; color: #789aab; font: 9px ui-monospace,monospace; letter-spacing: .15em; margin-bottom: 20px; }
+.portfolio-page footer .threat-map-link { display: inline-block; margin-top: 20px; color: #7395a4; font-size: 10px; }
+
+/* Reveal progressively: content is visible when JavaScript or observers are unavailable. */
+.portfolio-page [data-aos] { opacity: 1 !important; transform: none !important; transition-delay: 0ms !important; }
+.portfolio-page [data-aos].reveal-ready:not(.is-revealed) { opacity: 0 !important; transform: translateY(18px) !important; }
+.portfolio-page [data-aos].reveal-ready { transition: opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1),border-color .25s !important; }
+body:has(.portfolio-page) .site-controls { opacity: .9; }
+body:has(.portfolio-page) .language-switcher { color: #73e5e2; border-color: #2b4350; background: #0a151eeb; animation: none; box-shadow: none; }
+body:has(.portfolio-page) .language-label { color: #98adb9; font-size: 10px; }
+body:has(.portfolio-page) .site-language-select { background: #0f1e27; color: #c6dbe3; border-color: #2b4350; font-family: "Manrope",Arial,sans-serif; }
+body:has(.portfolio-page) .theme-toggle { border-color: #345460; box-shadow: none; }
+
+/* Light mode remains available; the cinematic hero keeps its dark contrast. */
+html[data-theme="light"] .portfolio-page { --surface: #f4f7f8; --panel: #fff; --ink: #152834; --muted: #536d7c; --line: #cedde2; --cyan: #147d88; }
+html[data-theme="light"] #main-content.portfolio-page nav { background: #f4f7f8ed !important; }
+html[data-theme="light"] #main-content.portfolio-page nav .site-nav-link { color: #435c6b !important; }
+html[data-theme="light"] #main-content.portfolio-page nav .site-nav-link.is-active { color: #116773 !important; }
+html[data-theme="light"] #main-content.portfolio-page nav a[href="#resume"]:not(.site-nav-link) { color: #fff !important; }
+html[data-theme="light"] #main-content.portfolio-page #mobile-navigation { background: #f4f7f8 !important; }
+html[data-theme="light"] #main-content.portfolio-page #home { --cyan: #73e5e2; }
+html[data-theme="light"] #main-content.portfolio-page #home .hero-button-secondary { color: #dce6ed !important; border-color: #32434e !important; background: #101a2180 !important; }
+html[data-theme="light"] #main-content.portfolio-page :is(#about,#skills,#resume,#projects,#services) .text-gray-300 { color: #425968 !important; }
+html[data-theme="light"] .portfolio-page #about .flex-wrap span { color: #355566; background: #e6eef1; }
+html[data-theme="light"] .portfolio-page #resume .cv-library { background: #e7f0f3; border-color: #bfd3dc; }
+html[data-theme="light"] .portfolio-page .cv-document-name { color: #234450; }
+html[data-theme="light"] .portfolio-page .cv-document-actions a:hover { background: #cce2e8; }
+html[data-theme="light"] .portfolio-page :is(.client-site-card,.client-sites-grid) { background: var(--panel) !important; }
+html[data-theme="light"] .portfolio-page #projects h3 { color: var(--ink); }
+html[data-theme="light"] .portfolio-page :is(a,button)[class~="bg-accent"] { color: white !important; }
+html[data-theme="light"] #main-content.portfolio-page :is(.text-accent,[class*="text-[#ff"]) { color: var(--cyan) !important; }
+html[data-theme="light"] #main-content.portfolio-page nav > div:first-child > div > a { color: var(--ink) !important; }
+html[data-theme="light"] #main-content.portfolio-page nav a[href="/service-request"] { color: #416371 !important; }
+html[data-theme="light"] #main-content.portfolio-page #resume h3.text-center { color: var(--ink) !important; }
+html[data-theme="light"] body:has(.portfolio-page) .language-switcher { color: #1b6976; border-color: #c7d9df; background: #f4f7f8f2; }
+html[data-theme="light"] body:has(.portfolio-page) .language-label { color: #416371; }
+html[data-theme="light"] body:has(.portfolio-page) .site-language-select { color: #274956; background: #fff; border-color: #c7d9df; }
+
+@media (min-width: 1600px) { .hero-copy { margin-left: max(0px, calc((100vw - 1600px) / 2)); } }
+@media (max-width: 1199px) {
+  #main-content.portfolio-page #home { min-height: 820px; padding-left: 6%; padding-right: 6%; }
+  .hero-copy { width: 62%; }
+  #main-content.portfolio-page #home h1 { font-size: clamp(65px,8vw,95px); }
+  .hero-discipline { display: none; }
+  .scene-caption { right: 6%; bottom: 23%; }
+  .portfolio-page #skills .skills-grid { grid-template-columns: repeat(4,minmax(0,1fr)); }
+  .portfolio-page #resume .text-center:has(> h2) { gap: 0 35px; }
+}
+@media (max-width: 767px) {
+  #main-content.portfolio-page nav,#main-content.portfolio-page nav > div:first-child > div { height: 72px; }
+  .portfolio-page nav > div:first-child > div > a { font-size: 14px; }
+  .portfolio-page nav > div:first-child > div > a::before { width: 34px; height: 34px; font-size: 9px; margin-right: 9px; }
+  #main-content.portfolio-page #home { min-height: max(860px,100svh); padding: 168px 7% 162px; align-items: flex-start; }
+  .hero-topline { top: 102px; left: 7%; right: 7%; font-size: 8px; }
+  .hero-topline > span:last-child { display: none; }
+  .hero-copy { width: 100%; padding-top: 0; }
+  #main-content.portfolio-page #home h1 { font-size: clamp(58px,13vw,85px); margin-bottom: 22px; }
+  #main-content.portfolio-page #home h1 .hero-greeting { font-size: 17px; }
+  .hero-status { font-size: 8px; margin-bottom: 23px; }
+  #main-content.portfolio-page #home .hero-role { font-size: 15px; max-width: 330px; }
+  #main-content.portfolio-page #home .hero-description { font-size: 12px; max-width: 350px; }
+  .hero-vignette { background: linear-gradient(90deg,#03070bdf,#03070b70),linear-gradient(0deg,#03070b,transparent 40%,#03070b90); }
+  .hero-scene { opacity: .6; }
+  .hero-tags { gap: 6px; margin-bottom: 26px; }
+  .hero-tags > span { font-size: 9px; padding: 6px 7px; }
+  .hero-tags b { display: none; }
+  .hero-actions { gap: 9px; }
+  .hero-button { font-size: 11px; min-height: 49px; padding: 0 17px; gap: 19px; }
+  .scene-caption { display: none; }
+  .hero-bottomline { left: 7%; right: 7%; bottom: 48px; padding-top: 19px; font-size: 8px; }
+  .hero-location { font-size: 7px; }
+  .scene-motion-control { right: 7%; bottom: 114px; font-size: 8px; }
+  .scene-fallback { width: 85vw; height: 85vw; top: 33%; right: -24%; }
+  #main-content.portfolio-page :is(#about,#skills,#resume,#projects,#services) { padding: 66px 7%; }
+  .portfolio-page #about > div.relative { display: block; }
+  .portfolio-page #about > div.relative > div:nth-child(2) { width: 100%; height: 330px; min-height: 0; margin-bottom: 28px; }
+  .portfolio-page #about img { object-position: center 55%; }
+  .portfolio-page #about > div.relative > h2 { font-size: 25px !important; }
+  .portfolio-page #skills .skills-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+  #main-content.portfolio-page #skills .skill-card { min-height: 143px; padding: 20px 10px; }
+  .portfolio-page #resume .text-center:has(> h2) { display: block; }
+  .portfolio-page #resume .cv-library { margin-top: 26px; padding: 19px; }
+  .portfolio-page .cv-document { flex-wrap: wrap; gap: 12px; }
+  .portfolio-page .cv-document-actions { margin-left: auto; }
+  .portfolio-page #resume > div > .grid { gap: 35px; }
+  .portfolio-page #services .grid > div { padding: 24px; }
+  .portfolio-page #projects .client-sites-grid { padding: 14px; }
+  .portfolio-page section { scroll-margin-top: 72px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html:has(.portfolio-page) { scroll-behavior: auto; }
+  .portfolio-page [data-aos].reveal-ready:not(.is-revealed) { opacity: 1 !important; transform: none !important; }
+  .portfolio-page *, .portfolio-page *::before,.portfolio-page *::after { animation: none !important; transition: none !important; }
+  .portfolio-page .scene-motion-control { display: none; }
+}
