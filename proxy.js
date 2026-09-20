@@ -40,7 +40,17 @@ export function proxy(request) {
 
     if (pathname === "/robots.txt") {
       return new Response(
-        `User-agent: *\nAllow: /\nSitemap: https://${itHostname}/sitemap.xml\n`,
+        `User-agent: *
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+Sitemap: https://${itHostname}/sitemap.xml
+`,
         { headers: { "content-type": "text/plain; charset=utf-8" } }
       );
     }
@@ -63,7 +73,17 @@ export function proxy(request) {
 
     if (pathname === "/robots.txt") {
       return new Response(
-        `User-agent: *\nAllow: /\nSitemap: https://${shopHostname}/sitemap.xml\n`,
+        `User-agent: *
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+Sitemap: https://${shopHostname}/sitemap.xml
+`,
         { headers: { "content-type": "text/plain; charset=utf-8" } }
       );
     }

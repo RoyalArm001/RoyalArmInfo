@@ -19,6 +19,7 @@ export default function sitemap() {
     lastModified: product.published ? new Date(product.published) : new Date(),
     changeFrequency: "weekly",
     priority: 0.8,
+    images: product.thumbnail ? [`${baseUrl}${product.thumbnail}`] : undefined,
   }));
 
   return [...routes, ...productRoutes];
