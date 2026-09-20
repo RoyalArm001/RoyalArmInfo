@@ -69,7 +69,12 @@ export function proxy(request) {
     }
 
     const destination = request.nextUrl.clone();
-    if (pathname === "/") destination.pathname = "/shop";
+    if (pathname === "/") {
+      destination.pathname = "/shop";
+    } else if (!pathname.startsWith("/shop")) {
+      // e.g. /some-product → /shop/some-product
+      destination.pathname = `/shop${pathname}`;
+    }
 
     return NextResponse.rewrite(destination);
   }
@@ -78,6 +83,18 @@ export function proxy(request) {
 }
 
 export const config = {
-  matcher: ["/", "/it/:path*", "/shop/:path*", "/shop", "/specialists", "/request", "/robots.txt", "/sitemap.xml"],
+  matcher: [
+    "/",
+    "/it",
+    "/it/:path*",
+    "/shop",
+    "/shop/:path*",
+    "/specialists",
+    "/request",
+    "/robots.txt",
+    "/sitemap.xml",
+    // Catch-all for shop.royalarm.uk subdomain paths (any pathname)
+    "/((?!_next/static|_next/image|favicon.ico|assets/).*)",
+  ],
 };
 
