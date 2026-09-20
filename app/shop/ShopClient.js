@@ -302,7 +302,6 @@ export default function ShopClient() {
       <header className="shop-nav">
         <div className="shop-nav-inner">
           <Link href="/" className="shop-brand" aria-label="RoyalArm Portfolio Home">
-            <span className="shop-brand-badge">S/D</span>
             <span>RoyalArm Shop</span>
           </Link>
 
@@ -331,7 +330,8 @@ export default function ShopClient() {
               <span>{t.requestSpecialist}</span>
             </Link>
 
-            <div className="shop-nav-tools">
+          </nav>
+          <div className="shop-nav-tools">
               <button
                 type="button"
                 className="shop-lang-toggle"
@@ -344,6 +344,7 @@ export default function ShopClient() {
                   window.dispatchEvent(new Event("storage"));
                 }}
                 title="Toggle Language"
+                aria-label="Change page language"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <circle cx="12" cy="12" r="10" />
@@ -353,8 +354,7 @@ export default function ShopClient() {
                 <span>{lang.toUpperCase()}</span>
               </button>
               <ThemeToggle variant="icon" />
-            </div>
-          </nav>
+          </div>
         </div>
       </header>
 
@@ -365,7 +365,7 @@ export default function ShopClient() {
           <span>{t.badge}</span>
         </div>
 
-        <h1 className="shop-title">
+        <h1 id="main-content" tabIndex={-1} className="shop-title">
           {t.title} <span className="shop-title-gradient">{t.titleGradient}</span>
         </h1>
 
