@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PRODUCTS } from "../../../lib/shopData";
 import HeaderControls from "../../HeaderControls";
+import SoftwareImage from "../SoftwareImage";
 import "../shop.css";
 
 export async function generateStaticParams() {
@@ -230,7 +231,7 @@ export default async function ProductDetailPage({ params }) {
         <div className="shop-controls-glass" style={{ marginBottom: "2rem" }}>
           <div className="shop-modal-top" style={{ marginBottom: "1.5rem" }}>
             <div className="shop-modal-logo" style={{ width: "90px", height: "90px" }}>
-              <img src={product.thumbnail} alt={product.title} />
+              <SoftwareImage src={product.thumbnail} alt={product.title} />
             </div>
 
             <div className="shop-modal-title-group">
@@ -246,7 +247,7 @@ export default async function ProductDetailPage({ params }) {
                 <span className="shop-license-tag">v{product.version}</span>
               </div>
 
-              <h1 id="main-content" tabIndex={-1} style={{ fontSize: "2.2rem", fontWeight: "900", margin: "0 0 0.4rem", color: "#ffffff" }}>
+              <h1 id="main-content" tabIndex={-1} style={{ fontSize: "2.2rem", fontWeight: "900", margin: "0 0 0.4rem", color: "var(--shop-text)" }}>
                 {product.title}
               </h1>
 
@@ -392,20 +393,20 @@ export default async function ProductDetailPage({ params }) {
         {/* Related Software Section */}
         {relatedProducts.length > 0 && (
           <section style={{ marginTop: "3rem" }}>
-            <h3 style={{ fontSize: "1.4rem", fontWeight: "800", color: "#ffffff", marginBottom: "1.2rem" }}>
+            <h3 style={{ fontSize: "1.4rem", fontWeight: "800", color: "var(--shop-text)", marginBottom: "1.2rem" }}>
               More Software in {product.primaryCategory.toUpperCase()}
             </h3>
 
-            <div className="shop-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}>
+            <div className="shop-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))" }}>
               {relatedProducts.map((rel) => (
                 <article key={rel.id} className="shop-card">
                   <div className="shop-card-header">
                     <div className="shop-card-icon-frame" style={{ width: "52px", height: "52px" }}>
-                      <img src={rel.thumbnail} alt={rel.title} className="shop-card-icon" />
+                      <SoftwareImage src={rel.thumbnail} alt={rel.title} className="shop-card-icon" />
                     </div>
                     <span className="shop-license-tag">{rel.license}</span>
                   </div>
-                  <h4 style={{ fontSize: "1.1rem", fontWeight: "800", margin: "0 0 0.4rem", color: "#ffffff" }}>
+                  <h4 style={{ fontSize: "1.1rem", fontWeight: "800", margin: "0 0 0.4rem", color: "var(--shop-text)" }}>
                     {rel.title}
                   </h4>
                   <p className="shop-card-desc">{rel.description}</p>

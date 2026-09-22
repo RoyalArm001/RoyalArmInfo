@@ -3,7 +3,7 @@
    Designed for Sipan Danielyan & RoyalArm
    ========================================================================== */
 
-:root {
+.shop-container {
   --shop-bg: #060911;
   --shop-bg-secondary: #0b111c;
   --shop-surface: rgba(14, 21, 34, 0.78);
@@ -186,7 +186,7 @@
 .shop-lang-toggle:focus {
   border-color: var(--shop-cyan);
   background: rgba(0, 242, 254, 0.08);
-  color: #ffffff;
+  color: var(--shop-text);
 }
 
 .shop-lang-toggle svg {
@@ -241,7 +241,7 @@
   letter-spacing: -0.03em;
   line-height: 1.12;
   margin: 0 0 1.25rem;
-  color: #ffffff;
+  color: var(--shop-text);
 }
 
 .shop-title-gradient {
@@ -325,7 +325,7 @@
 .shop-stat-value {
   font-size: 1.15rem;
   font-weight: 800;
-  color: #ffffff;
+  color: var(--shop-text);
   display: block;
 }
 
@@ -418,7 +418,7 @@
 
 .shop-search-clear:hover {
   background: rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+  color: var(--shop-text);
 }
 
 /* Secondary Controls: Platform & Sort */
@@ -544,7 +544,7 @@
 }
 
 .shop-cat-btn:hover {
-  color: #ffffff;
+  color: var(--shop-text);
   border-color: rgba(255, 255, 255, 0.2);
   background: rgba(20, 31, 50, 0.85);
   transform: translateY(-1px);
@@ -553,7 +553,7 @@
 .shop-cat-btn.active {
   background: linear-gradient(135deg, rgba(0, 242, 254, 0.16), rgba(79, 172, 254, 0.08));
   border-color: var(--shop-cyan);
-  color: #ffffff;
+  color: var(--shop-text);
   box-shadow: 0 4px 18px rgba(0, 242, 254, 0.22);
 }
 
@@ -596,7 +596,7 @@
 }
 
 .shop-results-count strong {
-  color: #ffffff;
+  color: var(--shop-text);
 }
 
 .shop-grid {
@@ -766,7 +766,7 @@
   font-size: 1.25rem;
   font-weight: 800;
   letter-spacing: -0.01em;
-  color: #ffffff;
+  color: var(--shop-text);
   margin: 0 0 0.6rem;
   line-height: 1.3;
 }
@@ -860,7 +860,7 @@
 .shop-btn-secondary:hover {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.25);
-  color: #ffffff;
+  color: var(--shop-text);
 }
 
 /* Empty State */
@@ -882,7 +882,7 @@
 
 .shop-empty h3 {
   font-size: 1.3rem;
-  color: #ffffff;
+  color: var(--shop-text);
   margin: 0 0 0.5rem;
 }
 
@@ -951,7 +951,7 @@
 
 .shop-modal-close:hover {
   background: rgba(255, 255, 255, 0.15);
-  color: #ffffff;
+  color: var(--shop-text);
 }
 
 .shop-modal-top {
@@ -981,7 +981,7 @@
 .shop-modal-title-group h2 {
   font-size: 1.75rem;
   font-weight: 800;
-  color: #ffffff;
+  color: var(--shop-text);
   margin: 0 0 0.35rem;
 }
 
@@ -1012,7 +1012,7 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #ffffff;
+  color: var(--shop-text);
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -1058,7 +1058,7 @@
 .shop-dl-name {
   font-size: 0.92rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--shop-text);
 }
 
 .shop-dl-meta {
@@ -1155,7 +1155,7 @@
 .shop-specialist-text h4 {
   font-size: 0.98rem;
   font-weight: 800;
-  color: #ffffff;
+  color: var(--shop-text);
   margin: 0 0 0.25rem;
 }
 
@@ -1215,7 +1215,7 @@
 
 .shop-alpha-btn:hover {
   background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
+  color: var(--shop-text);
   border-color: rgba(255, 255, 255, 0.2);
 }
 
@@ -1259,7 +1259,7 @@
   gap: 0.5rem;
   font-size: 0.95rem;
   font-weight: 800;
-  color: #ffffff;
+  color: var(--shop-text);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -1270,7 +1270,7 @@
 
 .shop-updates-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
   gap: 0.75rem;
 }
 
@@ -1310,13 +1310,15 @@
 .shop-update-name {
   font-size: 0.88rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--shop-text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .shop-update-ver {
+  white-space: nowrap;
+  flex-shrink: 0;
   font-size: 0.72rem;
   font-family: var(--shop-font-mono);
   color: var(--shop-cyan);
@@ -1373,3 +1375,51 @@
 @media (max-width: 359px) {
   .shop-brand > span:last-child { max-width: 80px; }
 }
+
+/* Day mode uses the same components with a complete, readable palette. */
+html[data-theme="light"] .shop-container {
+  --shop-bg: #f0f5f9; --shop-bg-secondary: #e7eff5;
+  --shop-surface: rgba(255,255,255,.94); --shop-surface-hover: #fff; --shop-surface-active: #e3f0f7;
+  --shop-card-border: #c9d9e4; --shop-card-border-hover: #087e91;
+  --shop-text: #172d3d; --shop-text-muted: #496276; --shop-text-dim: #536d80;
+  --shop-cyan: #087b8e; --shop-blue: #2861bc; --shop-purple: #7743b8; --shop-green: #087957; --shop-amber: #92600e;
+  color-scheme: light;
+}
+html[data-theme="light"] .shop-container :is(.shop-nav,.shop-controls-glass,.shop-updates-card,.shop-modal-content,.shop-modal-downloads-box) { background: var(--shop-surface); border-color: var(--shop-card-border); box-shadow: 0 8px 30px #172d3d0a; }
+html[data-theme="light"] .shop-container :is(.shop-search-input,.shop-search-input:focus,.shop-sort-select,.shop-cat-btn,.shop-lang-toggle,.shop-btn-secondary,.shop-modal-close) { color: var(--shop-text); background: #eaf2f7; border-color: #bfd2df; }
+html[data-theme="light"] .shop-container :is(.shop-pill-btn,.shop-alpha-btn,.shop-license-tag,.shop-req-box,.shop-update-item) { border-color: #c9d9e4; }
+html[data-theme="light"] .shop-container :is(.shop-nav-cta,.shop-btn-primary,.shop-dl-action-btn,.shop-alpha-btn.active,.shop-cat-btn.active .shop-cat-count) { color: #fff !important; }
+html[data-theme="light"] .shop-title-gradient { background-image: linear-gradient(120deg,#087b8e,#2861bc,#7743b8); }
+.shop-container { overflow-wrap: anywhere; }
+.shop-search-input-wrap { min-width: 0; }
+.shop-nav-tools { flex-shrink: 0; }
+.shop-modal-title-group { min-width: 0; }
+.shop-container nav[aria-label="Breadcrumb"] ol { flex-wrap: wrap; }
+@media (max-width: 767px) {
+  .shop-title { font-size: clamp(1.8rem,7.5vw,2.8rem); line-height: 1.15; }
+  .shop-subtitle { font-size: .9rem; line-height: 1.7; }
+  .shop-stats-strip { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+  .shop-stat-card { padding: 14px; gap: 10px; flex-direction: column; align-items: flex-start; }
+  .shop-stat-value { font-size: .88rem; }
+  .shop-stat-label { font-size: .72rem; }
+  .shop-controls-glass { padding: 16px; }
+  .shop-search-input-wrap { flex-basis: 100%; width: 100%; }
+  .shop-search-input { font-size: 16px; }
+  .shop-sort-wrap { width: 100%; justify-content: space-between; }
+  .shop-sort-select { max-width: 75%; }
+  .shop-card { padding: 18px; }
+  .shop-updates-card { padding: 16px; }
+  .shop-update-date { display: none; }
+  .shop-updates-header { flex-wrap: wrap; gap: 8px; }
+  .shop-update-left { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 4px 10px; width: 100%; min-width: 0; }
+  .shop-update-icon { grid-row: 1 / 3; }
+  .shop-update-name { min-width: 0; }
+  .shop-update-ver { grid-column: 2; width: fit-content; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+  .shop-modal-overlay { padding: 10px; }
+  .shop-modal-content { width: 100%; max-height: calc(100dvh - 20px); padding: 20px; }
+  .shop-dl-row { flex-wrap: wrap; gap: 12px; }
+  .shop-dl-action-btn { min-height: 44px; }
+  .shop-hero h1#main-content { font-size: clamp(1.6rem,7vw,2.2rem) !important; }
+  .shop-pill-btn,.shop-cat-btn,.shop-btn-secondary,.shop-nav-link,.shop-lang-toggle { min-height: 42px; }
+}
+@media (prefers-reduced-motion: reduce) { .shop-container *, .shop-container *::before { animation: none !important; transition: none !important; } }

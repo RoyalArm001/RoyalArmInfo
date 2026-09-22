@@ -14,13 +14,20 @@ export default function ThemeToggle({ variant = "switch" }) {
       if (themeMeta) themeMeta.setAttribute("content", currentTheme === "dark" ? "#020617" : "#f8fbff");
     };
     syncTheme();
+    const syncFromStorage = (event) => {
+      if (event.key !== "portfolio-theme") return;
+      const value = event.newValue === "light" ? "light" : "dark";
+      root.dataset.theme = value;
+      root.style.colorScheme = value;
+    };
+    window.addEventListener("storage", syncFromStorage);
     const observer = new MutationObserver(syncTheme);
     observer.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
-    return () => observer.disconnect();
+    return () => { observer.disconnect(); window.removeEventListener("storage", syncFromStorage); };
   }, []);
 
   function toggleTheme() {
-    const nextTheme = theme === "dark" ? "light" : "dark";
+    const nextTheme = document.documentElement.dataset.theme === "light" ? "dark" : "light";
     document.documentElement.dataset.theme = nextTheme;
     document.documentElement.style.colorScheme = nextTheme;
     try {

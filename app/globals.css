@@ -315,3 +315,9 @@ html[data-theme="light"] .site-map-loader-track i { background: linear-gradient(
     text-overflow: ellipsis;
   }
 }
+html[data-theme="light"] .service-request-page { background: #f0f5f9; color: #172d3d; }
+html[data-theme="light"] .service-request-page section { background: #fff; border-color: #c8d9e4; }
+@media (max-width: 767px) {
+  .service-request-page form { padding: 20px; }
+  .service-request-page input, .service-request-page select, .service-request-page textarea { font-size: 16px; min-width: 0; max-width: 100%; }
+}

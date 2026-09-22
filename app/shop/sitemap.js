@@ -1,5 +1,7 @@
 import { PRODUCTS } from "../../lib/shopData";
 
+export const revalidate = 3600;
+
 export default function sitemap() {
   const baseUrl = "https://shop.royalarm.uk";
 
@@ -14,12 +16,15 @@ export default function sitemap() {
   ];
 
   // Dynamic routes for all products
-  const productRoutes = PRODUCTS.map((product) => ({
+  const productRoutes = [...new Map(PRODUCTS.map((product) => [product.slug, product])).values()]
+    .sort((a, b) => a.slug.localeCompare(b.slug))
+    .map((product) => ({
     url: `${baseUrl}/${product.slug}`,
-    lastModified: product.published ? new Date(product.published) : new Date(),
+    lastModified: Number.isFinite(Date.parse(product.updatedAt || product.published))
+      ? new Date(product.updatedAt || product.published)
+      : undefined,
     changeFrequency: "weekly",
     priority: 0.8,
-    images: product.thumbnail ? [`${baseUrl}${product.thumbnail}`] : undefined,
   }));
 
   return [...routes, ...productRoutes];

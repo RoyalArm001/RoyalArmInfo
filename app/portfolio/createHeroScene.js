@@ -1,6 +1,5 @@
 import { PerspectiveCamera, Scene, WebGLRenderer } from "three";
 import { createParticleField } from "./ParticleField";
-import { createNetworkSphere } from "./NetworkSphere";
 import { createMouseInteraction } from "./MouseInteraction";
 
 export function createHeroScene(container, interactionTarget = null) {
@@ -20,10 +19,9 @@ export function createHeroScene(container, interactionTarget = null) {
   const scene = new Scene();
   const camera = new PerspectiveCamera(44, 1, .1, 50);
   camera.position.z = 10;
-  const maxCount = constrained ? 5500 : 16000;
+  const maxCount = constrained ? 10000 : 32000;
   const particles = createParticleField(maxCount);
-  const network = createNetworkSphere();
-  scene.add(particles.object, network.object);
+  scene.add(particles.object);
   const mouse = createMouseInteraction(page, container);
   let frame = 0;
   let lastTime = 0;
@@ -43,9 +41,8 @@ export function createHeroScene(container, interactionTarget = null) {
   let revealTarget = 0;
   let revealSmooth = 0;
   let heroHeight = hero.offsetHeight;
-  const baseNetworkOpacity = network.object.children[0]?.material?.opacity ?? .13;
   const baseCameraZ = 10;
-  const baseCameraZMobile = 11.5;
+  const baseCameraZMobile = 15;
 
   function updateScrollTarget() {
     // The document scrolls, not <main>. Reading main.scrollTop always returned zero.
@@ -78,7 +75,8 @@ export function createHeroScene(container, interactionTarget = null) {
     camera.updateProjectionMatrix();
     particles.uniforms.uAspect.value = camera.aspect;
     particles.uniforms.uPixelRatio.value = ratio;
-    activeCount = Math.floor(Math.min(maxCount, mobile ? 5000 : maxCount) * quality);
+    particles.uniforms.uIntensity.value = mobile ? 1.8 : 1.1;
+    activeCount = Math.floor(Math.min(maxCount, mobile ? 9000 : maxCount) * quality);
     particles.setCount(activeCount);
     container.dataset.particles = String(activeCount);
     if (!frame && !contextLost) render(performance.now(), false);
@@ -101,31 +99,24 @@ export function createHeroScene(container, interactionTarget = null) {
     revealSmooth += (revealTarget - revealSmooth) * blend;
     particles.uniforms.uScroll.value = scrollSmooth;
 
-    // Center the scene as the hero leaves. Fit the entire expanding orbital field
-    // inside the narrower viewport dimension, including portrait phone screens.
+    // Ease the inclined galaxy into view as the user scrolls; foreground stars
+    // retain their depth while the spiral arms turn in a separate plane.
     const mobile = compact.matches;
     const baseZ = mobile ? baseCameraZMobile : baseCameraZ;
     const halfAngle = Math.atan(Math.tan(camera.fov * Math.PI / 360) * Math.min(camera.aspect, 1));
-    const fieldRadius = 4 * (1 + scrollSmooth * .35);
-    const fitZ = fieldRadius / Math.sin(halfAngle) * 1.08;
+    const fieldRadius = 4.6;
+    const fitZ = fieldRadius / Math.sin(halfAngle) * .9;
     camera.position.z = baseZ + (Math.max(baseZ, fitZ) - baseZ) * revealSmooth;
     particles.uniforms.uOffset.value.set(
-      (mobile ? .8 : Math.min(3.0, camera.aspect * 1.48)) * (1 - revealSmooth),
-      (mobile ? -.45 : .05) * (1 - revealSmooth),
+      (mobile ? .2 : Math.min(3.5, camera.aspect * 1.9)) * (1 - revealSmooth),
+      (mobile ? -1.9 : .05) * (1 - revealSmooth),
     );
-    network.object.position.set(particles.uniforms.uOffset.value.x, particles.uniforms.uOffset.value.y, 0);
-
-    /* --- Scroll-reactive network sphere: fades and grows with scroll --- */
-    if (network.object.children[0]?.material) {
-      network.object.children[0].material.opacity = baseNetworkOpacity + scrollSmooth * .12;
-    }
-    const networkScale = 1 + scrollSmooth * .2;
-    network.object.scale.setScalar(networkScale);
-
-    network.object.rotation.y = elapsed * .018;
+    particles.object.rotation.x = .68 + scrollSmooth * .2 + (interactive ? mouse.current.y * .07 : 0);
+    particles.object.rotation.y = -.18 + (interactive ? mouse.current.x * .09 : 0);
+    particles.object.rotation.z = -.32 + scrollSmooth * .25;
     if (interactive) {
-      camera.position.x += (mouse.current.x * .12 - camera.position.x) * .035;
-      camera.position.y += (mouse.current.y * .08 - camera.position.y) * .035;
+      camera.position.x += (mouse.current.x * .5 - camera.position.x) * .045;
+      camera.position.y += (mouse.current.y * .3 - camera.position.y) * .045;
     }
     renderer.render(scene, camera);
     if (animate && delta > 0) {
@@ -181,7 +172,6 @@ export function createHeroScene(container, interactionTarget = null) {
       window.removeEventListener("scroll", scrollHandler);
       mouse.dispose();
       particles.dispose();
-      network.dispose();
       renderer.dispose();
       renderer.forceContextLoss();
       renderer.domElement.remove();

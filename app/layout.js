@@ -127,11 +127,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="dark" suppressHydrationWarning>
       <head>
-        <Script
+        <script
           id="theme-init"
-          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var saved=localStorage.getItem('portfolio-theme');var theme=saved||'dark';document.documentElement.dataset.theme=theme;document.documentElement.style.colorScheme=theme;}catch(e){document.documentElement.dataset.theme='dark';}})();`,
+            __html: `(function(){try{var saved=localStorage.getItem('portfolio-theme');var theme=saved==='light'?'light':'dark';document.documentElement.dataset.theme=theme;document.documentElement.style.colorScheme=theme;}catch(e){document.documentElement.dataset.theme='dark';}})();`,
           }}
         />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -142,7 +141,7 @@ export default function RootLayout({ children }) {
         />
         <link rel="stylesheet" href="/css/all.min.css" />
         <link rel="stylesheet" href="/css/aos.css" />
-        <link rel="stylesheet" href="/css/styles.css?v=cv-downloads-20260920" />
+        <link rel="stylesheet" href="/css/styles.css?v=galaxy-themes-20260922" />
       </head>
       <body className="bg-bg text-text">
         <script

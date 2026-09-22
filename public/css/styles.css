@@ -575,49 +575,49 @@ html[data-theme="light"] .theme-toggle-moon { opacity: .45; }
 }
 
 /* Light theme */
-html[data-theme="light"] body {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) body {
   color: #172033 !important;
   background: #fff !important;
 }
 
-html[data-theme="light"] .live-hack-map-layer {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) .live-hack-map-layer {
   background: #fff !important;
 }
 
-html[data-theme="light"] .live-hack-map-frame.is-ready {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) .live-hack-map-frame.is-ready {
   opacity: 1;
   filter: grayscale(1) contrast(3) brightness(.78);
   mix-blend-mode: multiply;
 }
 
-html[data-theme="light"] .live-hack-map-shade {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) .live-hack-map-shade {
   display: none;
 }
 
-html[data-theme="light"] nav {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) nav {
   color: #172033 !important;
   background: rgba(255, 255, 255, .94) !important;
   border-color: #cbd5e1 !important;
   box-shadow: 0 8px 24px rgba(15, 23, 42, .08) !important;
 }
 
-html[data-theme="light"] nav a,
-html[data-theme="light"] nav button,
-html[data-theme="light"] nav [class*="text-white"] {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) nav a,
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) nav button,
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) nav [class*="text-white"] {
   color: #172033 !important;
 }
 
-html[data-theme="light"] nav [class*="bg-[#ff004f]"],
-html[data-theme="light"] nav a[class*="hover:bg-[#ff004f]"]:hover {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) nav [class*="bg-[#ff004f]"],
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) nav a[class*="hover:bg-[#ff004f]"]:hover {
   color: #fff !important;
 }
 
-html[data-theme="light"] #home {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #home {
   color: #172033 !important;
   background: transparent !important;
 }
 
-html[data-theme="light"] #home a[href="#resume"] {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #home a[href="#resume"] {
   opacity: 1 !important;
   visibility: visible !important;
   color: #fff !important;
@@ -628,115 +628,115 @@ html[data-theme="light"] #home a[href="#resume"] {
   backdrop-filter: none !important;
 }
 
-html[data-theme="light"] #home a[href="#resume"] i {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #home a[href="#resume"] i {
   color: #fff !important;
 }
 
-html[data-theme="light"] #home a[href="#resume"]:hover {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #home a[href="#resume"]:hover {
   color: #fff !important;
   background: #0f172a !important;
   border-color: #ff004f !important;
 }
 
-html[data-theme="light"] #main-content > section,
-html[data-theme="light"] #main-content > footer {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content > section,
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content > footer {
 }
 
-html[data-theme="light"] #main-content .absolute[class*="blur-"] {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content .absolute[class*="blur-"] {
   opacity: 0 !important;
 }
 
-html[data-theme="light"] #about,
-html[data-theme="light"] #skills,
-html[data-theme="light"] #resume,
-html[data-theme="light"] #projects,
-html[data-theme="light"] #services,
-html[data-theme="light"] footer {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #about,
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #skills,
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #resume,
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #projects,
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #services,
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) footer {
   color: #172033 !important;
 }
 
-html[data-theme="light"] #main-content h1,
-html[data-theme="light"] #main-content h2,
-html[data-theme="light"] #main-content h3,
-html[data-theme="light"] #main-content h4 {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content h1,
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content h2,
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content h3,
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content h4 {
   color: #111827 !important;
 }
 
-html[data-theme="light"] #main-content .text-accent,
-html[data-theme="light"] #main-content [class*="text-[#ff0"],
-html[data-theme="light"] #main-content [class*="text-[#ff4"] {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content .text-accent,
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content [class*="text-[#ff0"],
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content [class*="text-[#ff4"] {
   color: #e60047 !important;
 }
 
-html[data-theme="light"] #main-content .text-gray-300 { color: #334155 !important; }
-html[data-theme="light"] #main-content .text-gray-400 { color: #475569 !important; }
-html[data-theme="light"] #main-content .text-gray-500 { color: #64748b !important; }
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content .text-gray-300 { color: #334155 !important; }
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content .text-gray-400 { color: #475569 !important; }
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content .text-gray-500 { color: #64748b !important; }
 
-html[data-theme="light"] #main-content .backdrop-blur,
-html[data-theme="light"] #main-content .backdrop-blur-md,
-html[data-theme="light"] #main-content [class*="bg-[#151515]"],
-html[data-theme="light"] #main-content [class*="bg-[#171717]"],
-html[data-theme="light"] #main-content [class*="bg-[#181818]"],
-html[data-theme="light"] #main-content [class*="bg-[#1a1a1a]"],
-html[data-theme="light"] #main-content [class*="bg-[#0d0d0d]"],
-html[data-theme="light"] #main-content article {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content .backdrop-blur,
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content .backdrop-blur-md,
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content [class*="bg-[#151515]"],
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content [class*="bg-[#171717]"],
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content [class*="bg-[#181818]"],
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content [class*="bg-[#1a1a1a]"],
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content [class*="bg-[#0d0d0d]"],
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content article {
   color: #172033 !important;
 }
 
-html[data-theme="light"] main[class*="bg-[#0d0d0d]"] {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) main[class*="bg-[#0d0d0d]"] {
   color: #172033 !important;
 
 }
 
-html[data-theme="light"] #main-content input,
-html[data-theme="light"] #main-content select,
-html[data-theme="light"] #main-content textarea {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content input,
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content select,
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content textarea {
   color: #172033 !important;
   background: rgba(255, 255, 255, .94) !important;
   border-color: #cbd5e1 !important;
 }
 
-html[data-theme="light"] #main-content input::placeholder,
-html[data-theme="light"] #main-content textarea::placeholder {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content input::placeholder,
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #main-content textarea::placeholder {
   color: #64748b !important;
 }
 
-html[data-theme="light"] .web-projects-accordion,
-html[data-theme="light"] .client-sites-grid,
-html[data-theme="light"] .client-site-card {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) .web-projects-accordion,
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) .client-sites-grid,
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) .client-site-card {
   color: #172033 !important;
   background: rgba(255, 255, 255, .90) !important;
   border-color: #cbd5e1;
 }
 
-html[data-theme="light"] .client-site-heading h4 { color: #111827 !important; }
-html[data-theme="light"] .client-site-body p { color: #475569 !important; }
-html[data-theme="light"] .border-gray-700,
-html[data-theme="light"] .border-gray-800 { border-color: #cbd5e1 !important; }
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) .client-site-heading h4 { color: #111827 !important; }
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) .client-site-body p { color: #475569 !important; }
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) .border-gray-700,
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) .border-gray-800 { border-color: #cbd5e1 !important; }
 
-html[data-theme="light"] #skills .skills-grid > .skill-card {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #skills .skills-grid > .skill-card {
   color: #172033 !important;
   background: rgba(255, 255, 255, .94) !important;
   border-color: #cbd5e1 !important;
   box-shadow: 0 12px 32px rgba(15, 23, 42, .09);
 }
 
-html[data-theme="light"] #skills .skill-card p {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #skills .skill-card p {
   color: #111827 !important;
 }
 
-html[data-theme="light"] #skills .tech-skill-mark {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #skills .tech-skill-mark {
   color: #be123c;
   background: #fff1f2;
   border-color: #fda4af;
 }
 
-html[data-theme="light"] #skills .tech-skill-link {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #skills .tech-skill-link {
   color: #475569;
 }
 
-html[data-theme="light"] #skills .skill-card:hover .tech-skill-link,
-html[data-theme="light"] #skills .skill-card:focus-visible .tech-skill-link {
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #skills .skill-card:hover .tech-skill-link,
+html[data-theme="light"]:not(:has(.portfolio-page, .shop-container, .royalarm-it-app)) #skills .skill-card:focus-visible .tech-skill-link {
   color: #be123c;
 }
 

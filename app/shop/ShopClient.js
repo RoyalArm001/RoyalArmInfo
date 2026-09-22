@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { PRODUCTS, SHOP_CATEGORIES } from "../../lib/shopData";
 import ThemeToggle from "../ThemeToggle";
+import SoftwareImage from "./SoftwareImage";
 import "./shop.css";
 
 const ALPHABET = ["ALL", ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""), "#"];
@@ -453,7 +454,7 @@ export default function ShopClient() {
                 onClick={() => setActiveModalProduct(item)}
               >
                 <div className="shop-update-left">
-                  <img src={item.thumbnail} alt="" className="shop-update-icon" />
+                  <SoftwareImage src={item.thumbnail} className="shop-update-icon" />
                   <span className="shop-update-name">{item.title}</span>
                   <span className="shop-update-ver">v{item.version}</span>
                 </div>

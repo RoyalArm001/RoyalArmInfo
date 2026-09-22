@@ -68,7 +68,7 @@ export default function ServiceRequestPage() {
   }
 
   return (
-    <main id="main-content" className="min-h-screen bg-[#0d0d0d] text-white px-3 pb-28 pt-7 sm:px-6 sm:pt-10">
+    <main id="main-content" className="service-request-page min-h-screen bg-[#0d0d0d] text-white px-3 pb-28 pt-7 sm:px-6 sm:pt-10">
       <div className="mx-auto max-w-4xl">
         <header className="flex flex-wrap items-center justify-between gap-4">
           <Link href="/" className="inline-flex items-center gap-2 text-gray-400 transition hover:text-[#ff004f]">

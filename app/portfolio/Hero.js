@@ -17,7 +17,7 @@ export default function Hero() {
           <a className="hero-button hero-button-secondary" href="#resume" data-magnetic><span>View CV</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M14 3H6v18h12V7l-4-4Z M14 3v5h5 M9 13h6 M9 17h4" /></svg></a>
         </div>
       </div>
-      <div className="scene-caption" aria-hidden="true"><span className="scene-caption-cross">+</span><div>THE NETWORK CORE<small>INTERACTIVE PARTICLE SYSTEM / 01</small></div></div>
+      <div className="scene-caption" aria-hidden="true"><span className="scene-caption-cross">+</span><div>THE SPIRAL GALAXY<small>AN INTERACTIVE STELLAR FIELD</small></div></div>
       <div className="hero-bottomline"><a href="#about"><span className="scroll-indicator" aria-hidden="true">↓</span><span>Scroll to explore</span></a><span className="hero-discipline">SOFTWARE <i /> INFRASTRUCTURE <i /> NETWORKS</span><span className="hero-location">BASED IN ARMENIA <span>AM</span></span></div>
     </section>
   );
