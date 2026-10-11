@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
     "start": "next start",
     "build:ai": "npm --prefix royalarm-ai run build",
     "test:ai": "npm --prefix royalarm-ai test"
   },
   "engines": {
-    "node": "24.x"
+    "node": ">=20.0.0"
   },
   "dependencies": {
     "@upstash/redis": "^1.35.6",
