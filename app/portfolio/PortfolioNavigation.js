@@ -16,6 +16,7 @@ function NavigationLinks({ activeSection }) {
           className={`site-nav-link${section === activeSection ? " is-active" : ""}`}
           aria-current={section === activeSection ? "location" : undefined}>{label}</a>
       ))}
+      <a href="https://ai.royalarm.uk/" className="site-nav-link">RoyalArm AI</a>
       <a href="https://it.royalarm.uk/" className="site-nav-link">IT App</a>
       <a href="https://shop.royalarm.uk/" className="site-nav-link">Shop</a>
     </>

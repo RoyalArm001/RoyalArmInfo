@@ -1,0 +1,46 @@
+MIT License
+
+Copyright (c) 2026 Sipan Danielyan & RoyalArm (https://royalarm.uk)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+### Third-Party Software & Open-Source AI Licenses Notice
+
+1. **Third-Party Software Catalog (RoyalArm Store / Shop)**:
+   All software products, logos, trademarks, and download binaries referenced
+   in the RoyalArm Software Catalog (`/shop`, `lib/shopData.js`) belong entirely
+   to their respective official developers and vendors (Google, Microsoft, Mozilla,
+   MikroTik, Sysinternals, Ventoy, Bandisoft, FastStone, VeraCrypt, Wireshark, etc.).
+   RoyalArm provides verified, direct official download links and metadata
+   strictly for educational and technical reference without adware or alterations.
+
+2. **Open-Source AI Models**:
+   The AI models accessible via RoyalArm AI are licensed under their respective
+   official open-source terms:
+   - **DeepSeek-R1 & DeepSeek-V3**: MIT License (DeepSeek AI)
+   - **Meta Llama 3.3 (70B / 8B)**: Meta Llama 3.3 Community License
+   - **Qwen 2.5 Coder**: Apache License 2.0 (Alibaba Cloud)
+   - **Mistral Small / Nemo**: Apache License 2.0 (Mistral AI)
+   - **Microsoft Phi-4**: MIT License (Microsoft)
+   - **Ollama**: MIT License (Ollama Inc.)
+
+See [MODELS.md](MODELS.md) for full model specifications, GitHub source repositories,
+and release tracking information.

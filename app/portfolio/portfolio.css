@@ -105,6 +105,8 @@ body:has(.portfolio-page) { background: #05090e !important; }
 .hero-button-primary:hover { background: #b1fff7; box-shadow: 0 0 32px #73e5e220; }
 .hero-button-secondary { color: #dce6ed; background: #101a2180; }
 .hero-button-secondary:hover { border-color: #73e5e2; background: #182a34; }
+.hero-button-ai { color: #b9f9f5 !important; border-color: #416c70; background: #0b202480; }
+.hero-button-ai:hover { border-color: var(--cyan); background: #10343b; box-shadow: 0 0 28px #73e5e21a; }
 .hero-button svg { width: 16px; height: 16px; }
 .hero-button-primary > span:last-child { font-size: 20px; font-weight: 400; }
 .scene-caption { position: absolute; right: 10%; bottom: 24%; display: flex; align-items: center; gap: 12px; color: #8db0bb; font: 9px/1.6 ui-monospace,monospace; letter-spacing: .17em; }

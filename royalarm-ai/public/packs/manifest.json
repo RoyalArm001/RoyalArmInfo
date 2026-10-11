@@ -1,0 +1,62 @@
+{
+  "version": "2026-10-11.1",
+  "counts": {
+    "words": 3000,
+    "phrases": 500,
+    "dialogues": 100,
+    "total": 3600,
+    "armenianEquivalents": 98
+  },
+  "source": "https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/en/en_50k.txt",
+  "sourceSha256": "5351ff405b1126ef555791dd4d9798a48e3e9a501a9fc481a9da957752cfb458",
+  "chunks": [
+    {
+      "path": "/packs/core-1.json",
+      "count": 300
+    },
+    {
+      "path": "/packs/core-2.json",
+      "count": 300
+    },
+    {
+      "path": "/packs/core-3.json",
+      "count": 300
+    },
+    {
+      "path": "/packs/core-4.json",
+      "count": 300
+    },
+    {
+      "path": "/packs/core-5.json",
+      "count": 300
+    },
+    {
+      "path": "/packs/core-6.json",
+      "count": 300
+    },
+    {
+      "path": "/packs/core-7.json",
+      "count": 300
+    },
+    {
+      "path": "/packs/core-8.json",
+      "count": 300
+    },
+    {
+      "path": "/packs/core-9.json",
+      "count": 300
+    },
+    {
+      "path": "/packs/core-10.json",
+      "count": 300
+    },
+    {
+      "path": "/packs/core-11.json",
+      "count": 300
+    },
+    {
+      "path": "/packs/core-12.json",
+      "count": 300
+    }
+  ]
+}

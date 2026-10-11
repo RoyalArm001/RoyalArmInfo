@@ -18,6 +18,20 @@ export default function ShopClient() {
   const [sortBy, setSortBy] = useState("popular");
   const [activeModalProduct, setActiveModalProduct] = useState(null);
   const [lang, setLang] = useState("hy"); // Armenian default
+  const [viewMode, setViewMode] = useState("windows"); // Network.am style windows view by default
+
+  // Sync URL search params (?search=... or ?q=...)
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const query = params.get("search") || params.get("q");
+      if (query) setSearchQuery(query);
+      const cat = params.get("cat") || params.get("category");
+      if (cat) setSelectedCategory(cat);
+      const mode = params.get("view");
+      if (mode === "grid" || mode === "windows") setViewMode(mode);
+    }
+  }, []);
 
   // Sync site language
   useEffect(() => {
@@ -127,6 +141,93 @@ export default function ShopClient() {
 
     return list;
   }, [selectedCategory, selectedPlatform, selectedLicense, selectedLetter, searchQuery, sortBy]);
+
+  // Network.am-style Categorized Windows
+  const windowCategories = useMemo(() => {
+    const groups = [
+      {
+        id: "security",
+        titleHy: "🛡️ Անվտանգություն & Հակավիրուսներ",
+        titleEn: "🛡️ Security & Antivirus",
+        titleRu: "🛡️ Безопасность и Антивирусы",
+        badge: "Antivirus & Defense",
+        filter: (p) =>
+          (p.categories && (p.categories.includes("security") || p.categories.includes("antivirus"))) ||
+          p.slug.includes("cureit") ||
+          p.slug.includes("kaspersky") ||
+          p.slug.includes("malware") ||
+          p.slug.includes("defender") ||
+          p.slug.includes("veracrypt") ||
+          p.slug.includes("eset"),
+      },
+      {
+        id: "browsers_net",
+        titleHy: "🌐 Ինտերնետ, Բրաուզերներ & Ցանց",
+        titleEn: "🌐 Internet, Browsers & Network",
+        titleRu: "🌐 Интернет, Браузеры и Сеть",
+        badge: "Web & Network",
+        filter: (p) =>
+          p.primaryCategory === "browsers" ||
+          (p.categories && (p.categories.includes("browsers") || p.categories.includes("network") || p.categories.includes("internet"))) ||
+          p.slug.includes("winbox") ||
+          p.slug.includes("wireshark") ||
+          p.slug.includes("telegram"),
+      },
+      {
+        id: "system_utils",
+        titleHy: "⚙️ Համակարգային Կոմունալներ & Գործիքներ",
+        titleEn: "⚙️ System Tools & Utilities",
+        titleRu: "⚙️ Системные Утилиты и Твики",
+        badge: "System & Tools",
+        filter: (p) =>
+          p.primaryCategory === "utilities" &&
+          !(p.categories && (p.categories.includes("security") || p.categories.includes("antivirus"))) &&
+          !p.slug.includes("cureit") &&
+          !p.slug.includes("kaspersky") &&
+          !p.slug.includes("veracrypt"),
+      },
+      {
+        id: "dev_tools",
+        titleHy: "💻 Ծրագրավորում & IT Ադմինիստրացիա",
+        titleEn: "💻 Developer & IT Tools",
+        titleRu: "💻 Разработка и IT Инструменты",
+        badge: "Dev & Code",
+        filter: (p) => p.primaryCategory === "dev" || (p.categories && p.categories.includes("dev")),
+      },
+      {
+        id: "graphics_design",
+        titleHy: "🎨 Գրաֆիկա, Դիզայն & 3D",
+        titleEn: "🎨 Graphics, Design & 3D",
+        titleRu: "🎨 Графика, Дизайн и 3D",
+        badge: "Visual & Design",
+        filter: (p) => p.primaryCategory === "design" || (p.categories && p.categories.includes("design")),
+      },
+      {
+        id: "multimedia",
+        titleHy: "🎬 Մուլտիմեդիա & Փլեյերներ",
+        titleEn: "🎬 Multimedia & Players",
+        titleRu: "🎬 Мультимедиа и Плееры",
+        badge: "Audio & Video",
+        filter: (p) => p.primaryCategory === "media" || (p.categories && p.categories.includes("media")),
+      },
+      {
+        id: "office_docs",
+        titleHy: "📄 Գրասենյակային & Օֆիս",
+        titleEn: "📄 Office & Documents",
+        titleRu: "📄 Офис и Документы",
+        badge: "Office & PDF",
+        filter: (p) => p.primaryCategory === "office" || (p.categories && p.categories.includes("office")),
+      },
+    ];
+
+    return groups
+      .map((g) => ({
+        ...g,
+        title: lang === "en" ? g.titleEn : lang === "ru" ? g.titleRu : g.titleHy,
+        items: filteredProducts.filter(g.filter),
+      }))
+      .filter((g) => g.items.length > 0);
+  }, [filteredProducts, lang]);
 
   // Translations
   const t = {
@@ -510,6 +611,26 @@ export default function ShopClient() {
                 <option value="newest">{t.sortNewest}</option>
               </select>
             </div>
+
+            {/* View Mode Switcher: Windows (Network.am style) vs Cards */}
+            <div className="shop-view-switcher">
+              <button
+                type="button"
+                className={`shop-view-btn ${viewMode === "windows" ? "active" : ""}`}
+                onClick={() => setViewMode("windows")}
+                title="Network.am ոճի պատուհաններով դասավորություն"
+              >
+                🪟 <span>Պատուհաններ</span>
+              </button>
+              <button
+                type="button"
+                className={`shop-view-btn ${viewMode === "grid" ? "active" : ""}`}
+                onClick={() => setViewMode("grid")}
+                title="Ժամանակակից քարտերի ցանց"
+              >
+                🔲 <span>Քարտեր</span>
+              </button>
+            </div>
           </div>
 
           {/* Secondary Filter Row: Platforms & Licenses */}
@@ -644,32 +765,123 @@ export default function ShopClient() {
           )}
         </div>
 
-        <div className="shop-grid">
-          {filteredProducts.length === 0 ? (
-            <div className="shop-empty">
-              <svg className="shop-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <circle cx="12" cy="12" r="10" />
-                <line x1="12" y1="8" x2="12" y2="12" />
-                <line x1="12" y1="16" x2="12.01" y2="16" />
-              </svg>
-              <h3>{t.noResults}</h3>
-              <p>{t.tryAnother}</p>
-              <button
-                type="button"
-                className="shop-btn-primary"
-                onClick={() => {
-                  setSearchQuery("");
-                  setSelectedCategory("all");
-                  setSelectedPlatform("all");
-                  setSelectedLicense("all");
-                  setSelectedLetter("ALL");
-                }}
-              >
-                {t.clearSearch}
-              </button>
-            </div>
-          ) : (
-            filteredProducts.map((p) => {
+        {filteredProducts.length === 0 ? (
+          <div className="shop-empty">
+            <svg className="shop-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+            <h3>{t.noResults}</h3>
+            <p>{t.tryAnother}</p>
+            <button
+              type="button"
+              className="shop-btn-primary"
+              onClick={() => {
+                setSearchQuery("");
+                setSelectedCategory("all");
+                setSelectedPlatform("all");
+                setSelectedLicense("all");
+                setSelectedLetter("ALL");
+              }}
+            >
+              {t.clearSearch}
+            </button>
+          </div>
+        ) : viewMode === "windows" ? (
+          <div className="shop-windows-container">
+            {windowCategories.map((group) => (
+              <div key={group.id} className="shop-window-panel">
+                <div className="shop-window-header">
+                  <div className="shop-window-dots" aria-hidden="true">
+                    <span className="dot dot-red" />
+                    <span className="dot dot-yellow" />
+                    <span className="dot dot-green" />
+                  </div>
+                  <h2 className="shop-window-title">{group.title}</h2>
+                  <span className="shop-window-count">{group.items.length}</span>
+                </div>
+
+                <div className="shop-window-body">
+                  {group.items.map((p) => {
+                    const primaryDownload = p.downloads && p.downloads[0] ? p.downloads[0].url : p.officialSite;
+                    return (
+                      <div key={p.id} className="shop-window-row">
+                        <div
+                          className="shop-window-item-main"
+                          onClick={() => setActiveModalProduct(p)}
+                          role="button"
+                          tabIndex={0}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") setActiveModalProduct(p);
+                          }}
+                        >
+                          <img
+                            src={p.thumbnail}
+                            alt=""
+                            className="shop-window-item-icon"
+                            loading="lazy"
+                            onError={(e) => {
+                              e.currentTarget.src = "/assets/LogoArm.png";
+                            }}
+                          />
+                          <div className="shop-window-item-meta">
+                            <span className="shop-window-item-name">{p.title}</span>
+                            <span className="shop-window-item-sub">
+                              v{p.version} • {p.developer}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="shop-window-item-tags">
+                          <span
+                            className={`shop-license-tag-sm ${
+                              p.license?.toLowerCase().includes("open source")
+                                ? "open-source"
+                                : p.license?.toLowerCase().includes("freeware")
+                                ? "freeware"
+                                : "commercial"
+                            }`}
+                          >
+                            {p.license}
+                          </span>
+                        </div>
+
+                        <div className="shop-window-item-actions">
+                          <a
+                            href={primaryDownload}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="shop-window-dl-btn"
+                            title={`${p.title} — Պաշտոնական Բեռնում`}
+                          >
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                              <polyline points="7 10 12 15 17 10" />
+                              <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
+                            <span>Բեռնել</span>
+                          </a>
+                          <button
+                            type="button"
+                            className="shop-window-info-btn"
+                            onClick={() => setActiveModalProduct(p)}
+                            title="Մանրամասներ և հայելիներ"
+                            aria-label={`${p.title} details`}
+                          >
+                            ℹ
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="shop-grid">
+            {filteredProducts.map((p) => {
               const primaryDownload = p.downloads && p.downloads[0] ? p.downloads[0].url : p.officialSite;
 
               return (
@@ -766,9 +978,9 @@ export default function ShopClient() {
                   </div>
                 </article>
               );
-            })
-          )}
-        </div>
+            })}
+          </div>
+        )}
       </section>
 
 

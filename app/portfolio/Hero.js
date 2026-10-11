@@ -14,6 +14,7 @@ export default function Hero() {
         <div className="hero-tags"><span><b>03</b> <span>3 years of experience</span></span><span>IT Programmer</span><span>Network Engineer</span></div>
         <div className="hero-actions">
           <a className="hero-button hero-button-primary" href="#projects" data-magnetic><span>View My Work</span><span aria-hidden="true">↗</span></a>
+          <a className="hero-button hero-button-ai" href="https://ai.royalarm.uk/" target="_blank" rel="noopener noreferrer" data-magnetic><span>Try RoyalArm AI</span><span aria-hidden="true">✦</span></a>
           <a className="hero-button hero-button-secondary" href="#resume" data-magnetic><span>View CV</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M14 3H6v18h12V7l-4-4Z M14 3v5h5 M9 13h6 M9 17h4" /></svg></a>
         </div>
       </div>

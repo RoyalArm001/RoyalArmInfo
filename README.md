@@ -1,72 +1,57 @@
-# Sipan Danielyan — Portfolio
+# RoyalArm AI
 
-Next.js portfolio for IT support, network engineering, server administration,
-Hikvision CCTV, monitoring systems, web development, and remote service requests.
+**RoyalArm AI** is a personal AI chat website built with Next.js App Router, TypeScript, Tailwind CSS, and the official OpenAI SDK. Designed for deployment on Vercel at [ai.royalarm.uk](https://ai.royalarm.uk).
 
-## Run locally
+---
 
-Requires Node.js 24.
+## Quick Start
 
+### 1. Run RoyalArm AI
 ```bash
+# Enter the application directory
+cd royalarm-ai
+
+# Install dependencies
 npm install
+
+# Setup environment variables
+cp .env.example .env.local
+# Set OPENAI_API_KEY, CHAT_PASSWORD (12+ chars), and SESSION_SECRET (32+ chars)
+
+# Run dev server
 npm run dev
 ```
 
-Open `http://localhost:3000`.
-
-## Verify a production build
-
+Alternatively, from the repository root:
 ```bash
-npm ci
-npm run build
-npm start
+npm run dev
 ```
 
-## Deploy to Vercel
+---
 
-The repository root is the Next.js project root, so Vercel should detect the
-**Next.js** framework automatically. Keep the Root Directory empty and use the
-default install, build, and output settings.
+## Features
 
-Add these variables in **Vercel → Project Settings → Environment Variables**
-for both Production and Preview:
+- **Streaming Responses**: Real-time server-side streaming via `/api/chat` using official OpenAI SDK.
+- **Privacy First (`store: false`)**:
+  - No database on the server (no Supabase, MySQL).
+  - No server logging of conversations.
+  - History stored in browser **IndexedDB** on the user's device.
+  - OpenAI API called with `store: false` to ensure no model training or persistent retention.
+- **Single-User Password Login**:
+  - Protected with server-only `CHAT_PASSWORD` and `SESSION_SECRET`.
+  - Cryptographically signed HMAC-SHA256 HttpOnly session cookies.
+- **Multi-Conversation Support**: Create, rename, switch, and delete conversations locally; restored across reloads.
+- **Controls & Error Handling**:
+  - Enter to send, Shift+Enter for new line.
+  - "Stop generating" abort button via `AbortController`.
+  - Clear alerts for missing configuration, failed requests, and interrupted streams with retry button.
+- **Safe Markdown Rendering**: Fenced code blocks with language labels and one-click copy buttons.
+- **Dark Navy & Cyan Interface**: Responsive palette (`#050913`, `#0a1326`, cyan `#06b6d4` / `#22d3ee`) styled for phones and desktops.
+- **Customizable Assistant Instructions**: System prompt isolated in `royalarm-ai/lib/system-prompt.ts`.
+- **Branding & Footer**: Links to [royalarm.uk](https://royalarm.uk) and [youtube.com/@RoyalArm001](https://youtube.com/@RoyalArm001).
 
-- `ROYALARM_IT_REDIS_REST_URL`
-- `ROYALARM_IT_REDIS_REST_TOKEN`
-- `ROYALARM_IT_ADMIN_PASSWORD`
-- `ROYALARM_IT_SESSION_SECRET`
+---
 
-Their expected format is documented in `.env.example`. Do not upload a real
-`.env` file or commit production secrets.
+## Deployment & Custom Domain
 
-## Structure
-
-- `app/` — Next.js App Router pages, API routes, SEO files, and components
-- `lib/` — Upstash Redis and admin authentication helpers
-- `public/` — runtime images, icons, CSS, and browser scripts
-- `index.html` — homepage content read during the Next.js build
-
-## Portfolio experience
-
-The homepage retains its existing content in `index.html`; its hero is rendered
-by `app/portfolio/Hero.js`. Homepage styles are scoped in
-`app/portfolio/portfolio.css`, so the IT app and admin keep their own layouts.
-
-`Hero3D` loads Three.js after hydration. `ParticleField` batches the particles in
-one GPU buffer and uses shaders for ambient motion, pointer displacement, and
-click ripples. `NetworkSphere` batches the orbital paths. There are two scene
-draw calls, without a full-screen bloom pass or particle DOM elements.
-
-The scene uses up to 16,000 particles on desktop and 5,000 on mobile, caps pixel
-density, and reduces quality after sustained slow frames. The particle scene is
-rendered as a fixed background across the full homepage, remaining visible behind
-translucent sections while scrolling. As the hero scrolls away, the orbital field
-centers and fits the viewport. Pointer coordinates use the canvas bounds and
-scroll progress uses the document, so both work throughout the page. Rendering
-stops when the canvas leaves the viewport or the browser tab is hidden. Reduced-motion users get a static scene;
-a pause control is available otherwise. A CSS illustration remains visible if
-WebGL2 is unavailable or its context is lost.
-
-CV files live in `public/cv/`. Each language has separate preview and download
-links in the existing Resume section. Translation strings remain in
-`public/i18n/translations.json`.
+Detailed instructions for Vercel deployment, environment variables, and binding `ai.royalarm.uk` are documented in [royalarm-ai/README.md](./royalarm-ai/README.md).
