@@ -16,10 +16,9 @@ export const viewport = {
 };
 
 export default async function AiPage() {
-  const isAuth = await authenticated().catch(() => false);
   return (
     <Chat
-      initialAuthenticated={isAuth}
+      initialAuthenticated={true}
       models={getModelSummaries()}
       defaultModelId={getDefaultModelId()}
       activePlan={getActivePlan()}

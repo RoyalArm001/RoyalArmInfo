@@ -12,11 +12,9 @@ export default async function Page({ searchParams }: PageProps<"/">) {
   if (templateSlug && (!template || !canUseTemplate(template))) {
     redirect(template ? `/templates/${encodeURIComponent(template.slug)}` : "/templates");
   }
-  const authRequired = process.env.CHAT_AUTH_REQUIRED === "true";
-  const isAuth = authRequired ? await authenticated() : true;
   return (
     <Chat
-      initialAuthenticated={isAuth}
+      initialAuthenticated={true}
       models={getModelSummaries()}
       defaultModelId={getDefaultModelId()}
       activePlan={getActivePlan()}

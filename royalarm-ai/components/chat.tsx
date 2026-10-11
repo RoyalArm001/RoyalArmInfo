@@ -71,17 +71,16 @@ interface ChatProps {
 }
 
 export function Chat({
-  initialAuthenticated = false,
+  initialAuthenticated = true,
   models = [],
   defaultModelId,
   activePlan = "free",
   initialTemplate,
 }: ChatProps) {
-  const [authenticated, setAuthenticated] = useState(initialAuthenticated);
+  const [authenticated, setAuthenticated] = useState(true);
   const [sessionExpired, setSessionExpired] = useState(false);
   const ws = useWorkspace(() => {
     setSessionExpired(true);
-    setAuthenticated(false);
   });
 
   const [draft, setDraft] = useState("");
@@ -448,21 +447,10 @@ export function Chat({
   async function signOut() {
     try {
       await fetch("/api/session", { method: "DELETE" });
-    } finally {
-      setAuthenticated(false);
-    }
-  }
-
-  if (!authenticated) {
-    return (
-      <Login
-        onSuccess={() => {
-          setAuthenticated(true);
-          setSessionExpired(false);
-        }}
-        expired={sessionExpired}
-      />
-    );
+    } catch {}
+    ws.create();
+    setDraft("");
+    setHasSpokenGreeting(false);
   }
 
   return (
@@ -591,11 +579,11 @@ export function Chat({
           <button
             className="nav-action-pill"
             onClick={signOut}
-            aria-label="Sign out"
-            title="Sign out (Դուրս գալ)"
+            aria-label="New conversation"
+            title="Մաքրել և սկսել նորից (Restart)"
           >
-            <LogOut size={15} />
-            <span className="hidden sm:inline">Sign out</span>
+            <RotateCcw size={14} />
+            <span className="hidden sm:inline">Նորից</span>
           </button>
 
         </div>

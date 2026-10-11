@@ -49,5 +49,6 @@ export function verifySession(token: string | undefined) {
 }
 
 export async function authenticated() {
+  if (process.env.CHAT_AUTH_REQUIRED !== "true") return true;
   return verifySession((await cookies()).get(COOKIE_NAME)?.value);
 }
