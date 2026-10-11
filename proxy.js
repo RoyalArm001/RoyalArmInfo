@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 const itHostname = "it.royalarm.uk";
 const shopHostname = "shop.royalarm.uk";
+const aiHostname = "ai.royalarm.uk";
 const portfolioHostnames = new Set([
   "royalarm.uk",
   "www.royalarm.uk",
@@ -19,7 +20,7 @@ export function proxy(request) {
   const hostname = getHostname(request);
   const pathname = request.nextUrl.pathname;
 
-  // 1. Redirect /it and /shop from main portfolio hostnames to their respective subdomains
+  // 1. Redirect /it, /shop, and /ai from main portfolio hostnames to their respective subdomains
   if (portfolioHostnames.has(hostname)) {
     if (pathname === "/it" || pathname.startsWith("/it/")) {
       const publicPath = pathname.replace(/^\/it/, "") || "/";
@@ -28,6 +29,10 @@ export function proxy(request) {
     if (pathname === "/shop" || pathname.startsWith("/shop/")) {
       const publicPath = pathname.replace(/^\/shop/, "") || "/";
       return NextResponse.redirect(`https://${shopHostname}${publicPath}`, 308);
+    }
+    if (pathname === "/ai" || pathname.startsWith("/ai/")) {
+      const publicPath = pathname.replace(/^\/ai/, "") || "/";
+      return NextResponse.redirect(`https://${aiHostname}${publicPath}`, 308);
     }
   }
 
@@ -101,6 +106,25 @@ Sitemap: https://${shopHostname}/sitemap.xml
     return NextResponse.rewrite(destination);
   }
 
+  // 4. Handle ai.royalarm.uk subdomain
+  if (hostname === aiHostname || hostname.startsWith("ai.")) {
+    if (pathname === "/robots.txt") {
+      return new Response(
+        `User-agent: *\nAllow: /\n\nSitemap: https://${aiHostname}/sitemap.xml\n`,
+        { headers: { "content-type": "text/plain; charset=utf-8" } }
+      );
+    }
+
+    const destination = request.nextUrl.clone();
+    if (pathname === "/") {
+      destination.pathname = "/ai";
+    } else if (!pathname.startsWith("/ai") && !pathname.startsWith("/api") && !pathname.startsWith("/_next")) {
+      destination.pathname = `/ai${pathname}`;
+    }
+
+    return NextResponse.rewrite(destination);
+  }
+
   return NextResponse.next();
 }
 
@@ -111,6 +135,8 @@ export const config = {
     "/it/:path*",
     "/shop",
     "/shop/:path*",
+    "/ai",
+    "/ai/:path*",
     "/specialists",
     "/request",
     "/robots.txt",
