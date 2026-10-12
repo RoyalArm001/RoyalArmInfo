@@ -8,7 +8,6 @@ import { getRequestModelLimits, resolveModelRequest } from "@/lib/models";
 import { resolveTemplateInstructions } from "@/lib/templates";
 import { authenticated } from "@/lib/auth";
 export const runtime = "nodejs";
-export const maxDuration = 60;
 export async function POST(request: Request) {
   const abort = new AbortController(); const disconnect = () => abort.abort();
   let timer: ReturnType<typeof setTimeout> | undefined;

@@ -2,7 +2,6 @@ import { jsonError, readJson, RequestError } from "@/lib/http";
 import { protect, providerError } from "@/lib/server-api";
 import { translate, translationRequest } from "@/lib/translation/providers";
 export const runtime = "nodejs";
-export const maxDuration = 60;
 export async function POST(request: Request) {
   try {
     await protect(request, "translate");

@@ -3,7 +3,6 @@ import { jsonError, RequestError } from "@/lib/http";
 import { protect, openAI, providerError } from "@/lib/server-api";
 import { getDefaultModelId, getRequestModelLimits, resolveModelRequest } from "@/lib/models";
 export const runtime = "nodejs";
-export const maxDuration = 60;
 const types: Record<string, string> = { "audio/webm": "webm", "audio/mp4": "mp4", "audio/ogg": "ogg", "audio/wav": "wav", "audio/mpeg": "mp3" };
 export async function POST(request: Request) {
   try {

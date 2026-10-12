@@ -3,7 +3,6 @@ import { readJson, jsonError, RequestError } from "@/lib/http";
 import { protect, openAI, providerError } from "@/lib/server-api";
 import { getDefaultModelId, getRequestModelLimits, resolveModelRequest } from "@/lib/models";
 export const runtime = "nodejs";
-export const maxDuration = 60;
 const schema = z.object({ text: z.string().trim().min(1).max(4000), voice: z.enum(["marin", "cedar", "alloy", "coral", "sage", "verse"]).optional() }).strict();
 export async function POST(request: Request) {
   try {
