@@ -4,13 +4,23 @@ import "./globals.css";
 
 export const metadata = {
   metadataBase: new URL("https://www.royalarm.uk"),
-  title: "Sipan Danielyan | IT Support & Network Engineer Armenia",
+  applicationName: "Sipan Danielyan — RoyalArm",
+  title: {
+    default: "Sipan Danielyan (Սիփան Դանիելյան) | IT Support & Network Engineer Armenia",
+    template: "%s | Sipan Danielyan — RoyalArm",
+  },
   description:
-    "IT support in Armenia by Sipan Danielyan: networks, servers, Proxmox, TrueNAS, Nextcloud, Hikvision CCTV, monitoring systems, websites, and remote technical service.",
+    "Official website of Sipan Danielyan (Սիփան Դանիելյան) — IT Technician & Network Engineer in Armenia (Mota-Engil, RoyalArm). Enterprise networks, servers, Proxmox VE, TrueNAS, Nextcloud, Hikvision CCTV, Zabbix monitoring, RoyalArm AI, and remote IT support.",
   keywords: [
     "Sipan Danielyan",
-    "IT programmer",
-    "network engineer",
+    "Սիփան Դանիելյան",
+    "Сипан Даниелян",
+    "RoyalArm",
+    "royalarm.uk",
+    "Sipan Danielyan Armenia",
+    "Sipan Danielyan IT",
+    "IT Technician Armenia",
+    "network engineer Armenia",
     "Hikvision",
     "server installation",
     "website developer",
@@ -25,7 +35,9 @@ export const metadata = {
     "Nextcloud Armenia",
     "Zabbix Armenia",
   ],
-  authors: [{ name: "Sipan Danielyan" }],
+  authors: [{ name: "Sipan Danielyan", url: "https://www.royalarm.uk" }],
+  creator: "Sipan Danielyan",
+  publisher: "Sipan Danielyan",
   robots: {
     index: true,
     follow: true,
@@ -40,23 +52,41 @@ export const metadata = {
     },
   },
   openGraph: {
-    title: "Sipan Danielyan | IT Support & Network Engineer Armenia",
+    title: "Sipan Danielyan (Սիփան Դանիելյան) | IT Support & Network Engineer Armenia",
     description:
-      "Remote IT support, networks, servers, CCTV, monitoring systems, and web development across Armenia.",
-    url: "/",
-    siteName: "Sipan Danielyan — IT Services Armenia",
-    locale: "hy_AM",
-    type: "website",
-    images: ["/assets/images/Sipan-Danielyan-2026.jpg"],
+      "Official portfolio and IT infrastructure hub of Sipan Danielyan: networks, servers, Proxmox, TrueNAS, CCTV, monitoring systems, and RoyalArm AI.",
+    url: "https://www.royalarm.uk",
+    siteName: "Sipan Danielyan — RoyalArm",
+    locale: "en_US",
+    alternateLocale: ["hy_AM", "ru_RU"],
+    type: "profile",
+    firstName: "Sipan",
+    lastName: "Danielyan",
+    username: "RoyalArm",
+    images: [
+      {
+        url: "/assets/images/Sipan-Danielyan-2026.jpg",
+        width: 1200,
+        height: 1200,
+        alt: "Sipan Danielyan — IT Technician and Network Engineer in Armenia",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sipan Danielyan | IT Services Armenia",
-    description: "Networks, servers, CCTV, monitoring, software, and remote IT support across Armenia.",
+    title: "Sipan Danielyan (Սիփան Դանիելյան) | IT & Network Engineer Armenia",
+    description: "Official website of Sipan Danielyan: networks, servers, CCTV, monitoring, software, and RoyalArm AI.",
     images: ["/assets/images/Sipan-Danielyan-2026.jpg"],
   },
-  alternates: { canonical: "/" },
-  icons: { icon: "/assets/LogoArm.png" },
+  alternates: {
+    canonical: "https://www.royalarm.uk",
+    languages: {
+      "en-US": "https://www.royalarm.uk",
+      "hy-AM": "https://www.royalarm.uk",
+      "ru-RU": "https://www.royalarm.uk",
+    },
+  },
+  icons: { icon: "/assets/LogoArm.png", apple: "/assets/royalarm-logo-180.png" },
 };
 
 export const viewport = {
@@ -70,14 +100,38 @@ export default function RootLayout({ children }) {
     "@context": "https://schema.org",
     "@graph": [
       {
+        "@type": "ProfilePage",
+        "@id": "https://www.royalarm.uk/#profilepage",
+        url: "https://www.royalarm.uk",
+        name: "Sipan Danielyan (Սիփան Դանիելյան) — Official Portfolio & IT Engineering Hub",
+        isPartOf: { "@id": "https://www.royalarm.uk/#website" },
+        about: { "@id": "https://www.royalarm.uk/#person" },
+        mainEntity: { "@id": "https://www.royalarm.uk/#person" },
+      },
+      {
         "@type": "Person",
         "@id": "https://www.royalarm.uk/#person",
         name: "Sipan Danielyan",
+        givenName: "Sipan",
+        familyName: "Danielyan",
         url: "https://www.royalarm.uk",
+        mainEntityOfPage: { "@id": "https://www.royalarm.uk/#profilepage" },
         image: "https://www.royalarm.uk/assets/images/Sipan-Danielyan-2026.jpg",
-        alternateName: "Սիփան Դանիելյան",
-        jobTitle: "IT Technician",
+        alternateName: ["Սիփան Դանիելյան", "Сипан Даниелян", "RoyalArm"],
+        description:
+          "Sipan Danielyan is an IT Technician and Network Engineer in Armenia specializing in enterprise networks, Linux/Windows servers, Proxmox VE, TrueNAS, Nextcloud, Hikvision CCTV, and AI engineering.",
+        jobTitle: ["IT Technician", "Network Engineer", "Systems Administrator"],
         worksFor: { "@type": "Organization", name: "Mota-Engil" },
+        knowsLanguage: ["hy", "en", "ru"],
+        sameAs: [
+          "https://www.royalarm.uk",
+          "https://ai.royalarm.uk",
+          "https://it.royalarm.uk",
+          "https://shop.royalarm.uk",
+          "https://gen.royalarm.uk",
+          "https://www.royalarm.uk/cv/en",
+          "https://www.royalarm.uk/cv/hy",
+        ],
         email: "mailto:royalarm001@gmail.com",
         telephone: "+37491733633",
         address: {
@@ -173,8 +227,8 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
         <a href="#main-content" className="skip-link">Skip to main content</a>
-        <SiteEntryLoader />
         {children}
+        <SiteEntryLoader />
         <Script src="/js/script.js?v=portfolio-navigation-20260920" strategy="afterInteractive" />
         <Script src="/js/translate.js?v=portfolio-depth" strategy="afterInteractive" />
       </body>

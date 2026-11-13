@@ -118,7 +118,14 @@ export default function SiteEntryLoader() {
     const hostname = window.location.hostname.toLowerCase();
     const pathname = window.location.pathname;
 
+    const ua = window.navigator.userAgent || "";
+    const isSearchCrawler =
+      /bot|crawl|spider|slurp|googlebot|bingbot|yandex|duckduckbot|baiduspider|applebot|facebookexternalhit|linkedinbot|twitterbot|whatsapp|telegrambot|oai-searchbot|gptbot|perplexitybot|claudebot|lighthouse|pagespeed/i.test(
+        ua
+      );
+
     if (
+      isSearchCrawler ||
       document.documentElement.dataset.skipEntryLoader === "1" ||
       isExcludedRoute(hostname, pathname) ||
       document.querySelector(".ai-root, [data-admin-page], .resume-sheet")
@@ -227,6 +234,7 @@ export default function SiteEntryLoader() {
         role="status"
         aria-live="polite"
         aria-label={copy.ariaLabel}
+        data-nosnippet=""
         suppressHydrationWarning
       >
         <div className="site-entry-loader-grid" aria-hidden="true" />

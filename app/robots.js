@@ -3,11 +3,18 @@ const PUBLIC_ALLOW = [
   "/assets/",
   "/cv/",
   "/service-request",
+  "/ai",
+  "/ai/",
+  "/it",
+  "/it/",
+  "/shop",
+  "/shop/",
+  "/shopblog",
   "/_next/static/",
   "/_next/image/",
 ];
 
-const PRIVATE_DISALLOW = ["/api/", "/admin", "/admin/", "/ai", "/ai/"];
+const PRIVATE_DISALLOW = ["/api/", "/admin", "/admin/"];
 
 const SEARCH_CRAWLERS = [
   "Googlebot",
@@ -66,7 +73,7 @@ export default function robots() {
       },
       {
         userAgent: AI_SEARCH_CRAWLERS,
-        allow: ["/", "/cv/", "/service-request", "/assets/"],
+        allow: ["/", "/cv/", "/service-request", "/ai", "/ai/", "/it", "/shop", "/assets/"],
         disallow: PRIVATE_DISALLOW,
       },
       {
