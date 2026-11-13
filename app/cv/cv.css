@@ -18,3 +18,105 @@
   .resume-sheet li, .resume-sheet header { break-inside: avoid; }
   .resume-sheet li { margin-bottom: .25em; }
 }
+.resume-portrait, .resume-index { display: none; }
+
+@media screen {
+  body:has(.resume-sheet) {
+    --cv-bg: #080d13;
+    --cv-panel: #101a23;
+    --cv-line: #2c404c;
+    --cv-ink: #edf3f7;
+    --cv-muted: #b1c1ce;
+    --cv-accent: #73e5e2;
+    background: radial-gradient(ellipse at 83% 0, #153039, transparent 37rem), var(--cv-bg) !important;
+  }
+  html[data-theme="light"] body:has(.resume-sheet) {
+    --cv-bg: #f1f6f7;
+    --cv-panel: #fff;
+    --cv-line: #b9cdd8;
+    --cv-ink: #172d3d;
+    --cv-muted: #42596b;
+    --cv-accent: #096b73;
+    background: radial-gradient(ellipse at 83% 0, #d3e9e8, transparent 37rem), var(--cv-bg) !important;
+  }
+  .resume-sheet {
+    max-width: 74rem;
+    padding: 0 clamp(1rem, 4vw, 3rem) 5rem;
+    background: transparent;
+    color: var(--cv-ink);
+    font-family: Manrope, Arial, sans-serif;
+  }
+  .resume-sheet a { color: var(--cv-accent); text-underline-offset: .22em; }
+  .resume-sheet :is(a,button):focus-visible { outline: 2px solid var(--cv-accent); outline-offset: 3px; }
+  .resume-sheet .resume-tools {
+    margin: 0;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--cv-line);
+    font-weight: 700;
+    font-size: .9rem;
+  }
+  .resume-tools a { text-decoration: none; }
+  .resume-tools a:hover, .resume-index a:hover { text-decoration: underline; }
+  .resume-sheet .resume-tools button { background: var(--cv-accent); color: var(--cv-bg); padding: .65rem 1rem; }
+  .resume-sheet header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(10rem, 26vw, 17rem);
+    gap: clamp(1.5rem, 6vw, 5rem);
+    align-items: center;
+    padding: clamp(2rem, 6vw, 4.5rem) 0;
+  }
+  .resume-portrait {
+    display: block;
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 4.5;
+    object-fit: cover;
+    object-position: center 68%;
+    border: 1px solid var(--cv-line);
+    border-radius: 5rem .9rem .9rem .9rem;
+  }
+  .resume-intro { grid-area: 1 / 1; }
+  .resume-sheet h1 { font-size: clamp(2.5rem, 6vw, 5.5rem); line-height: 1.07; letter-spacing: -.055em; }
+  .resume-intro p { color: var(--cv-muted); }
+  .resume-intro h1 + p { color: var(--cv-accent); font-size: clamp(1rem, 2vw, 1.45rem); font-weight: 600; margin: 1.15rem 0; }
+  .resume-body { display: grid; grid-template-columns: minmax(10rem, 1fr) minmax(0, 3fr); gap: clamp(1.5rem, 5vw, 4rem); }
+  .resume-sheet .resume-index {
+    display: grid;
+    align-self: start;
+    gap: 0;
+    position: sticky;
+    top: 1rem;
+    margin: 0;
+    padding-left: 1rem;
+    border-left: 2px solid var(--cv-line);
+  }
+  .resume-index a { padding: .4rem 0; color: var(--cv-muted); text-decoration: none; font-size: .9rem; }
+  .resume-sheet section {
+    margin-bottom: 1.2rem;
+    padding: clamp(1.2rem, 3vw, 2.35rem);
+    background: var(--cv-panel);
+    border: 1px solid var(--cv-line);
+    border-radius: 1rem;
+    scroll-margin-top: 1rem;
+  }
+  .resume-sheet h2 { color: var(--cv-ink); border-color: var(--cv-line); margin: 0 0 1.35rem; padding-bottom: .8rem; font-size: clamp(1.3rem, 2.5vw, 1.8rem); }
+  .resume-sheet li { margin-bottom: 1rem; }
+  .resume-sheet li:last-child { margin-bottom: 0; }
+  .resume-sheet li span { color: var(--cv-muted); }
+  .resume-sheet section:first-child li { position: relative; border-left: 1px solid var(--cv-line); padding: 0 0 1.5rem 1.2rem; margin: 0; }
+  .resume-sheet section:first-child li:last-child { padding-bottom: 0; }
+  .resume-sheet section:first-child li::before { content: ""; position: absolute; left: -4px; top: .5em; width: 7px; height: 7px; border-radius: 50%; background: var(--cv-accent); }
+  .resume-sheet section > a { display: inline-block; margin-top: 1rem; }
+}
+@media screen and (max-width: 700px) {
+  .resume-body { display: block; }
+  .resume-sheet .resume-index { position: static; display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 1rem; border: 0; padding: .4rem 0; margin-bottom: 1rem; }
+  .resume-index a { flex: none; }
+  .resume-sheet header { grid-template-columns: minmax(0, 1fr) 5.5rem; gap: .7rem; }
+  .resume-portrait { align-self: start; border-radius: 2rem .5rem .5rem .5rem; }
+  .resume-sheet h1 { font-size: clamp(2rem, 7vw, 3rem); }
+  .resume-sheet .resume-tools { column-gap: .7rem; }
+  .resume-intro { overflow-wrap: anywhere; }
+}

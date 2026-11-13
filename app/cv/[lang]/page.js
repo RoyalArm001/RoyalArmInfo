@@ -34,26 +34,36 @@ export default async function Resume({ params }) {
   const hy = lang === "hy";
   return (
     <main id="main-content" className="resume-sheet" lang={lang}>
-      <nav aria-label={hy ? "CV-ի գործիքներ" : "CV tools"}>
+      <nav className="resume-tools" aria-label={hy ? "CV-ի գործիքներ" : "CV tools"}>
         <a href="/#resume">{hy ? "← Պորտֆոլիո" : "← Portfolio"}</a>
         <a href={hy ? "/cv/en" : "/cv/hy"} lang={hy ? "en" : "hy"}>{hy ? "English" : "Հայերեն"}</a>
         <PrintButton>{hy ? "Արտահանել PDF" : "Export PDF"}</PrintButton>
       </nav>
       <header>
-        <h1>{name}</h1>
-        <p>{hy ? "ՏՏ տեխնիկ · Ցանցային ինժեներ" : "IT Technician · Network Engineer"}</p>
-        <p>{location}</p>
-        <p><a href="mailto:RoyalArm001@gmail.com">RoyalArm001@gmail.com</a> · <a href="tel:+37491733633">+374 91 733633</a></p>
+        <img className="resume-portrait" src="/assets/images/Sipan-Danielyan-2026.jpg" alt="" width="480" height="640" />
+        <div className="resume-intro">
+          <h1>{name}</h1>
+          <p>{hy ? "ՏՏ տեխնիկ · Ցանցային ինժեներ" : "IT Technician · Network Engineer"}</p>
+          <p>{location}</p>
+          <p><a href="mailto:RoyalArm001@gmail.com">RoyalArm001@gmail.com</a> · <a href="tel:+37491733633">+374 91 733633</a></p>
+        </div>
       </header>
-      {sections.map(({ title, entries, profileLink }) => (
-        <section key={title}>
-          <h2>{title}</h2>
-          <ul>{entries.map(([subject, detail]) => (
-            <li key={subject || detail}>{subject && <strong>{subject}</strong>}{detail && <span>{detail}</span>}</li>
-          ))}</ul>
-          {profileLink && <a href={profileLink.href} rel="me">{profileLink.label}</a>}
-        </section>
-      ))}
+      <div className="resume-body">
+        <nav className="resume-index" aria-label={hy ? "CV-ի բաժիններ" : "CV sections"}>
+          {sections.map(({ title }, index) => <a key={title} href={`#section-${index + 1}`}>{title}</a>)}
+        </nav>
+        <div className="resume-sections">
+          {sections.map(({ title, entries, profileLink }, index) => (
+            <section key={title} id={`section-${index + 1}`}>
+              <h2>{title}</h2>
+              <ul>{entries.map(([subject, detail]) => (
+                <li key={subject || detail}>{subject && <strong>{subject}</strong>}{detail && <span>{detail}</span>}</li>
+              ))}</ul>
+              {profileLink && <a href={profileLink.href} rel="me">{profileLink.label}</a>}
+            </section>
+          ))}
+        </div>
+      </div>
     </main>
   );
 }
