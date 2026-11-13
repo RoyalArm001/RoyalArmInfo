@@ -1,4 +1,5 @@
 (function setupLocalTranslation() {
+  if (document.querySelector(".ai-root")) return;
   const resume = document.querySelector(".resume-sheet[lang]");
   if (resume) {
     document.documentElement.lang = resume.lang;
