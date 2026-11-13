@@ -1,3 +1,5 @@
+import SignalField from "./SignalField";
+
 export default function Hero() {
   return (
     <section id="home" className="systems-hero" aria-labelledby="hero-heading">
@@ -11,18 +13,7 @@ export default function Hero() {
           <a href="https://ai.royalarm.uk/">RoyalArm AI</a>
         </div>
       </div>
-      <figure className="rack-figure">
-        <div className="rack-field" aria-hidden="true">
-          <div className="rack-stack">
-            {["switch", "compute", "storage"].map((type) => (
-              <div key={type} className={`rack-unit rack-${type}`}>
-                <div className="rack-face"><i /><span /><b /></div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <figcaption><span>Network infrastructure</span><span aria-hidden="true">↗</span></figcaption>
-      </figure>
+      <SignalField />
     </section>
   );
 }
