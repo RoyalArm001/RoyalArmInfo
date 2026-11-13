@@ -154,7 +154,7 @@ export default function RootLayout({ children }) {
         <script
           id="theme-init"
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var saved=localStorage.getItem('portfolio-theme');var theme=saved==='light'?'light':'dark';document.documentElement.dataset.theme=theme;document.documentElement.style.colorScheme=theme;}catch(e){document.documentElement.dataset.theme='dark';}try{var p=location.pathname;var h=location.hostname.toLowerCase();if(h.indexOf('ai.')===0||p.indexOf('/admin')===0||p.indexOf('/ai')===0||p.indexOf('/cv')===0){document.documentElement.dataset.skipEntryLoader='1';}}catch(e){}})();`,
+            __html: `(function(){try{var p=location.pathname;var h=location.hostname.toLowerCase();var isAi=h.indexOf('ai.')===0||p.indexOf('/ai')===0;var saved=localStorage.getItem('portfolio-theme');var theme=isAi?'dark':(saved==='light'?'light':'dark');document.documentElement.dataset.theme=theme;document.documentElement.style.colorScheme=theme;if(isAi||p.indexOf('/admin')===0||p.indexOf('/cv')===0){document.documentElement.dataset.skipEntryLoader='1';}}catch(e){document.documentElement.dataset.theme='dark';}})();`,
           }}
         />
         <link rel="preconnect" href="https://fonts.googleapis.com" />

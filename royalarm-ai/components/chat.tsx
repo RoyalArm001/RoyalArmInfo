@@ -673,7 +673,7 @@ export function Chat({
               title="Բացել պատմությունը և նավարկումը"
             >
               <PanelLeft size={16} />
-              <span className="hidden md:inline">Պատմություն</span>
+              <span className="drawer-trigger-label">Պատմություն</span>
             </button>
 
             {/* Visible Grouped Model Selector */}
@@ -859,7 +859,9 @@ export function Chat({
                   "Լոկալ ինժեներական մտածողություն՝ FortiGate, MikroTik, Proxmox, AD, CCTV, Delphi և RoyalArm Store կատալոգի համար։"}
               </p>
             </div>
-            <AiOrb state={orbState} micVolume={micVolume} onOrbClick={handleOrbClick} />
+            <div className="command-hero-orb">
+              <AiOrb state={orbState} micVolume={micVolume} onOrbClick={handleOrbClick} />
+            </div>
           </div>
 
           {/* Sipan Engineering Quick Launch Cards (shown before first question) */}

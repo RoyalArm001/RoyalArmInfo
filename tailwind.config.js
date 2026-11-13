@@ -1,6 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./app/**/*.{js,jsx}", "./index.html"],
+  content: [
+    "./app/**/*.{js,jsx,ts,tsx}",
+    "./royalarm-ai/app/**/*.{js,jsx,ts,tsx}",
+    "./royalarm-ai/components/**/*.{js,jsx,ts,tsx}",
+    "./index.html",
+  ],
   theme: {
     extend: {
       colors: {
