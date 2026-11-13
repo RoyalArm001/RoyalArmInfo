@@ -28,6 +28,7 @@ import { Login } from "./login";
 import { useWorkspace } from "@/lib/use-workspace";
 import { GREETING } from "@/lib/identity";
 import { MessageMarkdown } from "./markdown";
+import { SpeechPlayer } from "@/lib/voice/audio";
 import { AiOrb, type OrbState } from "./ai-orb";
 import { AmbientBackground } from "./ambient-background";
 import { HistoryDrawer } from "./history-drawer";
@@ -93,12 +94,15 @@ export function Chat({
   const [vocabulary, setVocabulary] = useState<VocabularyItem[]>([]);
 
   // Voice, Microphone & Speech States
-  const [voiceActivated, setVoiceActivated] = useState(false);
-  const [speakerEnabled, setSpeakerEnabled] = useState(true);
+  const autoRead = useRef(false);
+  const playbackVersion = useRef(0);
+  const speechPlayer = useRef<SpeechPlayer | null>(null);
+  const [voiceError, setVoiceError] = useState("");
+  const [speakerEnabled, setSpeakerEnabled] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [speaking, setSpeaking] = useState(false);
   const [micVolume, setMicVolume] = useState(0);
-  const [hasSpokenGreeting, setHasSpokenGreeting] = useState(false);
+
 
   // Conversational Voice Modulation Settings
   const [voicePitch, setVoicePitch] = useState<number>(1.0);
@@ -124,8 +128,7 @@ export function Chat({
   }
 
   function testVoiceSample() {
-    triggerVoiceActivation();
-    speakText("Բարև, ես RoyalArm AI-ն եմ։ Ձայնային մոդուլացիան ակտիվ է։ Hello, voice modulation is ready!");
+    void speakText("Բարև։ Այսպես կհնչի իմ պատասխանը։");
   }
 
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -146,9 +149,7 @@ export function Chat({
     return () => {
       mounted = false;
       stopMicrophone();
-      if (typeof window !== "undefined" && "speechSynthesis" in window) {
-        window.speechSynthesis.cancel();
-      }
+      stopSpeech();
     };
   }, []);
 
@@ -192,9 +193,7 @@ export function Chat({
 
   // Determine actual Orb State
   let orbState: OrbState = "idle";
-  if (!speakerEnabled && !isListening) {
-    orbState = "muted";
-  } else if (isListening) {
+  if (isListening) {
     orbState = "listening";
   } else if (ws.busy) {
     orbState = "thinking";
@@ -206,53 +205,59 @@ export function Chat({
     orbState = "idle";
   }
 
-  // Speak assistant text
-  function speakText(text: string) {
-    if (!speakerEnabled || typeof window === "undefined" || !("speechSynthesis" in window))
-      return;
-    window.speechSynthesis.cancel();
-
-    const clean = text
-      .replace(/```[\s\S]*?```/g, "Code block omitted.")
-      .replace(/`([^`]+)`/g, "$1")
-      .replace(/[*_#>[\]()]/g, "")
-      .trim();
-
-    if (!clean) return;
-
-    const utterance = new SpeechSynthesisUtterance(clean);
-    const hasArmenian = /[\u0530-\u058F]/.test(clean);
-    utterance.lang = hasArmenian ? "hy-AM" : "en-US";
-    utterance.pitch = voicePitch;
-    utterance.rate = voiceRate;
-
-    utterance.onstart = () => setSpeaking(true);
-    utterance.onend = () => setSpeaking(false);
-    utterance.onerror = () => setSpeaking(false);
-
-    window.speechSynthesis.speak(utterance);
+  function stopSpeech() {
+    playbackVersion.current++;
+    window.speechSynthesis?.cancel();
+    speechPlayer.current?.stop();
+    setSpeaking(false);
   }
 
-  // Voice activation handler:
-  // "Speak the greeting only after voice has been activated."
-  function triggerVoiceActivation() {
-    if (!voiceActivated) {
-      setVoiceActivated(true);
-      if (!hasSpokenGreeting && messages.length <= 1) {
-        setHasSpokenGreeting(true);
-        speakText(GREETING);
+  async function speakText(text: string) {
+    stopSpeech();
+    setVoiceError("");
+    const version = playbackVersion.current;
+    const clean = text.replace(/```[\s\S]*?```/g, " ").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/[`*_#>]/g, "").trim();
+    if (!clean) return;
+    const lang = /[Ա-ֆ]/.test(clean) ? "hy" : /[А-яЁё]/.test(clean) ? "ru" : "en";
+    const synth = window.speechSynthesis;
+    const voice = synth?.getVoices().find((item) => item.lang.toLowerCase().split(/[-_]/)[0] === lang);
+    setSpeaking(true);
+
+    async function playOnline() {
+      if (version !== playbackVersion.current) return;
+      const player = speechPlayer.current ??= new SpeechPlayer();
+      try {
+        let remaining = clean;
+        while (remaining && version === playbackVersion.current) {
+          const boundary = remaining.lastIndexOf(" ", 4000);
+          const end = remaining.length <= 4000 ? remaining.length : boundary > 0 ? boundary : 4000;
+          await player.speak(remaining.slice(0, end), ws.prefs.voice, voiceRate);
+          remaining = remaining.slice(end).trimStart();
+        }
+      } catch {
+        if (version === playbackVersion.current) {
+          player.stop();
+          setVoiceError("Ձայնային ծառայությունն անհասանելի է։ Կարող եք կրկին փորձել կամ սարքի կարգավորումներում ավելացնել պատասխանի լեզվի ձայնը։");
+        }
+      } finally {
+        if (version === playbackVersion.current) setSpeaking(false);
       }
     }
+
+    if (!voice) return playOnline();
+    const utterance = new SpeechSynthesisUtterance(clean);
+    utterance.voice = voice;
+    utterance.lang = voice.lang;
+    utterance.pitch = voicePitch;
+    utterance.rate = voiceRate;
+    utterance.onend = () => { if (version === playbackVersion.current) setSpeaking(false); };
+    utterance.onerror = () => { void playOnline(); };
+    synth.speak(utterance);
   }
 
-  // Real Microphone Audio Analyser via Web Audio API
-  async function startMicrophone() {
-    triggerVoiceActivation();
-    if (speaking) {
-      window.speechSynthesis.cancel();
-      setSpeaking(false);
-    }
-
+  async function startMicrophone(prefix = "") {
+    stopSpeech();
+    setVoiceError("");
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       mediaStreamRef.current = stream;
@@ -299,7 +304,7 @@ export function Chat({
           const transcript = Array.from(event.results)
             .map((result) => result[0].transcript)
             .join("");
-          setDraft(transcript);
+          setDraft(prefix + transcript);
         };
 
         recognition.onend = () => {
@@ -312,9 +317,12 @@ export function Chat({
 
         speechRecognitionRef.current = recognition;
         recognition.start();
+      } else {
+        stopMicrophone();
+        setVoiceError("Այս դիտարկիչը չի աջակցում խոսքի ճանաչմանը։ Հարցը կարող եք գրել։");
       }
-    } catch (err) {
-      console.error("Microphone access denied or error:", err);
+    } catch {
+      setVoiceError("Խոսափողը հասանելի չէ։ Ստուգեք դիտարկիչի թույլտվությունը։");
       stopMicrophone();
     }
   }
@@ -354,19 +362,14 @@ export function Chat({
   }
 
   function toggleSpeaker() {
-    triggerVoiceActivation();
-    const next = !speakerEnabled;
-    setSpeakerEnabled(next);
-    if (!next && speaking) {
-      window.speechSynthesis.cancel();
-      setSpeaking(false);
-    }
+    autoRead.current = !autoRead.current;
+    setSpeakerEnabled(autoRead.current);
+    if (!autoRead.current) stopSpeech();
   }
 
   function handleOrbClick() {
     if (speaking) {
-      window.speechSynthesis.cancel();
-      setSpeaking(false);
+      stopSpeech();
     } else if (!isListening) {
       startMicrophone();
     } else {
@@ -374,19 +377,19 @@ export function Chat({
     }
   }
 
-  async function send(text = draft) {
+  async function send(text = draft, retry = false) {
     const trimmed = text.trim();
-    if (!trimmed || ws.busy) return;
+    if ((!trimmed && !retry) || ws.busy || !ws.ready) return;
 
     if (speaking) {
-      window.speechSynthesis.cancel();
-      setSpeaking(false);
+      stopSpeech();
     }
     stopMicrophone();
     setDraft("");
 
-    const answer = await ws.send(trimmed, false, false, selectedModelId);
-    if (answer && speakerEnabled && voiceActivated) {
+    const version = playbackVersion.current;
+    const answer = await ws.send(trimmed, retry, false, selectedModelId);
+    if (answer && autoRead.current && version === playbackVersion.current) {
       speakText(answer);
     }
   }
@@ -394,8 +397,7 @@ export function Chat({
   function handleStop() {
     ws.stop();
     if (speaking) {
-      window.speechSynthesis.cancel();
-      setSpeaking(false);
+      stopSpeech();
     }
     stopMicrophone();
   }
@@ -412,8 +414,8 @@ export function Chat({
     if (!text) return;
 
     if (action === "listen") {
-      triggerVoiceActivation();
-      speakText(text);
+      if (speaking) stopSpeech();
+      else void speakText(text);
     } else if (action === "translate") {
       const hasArmenian = /[\u0530-\u058F]/.test(text);
       const prompt = hasArmenian
@@ -450,7 +452,7 @@ export function Chat({
     } catch {}
     ws.create();
     setDraft("");
-    setHasSpokenGreeting(false);
+    stopSpeech();
   }
 
   return (
@@ -506,6 +508,7 @@ export function Chat({
 
         {/* Top Right Actions */}
         <div className="top-actions-row">
+          <details className="chat-tools"><summary>Գործիքներ</summary><div className="chat-tools-menu">
           <span className="active-plan-chip">{activePlan.toUpperCase()}</span>
           {models.length > 0 && <label className="model-selector">
             <span>Model</span>
@@ -535,7 +538,7 @@ export function Chat({
           <Link className="nav-action-pill" href="/plans">Plans</Link>
           <a
             className="nav-action-pill text-cyan-300 hover:text-cyan-200 border-cyan-500/30"
-            href="/shop"
+            href="https://shop.royalarm.uk"
             title="RoyalArm Store — Ծրագրերի կատալոգ (Windows, Network.am ոճով)"
           >
             <ShoppingBag size={14} className="text-cyan-400" />
@@ -546,7 +549,7 @@ export function Chat({
             onClick={() => {
               ws.create();
               setDraft("");
-              setHasSpokenGreeting(false);
+              stopSpeech();
             }}
             aria-label="New conversation"
             title="New conversation (Նոր զրույց)"
@@ -586,31 +589,20 @@ export function Chat({
             <span className="hidden sm:inline">Նորից</span>
           </button>
 
+          </div></details>
         </div>
       </header>
 
       {/* Main Conversational Showcase (Center Stage) */}
       <main className="ai-orb-stage">
         {/* Futuristic Stage Header */}
-        <div className="conversation-stage-header text-center mb-3">
-          <h1 className="text-xl sm:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-200 via-white to-violet-200">
-            What’s on your mind?
-          </h1>
-          <p className="text-xs text-cyan-300/80 mt-1">
-            {ws.prefs.mode === "practice"
-              ? "English Practice • Interactive AI Tutor"
-              : ws.prefs.mode === "translation"
-              ? "Translation Mode • English & Armenian"
-              : "Հայկական խելացի տարածք • Ստեղծված Սիփանի կողմից"}
-          </p>
+        <div className="chat-intro">
+          <div>
+            <h1>{ws.prefs.mode === "practice" ? "Անգլերենի փորձասենյակ" : ws.prefs.mode === "translation" ? "Թարգմանություն" : "Ինչո՞վ կարող եմ օգնել։"}</h1>
+            <p>{ws.prefs.mode === "practice" ? "Սկսեք զրույց անգլերենով և ստացեք ուղղումներ։" : ws.prefs.mode === "translation" ? "Գրեք հայերեն կամ անգլերեն՝ թարգմանելու համար։" : "Գրեք ձեր հարցը կամ օգտագործեք խոսափողը։"}</p>
+          </div>
+          <AiOrb state={orbState} micVolume={micVolume} onOrbClick={handleOrbClick} />
         </div>
-
-        {/* The Animated Dimensional Fluid AI Orb */}
-        <AiOrb
-          state={orbState}
-          micVolume={micVolume}
-          onOrbClick={handleOrbClick}
-        />
 
         {/* Conversation Focus Area (Stationary Readable Area) */}
         <div className="conversation-focus-area mt-4">
@@ -628,14 +620,19 @@ export function Chat({
               <div className="response-author-tag">
                 <Sparkles size={14} />
                 <span>
-                  RoyalArm AI •{" "}
+                  RoyalArm AI · {" "}
                   {ws.prefs.mode === "practice"
-                    ? "English Practice"
+                    ? "Անգլերեն"
                     : ws.prefs.mode === "translation"
-                    ? "Translation Mode"
-                    : "Assistant"}
+                    ? "Թարգմանություն"
+                    : "Օգնական"}
                 </span>
               </div>
+              <button className="listen-reply" disabled={ws.busy || !lastAssistant.content}
+                onClick={() => handleChipAction("listen")} aria-pressed={speaking}>
+                {speaking ? <Square size={14} /> : <Volume2 size={16} />}
+                {speaking ? "Կանգնեցնել ձայնը" : "Լսել պատասխանը"}
+              </button>
               {messages.length > 2 && (
                 <button
                   className="action-chip transcript-link-chip"
@@ -648,6 +645,7 @@ export function Chat({
               )}
             </div>
 
+            {voiceError && <p className="voice-feedback" role="status">{voiceError}</p>}
             {/* Response Body Text */}
             <div className="response-body-text">
               {lastAssistant.status === "streaming" && !lastAssistant.content ? (
@@ -676,7 +674,7 @@ export function Chat({
                   </span>
                   <button
                     className="retry-btn px-3 py-1 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/40 text-xs font-medium transition-colors"
-                    onClick={() => void ws.send("", true, false, selectedModelId)}
+                    onClick={() => void send("", true)}
                     aria-label="Retry reply"
                   >
                     Retry reply
@@ -687,15 +685,6 @@ export function Chat({
 
             {/* Compact Action Chips */}
             <div className="action-chips-container">
-              <a
-                href="/shop"
-                className="action-chip text-cyan-300 border-cyan-500/30 hover:border-cyan-400"
-                title="Որոնել և բեռնել ստուգված ծրագրեր Store-ում (Windows, Network.am ոճով)"
-              >
-                <ShoppingBag size={13} className="text-cyan-400" />
-                <span>Store Ծրագրեր</span>
-              </a>
-
               <button
                 className="action-chip"
                 onClick={() => handleChipAction("translate")}
@@ -714,14 +703,19 @@ export function Chat({
                 <span>Ավելի պարզ</span>
               </button>
 
-              <button
-                className="action-chip"
-                onClick={() => handleChipAction("listen")}
-                title="Լսել բարձրաձայն"
-              >
-                <Volume2 size={13} className="text-sky-400" />
-                <span>Լսել</span>
-              </button>
+
+
+              {currentQuestion && lastAssistant.status === "complete" && (
+                <button className="action-chip" disabled={ws.busy || isListening}
+                  onClick={() => {
+                    const prefix = draft.trim() ? draft.trimEnd() + " " : "Նախորդ պատասխանում խնդրում եմ ուղղել հետևյալը․ ";
+                    textareaRef.current?.focus();
+                    void startMicrophone(prefix);
+                  }}>
+                  <Mic size={14} />
+                  Ձայնով առաջարկել ուղղում
+                </button>
+              )}
 
               <button
                 className="action-chip"
@@ -878,10 +872,11 @@ export function Chat({
               onClick={toggleSpeaker}
               title={
                 speakerEnabled
-                  ? "Ձայնը միացված է (Mute voice)"
-                  : "Ձայնն անջատված է (Unmute voice)"
+                  ? "Անջատել պատասխանների ավտոմատ ընթերցումը"
+                  : "Ավտոմատ կարդալ պատասխանները"
               }
-              aria-label={speakerEnabled ? "Ձայնը միացված է" : "Ձայնն անջատված է"}
+              aria-pressed={speakerEnabled}
+              aria-label="Ավտոմատ կարդալ պատասխանները"
             >
               {speakerEnabled ? <Volume2 size={17} /> : <VolumeX size={17} />}
             </button>
@@ -915,7 +910,7 @@ export function Chat({
                 onClick={() => {
                   ws.create();
                   setDraft("");
-                  setHasSpokenGreeting(false);
+                  stopSpeech();
                 }}
                 aria-label="New conversation"
                 title="New conversation (Ավարտել զրույցը)"
@@ -954,7 +949,7 @@ export function Chat({
             YouTube <ExternalLink size={10} />
           </a>
           <span>•</span>
-          <span className="text-slate-500">Conversations stay in IndexedDB on this device</span>
+          <span className="text-slate-500">Զրույցների պատմությունը պահվում է այս սարքում։</span>
         </div>
       </footer>
 
@@ -965,13 +960,14 @@ export function Chat({
         conversations={ws.conversations}
         activeId={ws.activeId}
         onSelectConversation={(id) => {
+          stopSpeech();
           ws.select(id);
           setDraft("");
         }}
         onNewConversation={() => {
           ws.create();
           setDraft("");
-          setHasSpokenGreeting(false);
+          stopSpeech();
         }}
         onDeleteConversation={(id) => {
           void ws.remove(id);

@@ -25,13 +25,14 @@ export class SpeechPlayer {
   private request: AbortController | null = null;
   private url: string | null = null;
   stop() { this.request?.abort(); this.request = null; this.audio?.pause(); this.audio = null; if (this.url) URL.revokeObjectURL(this.url); this.url = null; }
-  async speak(text: string, voice: string) {
+  async speak(text: string, voice: string, rate = 1) {
     this.stop(); const controller = new AbortController(); this.request = controller;
     const audio = new Audio(); this.audio = audio;
     const response = await fetch("/api/speech", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: text.slice(0, 4000), voice }), signal: controller.signal });
     if (!response.ok) throw new Error((await response.json()).error || "Read-aloud is unavailable.");
     const blob = await response.blob(); if (controller.signal.aborted) return;
     this.url = URL.createObjectURL(blob); audio.src = this.url;
+    audio.playbackRate = rate;
     await audio.play().catch(() => { throw new Error("Your browser blocked playback. Press Listen again to allow audio."); });
     await new Promise<void>((resolve, reject) => { audio.onended = () => { this.stop(); resolve(); }; audio.onerror = () => { this.stop(); reject(new Error("Audio playback failed.")); }; controller.signal.addEventListener("abort", () => resolve(), { once: true }); });
   }
