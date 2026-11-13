@@ -45,12 +45,13 @@ export default async function Resume({ params }) {
         <p>{location}</p>
         <p><a href="mailto:RoyalArm001@gmail.com">RoyalArm001@gmail.com</a> · <a href="tel:+37491733633">+374 91 733633</a></p>
       </header>
-      {sections.map(({ title, entries }) => (
+      {sections.map(({ title, entries, profileLink }) => (
         <section key={title}>
           <h2>{title}</h2>
           <ul>{entries.map(([subject, detail]) => (
             <li key={subject || detail}>{subject && <strong>{subject}</strong>}{detail && <span>{detail}</span>}</li>
           ))}</ul>
+          {profileLink && <a href={profileLink.href} rel="me">{profileLink.label}</a>}
         </section>
       ))}
     </main>

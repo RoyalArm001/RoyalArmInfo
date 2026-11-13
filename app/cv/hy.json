@@ -58,6 +58,7 @@
     },
     {
       "title": "Վկայականներ",
+      "profileLink": { "href": "https://www.credly.com/users/sipan-danielyan", "label": "Տեսնել իմ թվային վկայանշանները Credly-ում" },
       "entries": [
         [
           "Fortinet NSE 1 Certified in Cybersecurity",

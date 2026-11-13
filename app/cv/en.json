@@ -58,6 +58,7 @@
     },
     {
       "title": "Certificates",
+      "profileLink": { "href": "https://www.credly.com/users/sipan-danielyan", "label": "View my badges on Credly" },
       "entries": [
         [
           "Fortinet NSE 1 Certified in Cybersecurity",
