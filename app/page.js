@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import HeadingSignals from "./portfolio/HeadingSignals";
+import MatrixRain from "./portfolio/MatrixRain";
 import SkillDepth from "./portfolio/SkillDepth";
 import Hero from "./portfolio/Hero";
 import PortfolioInteractions from "./portfolio/PortfolioInteractions";
@@ -34,10 +34,10 @@ export default function HomePage() {
   const [, content] = markup.split(/<!-- Hero Section -->[\s\S]*?<!-- About Me Section -->/);
   return (
     <main id="main-content" className="portfolio-page">
+      <MatrixRain />
       <PortfolioNavigation />
       <Hero />
       <div className="portfolio-markup" dangerouslySetInnerHTML={{ __html: content }} />
-      <HeadingSignals />
       <SkillDepth />
       <PortfolioInteractions />
     </main>

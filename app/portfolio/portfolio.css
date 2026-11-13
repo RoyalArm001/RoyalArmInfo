@@ -210,12 +210,12 @@ html[data-theme="light"] .portfolio-page .tech-skill-link { color: #426377; }
 /* Infrastructure portfolio */
 html .portfolio-page, html[data-theme="dark"] .portfolio-page {
   --surface: #0a1020; --panel: #141e33; --ink: #f4f5ff; --muted: #b9c5dc;
-  --line: #37425c; --cyan: #8eead8; --section-glass: var(--surface);
+  --line: #37425c; --cyan: #8eead8; --section-glass: color-mix(in srgb,var(--surface) 78%,transparent);
   background: var(--surface); color: var(--ink);
 }
 html[data-theme="light"] .portfolio-page {
   --surface: #f1f4ff; --panel: #fbfcff; --ink: #1b2341; --muted: #4e5873;
-  --line: #c1cbe1; --cyan: #156b73; --section-glass: var(--surface);
+  --line: #c1cbe1; --cyan: #156b73; --section-glass: color-mix(in srgb,var(--surface) 78%,transparent);
 }
 #main-content.portfolio-page .portfolio-navigation,
 html[data-theme="light"] #main-content.portfolio-page .portfolio-navigation,
@@ -242,12 +242,12 @@ html[data-theme="light"] #main-content.portfolio-page #mobile-navigation {
 .systems-links a { padding: .85rem 1.1rem; border: 1px solid var(--line); border-radius: 3px; font-size: .88rem; font-weight: 700; color: var(--ink); }
 .systems-links a:first-child { background: var(--cyan); color: var(--surface); border-color: var(--cyan); }
 .systems-links a:hover { outline: 1px solid var(--cyan); }
-.signal-field {
-  position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
-  mask-image: linear-gradient(90deg, transparent 12%, #0002 35%, #000 62%);
+.portfolio-page .portfolio-code-rain {
+  position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0;
+  pointer-events: none;
 }
 .signal-toggle {
-  position: absolute; right: 6%; bottom: 1.25rem; z-index: 1;
+  position: fixed; right: 1rem; bottom: 1rem; z-index: 4; background: var(--surface); border-radius: .5rem;
   padding: .6rem .8rem; color: var(--muted); border-bottom: 1px solid var(--line);
   font: .75rem ui-monospace, monospace;
 }
@@ -259,36 +259,26 @@ html[data-theme="light"] .portfolio-page :is(.skill-card,.cv-library,#projects a
 #main-content.portfolio-page :is(.text-gray-300,.text-gray-400,.text-gray-500) { color: var(--muted) !important; }
 #main-content.portfolio-page :is(.tech-skill-mark,#services .grid > div > div,#about .flex-wrap span,.web-projects-chevron,.client-site-card,.client-sites-grid) { background: var(--panel) !important; border-color: var(--line); color: var(--ink); }
 #main-content.portfolio-page #projects img { filter: none; }
-#main-content.portfolio-page footer { background: var(--panel) !important; }
+#main-content.portfolio-page :is(#armenia-support,footer) { background: var(--section-glass) !important; }
 @media (max-width: 760px) {
   #main-content.portfolio-page #home { min-height: min(790px, 92svh); padding: 7rem 6% clamp(9rem, 26vh, 14rem); }
   #main-content.portfolio-page #home h1 { font-size: clamp(3.25rem, 12vw, 6rem); }
   .systems-summary { margin: 1rem 0 1.3rem; }
-  .signal-field {
-    inset: auto -8% 0 auto; width: 128%; height: 53%;
-    mask-image: linear-gradient(180deg, transparent, #0009 32%, black 70%);
-  }
   .signal-toggle { bottom: .65rem; background: var(--surface); }
 }
 @media (prefers-reduced-motion: reduce) { .signal-toggle { display: none; } }
 
-.portfolio-page .heading-signals {
-  position: fixed;
-  inset: 0 auto auto 0;
-  z-index: 3;
-  width: 100%;
-  height: 102px;
-  pointer-events: none;
-  opacity: 0;
-}
-@media (prefers-reduced-motion: reduce), print {
-  .portfolio-page .heading-signals { display: none; }
-}
-
-/* Refracted light and extruded edges carry the fibre palette through the page. */
+@media print { .portfolio-code-rain, .signal-toggle { display: none; } }
 #main-content.portfolio-page #home {
-  background: radial-gradient(ellipse at 78% 46%, #6756cd24, transparent 46%),
-    radial-gradient(ellipse at 43% 74%, #2589a01a, transparent 45%), var(--surface) !important;
+  z-index: 1;
+  background: linear-gradient(90deg, color-mix(in srgb,var(--surface) 95%,transparent) 0%,
+    color-mix(in srgb,var(--surface) 88%,transparent) 36%, transparent 82%) !important;
+}
+@media (max-width: 760px) {
+  #main-content.portfolio-page #home {
+    background: linear-gradient(180deg, color-mix(in srgb,var(--surface) 70%,transparent),
+      color-mix(in srgb,var(--surface) 91%,transparent) 46%, transparent 95%) !important;
+  }
 }
 #main-content.portfolio-page #home h1 span:last-child {
   width: fit-content;
@@ -303,7 +293,7 @@ html[data-theme="light"] #main-content.portfolio-page #home h1 span:last-child {
 .systems-links a:first-child { box-shadow: inset 0 1px #ffffff77, 0 3px 0 color-mix(in srgb,var(--cyan), #000 35%); }
 #main-content.portfolio-page :is(#about,#skills,#resume,#projects,#services) {
   --section-tint: #589be2;
-  background: radial-gradient(ellipse at 93% 0, color-mix(in srgb,var(--section-tint) 13%,transparent), transparent 50rem), var(--surface) !important;
+  background: radial-gradient(ellipse at 93% 0, color-mix(in srgb,var(--section-tint) 13%,transparent), transparent 50rem), var(--section-glass) !important;
 }
 #main-content.portfolio-page #about, #main-content.portfolio-page #resume { --section-tint: #a78beb; }
 #main-content.portfolio-page #services { --section-tint: #43c5af; }
