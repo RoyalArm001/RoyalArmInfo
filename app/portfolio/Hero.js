@@ -1,4 +1,4 @@
-import PrismOrbit from "./PrismOrbit";
+import SignalField from "./SignalField";
 
 export default function Hero() {
   return (
@@ -13,7 +13,7 @@ export default function Hero() {
           <a href="https://ai.royalarm.uk/">RoyalArm AI</a>
         </div>
       </div>
-      <PrismOrbit />
+      <SignalField />
     </section>
   );
 }

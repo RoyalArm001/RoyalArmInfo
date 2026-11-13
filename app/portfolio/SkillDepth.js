@@ -18,7 +18,7 @@ export default function SkillDepth() {
     }
 
     function update(event) {
-      if (!pointer.matches || document.querySelector('.signal-toggle[aria-pressed="true"]')) {
+      if (!pointer.matches) {
         reset();
         return;
       }
