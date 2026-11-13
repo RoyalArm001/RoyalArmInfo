@@ -1,7 +1,7 @@
 /* Layer the technology marks over a cut-metal pedestal in each tile. */
 #main-content.portfolio-page #skills .skills-grid {
   gap: clamp(12px, 1.3vw, 22px);
-  align-items: stretch;
+  place-items: center;
 }
 
 #main-content.portfolio-page #skills .skills-grid > .skill-card {
@@ -13,14 +13,17 @@
   --shine-y: 0%;
   min-width: 0;
   position: relative;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  min-height: 175px;
-  padding: 25px 18px 21px;
-  text-align: left;
+  display: grid;
+  grid-template-rows: 50% auto 1fr;
+  justify-items: center;
+  align-items: start;
+  width: min(100%, 235px);
+  aspect-ratio: 1;
+  min-height: 0;
+  padding: 0;
+  text-align: center;
   border: 1px solid var(--rim) !important;
-  border-radius: 15px !important;
+  border-radius: 50% !important;
   background:
     radial-gradient(ellipse at var(--shine-x) var(--shine-y), color-mix(in srgb, var(--tint) 27%, transparent), transparent 75%),
     linear-gradient(135deg, var(--face), color-mix(in srgb, var(--face) 85%, #020819)) !important;
@@ -47,15 +50,15 @@
 #main-content.portfolio-page #skills .skill-card::before {
   content: "";
   position: absolute;
-  top: 52px;
-  left: 18px;
+  top: calc(50% + 5px);
+  left: 50%;
   width: 65px;
   height: 20px;
   border-radius: 50%;
   border: 1px solid var(--stand);
   background: radial-gradient(ellipse at 40% 0, var(--stand), transparent 75%), var(--face);
   box-shadow: 0 3px 0 var(--rim), 0 6px 0 color-mix(in srgb, var(--rim) 68%, #071425);
-  transform: translateZ(4px);
+  transform: translateX(-50%) translateZ(4px);
   pointer-events: none;
 }
 
@@ -63,21 +66,22 @@
   z-index: 1;
   display: grid;
   place-items: center;
-  align-self: flex-start;
+  position: absolute;
+  top: 50%;
+  left: 50%;
   width: 65px;
   height: 47px;
   max-height: 47px;
-  margin: 0 0 22px;
+  margin: 0;
   object-fit: contain;
   filter: drop-shadow(0 4px 3px #0006);
-  transform: translateZ(22px) translateY(-4px);
+  transform: translate(-50%, -50%) translateZ(22px);
 }
 
 #main-content.portfolio-page #skills .skill-card > img { padding: 0 11px; }
 #main-content.portfolio-page #skills .skill-card > img[alt="Express.js"] {
   width: 41px;
   height: 41px;
-  margin: 3px 12px 25px;
   padding: 4px;
   border-radius: 8px;
 }
@@ -91,11 +95,13 @@
 #main-content.portfolio-page #skills .skill-card > div:has(img) {
   width: min(108px, 98%);
   height: 34px;
-  margin: 4px 0 31px;
   padding: 7px 8px;
   border-radius: 5px;
 }
 #main-content.portfolio-page #skills .skill-card > p {
+  grid-row: 2;
+  max-width: 82%;
+  margin: 31px 0 0;
   color: #f6f8ff !important;
   font-size: clamp(.9rem, 1.15vw, 1.07rem);
   line-height: 1.25;
@@ -103,7 +109,8 @@
   transform: translateZ(12px);
 }
 #main-content.portfolio-page #skills .skill-card .tech-skill-link {
-  margin-top: 7px;
+  grid-row: 3;
+  margin-top: 3px;
   color: #c4d0e2;
   font-size: .61rem;
   letter-spacing: .05em;
@@ -131,6 +138,11 @@ html[data-theme="light"] #main-content.portfolio-page #skills .skill-card > .tec
   }
 }
 @media (max-width: 600px) {
-  #main-content.portfolio-page #skills .skills-grid > .skill-card { min-height: 157px; padding: 19px 13px 14px; }
-  #main-content.portfolio-page #skills .skill-card::before { top: 48px; left: 13px; }
+  #main-content.portfolio-page #skills .skill-card > p { margin-top: 25px; font-size: .79rem; }
+  #main-content.portfolio-page #skills .skill-card > :is(img,.tech-skill-mark) { height: 36px; }
+  #main-content.portfolio-page #skills .skill-card::before { height: 14px; }
+  #main-content.portfolio-page #skills .skill-card .tech-skill-link { font-size: .52rem; }
+}
+@media (max-width: 359px) {
+  #main-content.portfolio-page #skills .skills-grid { grid-template-columns: 1fr; }
 }
