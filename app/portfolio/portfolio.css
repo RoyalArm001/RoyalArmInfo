@@ -271,3 +271,16 @@ html[data-theme="light"] .portfolio-page :is(.skill-card,.cv-library,#projects a
   .signal-toggle { bottom: .65rem; background: var(--surface); }
 }
 @media (prefers-reduced-motion: reduce) { .signal-toggle { display: none; } }
+
+.portfolio-page .heading-walker {
+  position: fixed;
+  inset: 0 auto auto 0;
+  z-index: 3;
+  width: 152px;
+  height: 100px;
+  pointer-events: none;
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce), print {
+  .portfolio-page .heading-walker { display: none; }
+}
