@@ -1,5 +1,5 @@
 export default function sitemap() {
-  const baseUrl = "https://royalarm.uk";
+  const baseUrl = "https://www.royalarm.uk";
 
   const staticRoutes = [
     {
@@ -16,5 +16,5 @@ export default function sitemap() {
     },
   ];
 
-  return staticRoutes;
+  return [...staticRoutes, ...["en", "hy"].map((lang) => ({ url: `${baseUrl}/cv/${lang}` }))];
 }

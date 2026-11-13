@@ -16,6 +16,11 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      ...["en", "hy"].map((lang) => ({
+        source: `/cv/Sipan-Danielyan-CV-${lang.toUpperCase()}.pdf`,
+        destination: `/cv/${lang}`,
+        permanent: true,
+      })),
       {
         source: "/pages/portfolio-1.html",
         destination: "/",

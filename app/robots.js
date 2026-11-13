@@ -10,6 +10,6 @@ export default function robots() {
         allow: "/",
       },
     ],
-    sitemap: "https://royalarm.uk/sitemap.xml",
+    sitemap: "https://www.royalarm.uk/sitemap.xml",
   };
 }

@@ -1,4 +1,9 @@
 (function setupLocalTranslation() {
+  const resume = document.querySelector(".resume-sheet[lang]");
+  if (resume) {
+    document.documentElement.lang = resume.lang;
+    return;
+  }
   const supportedLanguages = ["en", "hy", "ru"];
   const originalText = new WeakMap();
   const originalAttributes = new WeakMap();
@@ -103,7 +108,7 @@
 
   async function initialize() {
     try {
-      const response = await fetch("/i18n/translations.json?v=portfolio-3d-20260920", { cache: "force-cache" });
+      const response = await fetch("/i18n/translations.json?v=cv-20261113", { cache: "force-cache" });
       if (!response.ok) throw new Error("Translation file could not be loaded");
       translations = await response.json();
     } catch (_) {

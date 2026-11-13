@@ -1,0 +1,215 @@
+{
+  "name": "Sipan Danielyan",
+  "location": "Currently in Yerevan, Armenia · Residence: Kechut, Armenia",
+  "sections": [
+    {
+      "title": "Work Experience",
+      "entries": [
+        [
+          "Mota-Engil",
+          "IT Technician · 20 October 2026 – Present"
+        ],
+        [
+          "SmartTech Building, Engineering and Security Technologies",
+          "IT Network Engineer 20 May 2026 - Present · Yerevan"
+        ],
+        [
+          "Moselle Armenia Jermuk",
+          "IT Network Engineer 01 Dec 2024 - 05 May 2026 · Jermuk"
+        ],
+        [
+          "Armath Engineering Laboratory - Ghoghanj Center",
+          "Robotics Instructor and Group Leader 01 Nov 2019 - Jan 2025"
+        ],
+        [
+          "Jermuk Group",
+          "Engineer 01 Oct 2024 - 01 Dec 2024"
+        ],
+        [
+          "Drone Flight",
+          "Owner and Photographer 12 Nov 2023 - 10 Jul 2024 · Jermuk"
+        ],
+        [
+          "Jermuk Educational Complex",
+          "Electronics Management Teaching Support Specialist 05 Sep 2023 - 01 May 2024 · Jermuk"
+        ],
+        [
+          "Jermuk Ashkhar Health Center",
+          "Bartender 15 Jun 2018 - 01 May 2022"
+        ]
+      ]
+    },
+    {
+      "title": "Education & Training",
+      "entries": [
+        [
+          "Global IT Academy",
+          "Cyber Security · Network Cyber Security Feb 2026 - Present · Yerevan"
+        ],
+        [
+          "Planet Training Center",
+          "Windows Server Maintenance · Windows Server, Proxmox VM, maintenance Feb 2026 - Apr 2026 · Yerevan"
+        ],
+        [
+          "Yeghegnadzor State College",
+          "Vehicle Inspection and Maintenance · Certificate Sep 2013 - May 2019 · Yeghegnadzor"
+        ]
+      ]
+    },
+    {
+      "title": "Certificates",
+      "entries": [
+        [
+          "Fortinet NSE 1 Certified in Cybersecurity",
+          "Achieved 29 October 2026 · Valid through 28 October 2028"
+        ],
+        [
+          "Fortinet NSE 2 Certified in Cybersecurity",
+          "Achieved 29 October 2026 · Valid through 28 October 2028"
+        ],
+        [
+          "Fortinet NSE 3 Certified in Cybersecurity",
+          "Achieved 28 October 2026 · Valid through 27 October 2028"
+        ],
+        [
+          "Programming",
+          "VS LESSON STUDIO · Programmer qualification · 17 Mar 2023"
+        ],
+        [
+          "Windows Server",
+          "Planet Training Center · Course completion · 12 lessons"
+        ],
+        [
+          "Information Technology",
+          "VS LESSON STUDIO · Course completion"
+        ]
+      ]
+    },
+    {
+      "title": "Completed Fortinet courses",
+      "entries": [
+        [
+          "Cybersecurity and Cloud Fundamentals 1.0",
+          "29.10.2026"
+        ],
+        [
+          "FortiGate 7.6 Operator Self-Paced",
+          "28.10.2026"
+        ],
+        [
+          "Introduction to Next Generation Firewall 1.0",
+          "29.10.2026"
+        ]
+      ]
+    },
+    {
+      "title": "Personal Qualities",
+      "entries": [
+        [
+          "",
+          "Independent work; measurements and technical checks; identification and analysis of technical issues. Written communication, goal orientation, quick thinking and learning, initiative and courtesy."
+        ]
+      ]
+    },
+    {
+      "title": "Websites I Created",
+      "entries": [
+        [
+          "Find Your IT Specialist",
+          ""
+        ],
+        [
+          "Patch Panel Assistant",
+          ""
+        ],
+        [
+          "Get Your Menu",
+          ""
+        ],
+        [
+          "My CV Website",
+          ""
+        ],
+        [
+          "One City in One Place",
+          ""
+        ],
+        [
+          "Ditak Net",
+          ""
+        ]
+      ]
+    },
+    {
+      "title": "Technical Skills",
+      "entries": [
+        [
+          "CCTV · Hikvision / Dahua",
+          "Installation, configuration and maintenance."
+        ],
+        [
+          "Windows Active Directory",
+          "Installation, configuration and maintenance. Intermediate."
+        ],
+        [
+          "Network Equipment",
+          "MikroTik, Grandstream, Aruba, UniFi. Router and switch installation and configuration. VLANs, IP addressing, DNS, gateways and network security."
+        ],
+        [
+          "FortiGate",
+          "VLAN and WAN configuration; VPN client support. Firewall policy management, NAT / port forwarding. Log review and connectivity troubleshooting. Configuration backup and restore. Intermediate."
+        ],
+        [
+          "Computers and Servers",
+          "Software installation, configuration and maintenance."
+        ],
+        [
+          "Proxmox VE · VM",
+          "Virtual machine setup, configuration and maintenance."
+        ],
+        [
+          "Backup Server",
+          "Backup server configuration and maintenance."
+        ],
+        [
+          "Nextcloud",
+          "Installation, configuration and maintenance. Secure use of local and web platforms."
+        ],
+        [
+          "TrueNAS SCALE / CORE",
+          "Configuration and maintenance."
+        ],
+        [
+          "Windows File Sharing · AD",
+          "Shared folder creation and integration with Active Directory."
+        ]
+      ]
+    },
+    {
+      "title": "Languages",
+      "entries": [
+        [
+          "Armenian",
+          "Full proficiency"
+        ],
+        [
+          "Russian",
+          "Advanced"
+        ],
+        [
+          "English",
+          "Beginner"
+        ]
+      ]
+    },
+    {
+      "title": "Additional Information",
+      "entries": [
+        [
+          "",
+          "Age: 27 · Driving licence: B, C Available to start within one month. Willing to relocate to another city / country and travel for business."
+        ]
+      ]
+    }
+  ]
+}

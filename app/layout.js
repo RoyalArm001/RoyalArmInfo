@@ -2,7 +2,7 @@ import Script from "next/script";
 import "./globals.css";
 
 export const metadata = {
-  metadataBase: new URL("https://royalarm.store"),
+  metadataBase: new URL("https://www.royalarm.uk"),
   title: "Sipan Danielyan | IT Support & Network Engineer Armenia",
   description:
     "IT support in Armenia by Sipan Danielyan: networks, servers, Proxmox, TrueNAS, Nextcloud, Hikvision CCTV, monitoring systems, websites, and remote technical service.",
@@ -57,11 +57,13 @@ export default function RootLayout({ children }) {
     "@graph": [
       {
         "@type": "Person",
-        "@id": "https://royalarm.store/#person",
+        "@id": "https://www.royalarm.uk/#person",
         name: "Sipan Danielyan",
-        url: "https://royalarm.store",
-        image: "https://royalarm.store/assets/images/Sipan-Danielyan-2026.jpg",
-        jobTitle: "IT Programmer and Network Engineer",
+        url: "https://www.royalarm.uk",
+        image: "https://www.royalarm.uk/assets/images/Sipan-Danielyan-2026.jpg",
+        alternateName: "Սիփան Դանիելյան",
+        jobTitle: "IT Technician",
+        worksFor: { "@type": "Organization", name: "Mota-Engil" },
         email: "mailto:royalarm001@gmail.com",
         telephone: "+37491733633",
         address: {
@@ -89,15 +91,15 @@ export default function RootLayout({ children }) {
       },
       {
         "@type": "ProfessionalService",
-        "@id": "https://royalarm.store/#service",
+        "@id": "https://www.royalarm.uk/#service",
         name: "Sipan Danielyan IT Services",
-        url: "https://royalarm.store",
-        image: "https://royalarm.store/assets/images/Sipan-Danielyan-2026.jpg",
+        url: "https://www.royalarm.uk",
+        image: "https://www.royalarm.uk/assets/images/Sipan-Danielyan-2026.jpg",
         telephone: "+37491733633",
         email: "royalarm001@gmail.com",
         priceRange: "$$",
         areaServed: { "@type": "Country", name: "Armenia" },
-        founder: { "@id": "https://royalarm.store/#person" },
+        founder: { "@id": "https://www.royalarm.uk/#person" },
         address: {
           "@type": "PostalAddress",
           addressLocality: "Jermuk",
@@ -151,7 +153,7 @@ export default function RootLayout({ children }) {
         <a href="#main-content" className="skip-link">Skip to main content</a>
         {children}
         <Script src="/js/script.js?v=portfolio-navigation-20260920" strategy="afterInteractive" />
-        <Script src="/js/translate.js?v=header-controls-20260920" strategy="afterInteractive" />
+        <Script src="/js/translate.js?v=cv-20261113" strategy="afterInteractive" />
       </body>
     </html>
   );

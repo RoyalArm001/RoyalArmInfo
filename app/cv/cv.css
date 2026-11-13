@@ -1,0 +1,20 @@
+.resume-sheet { max-width: 54rem; margin: 0 auto; padding: 2rem clamp(1rem, 4vw, 3rem) 4rem; background: #fff; color: #20313b; font: 1rem/1.55 Arial, sans-serif; }
+.resume-sheet nav { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-bottom: 2.5rem; }
+.resume-sheet nav a:first-child { margin-right: auto; }
+.resume-sheet a { color: #08556b; text-decoration: underline; }
+.resume-sheet button { background: #104858; color: white; padding: .55rem 1rem; border-radius: .4rem; }
+.resume-sheet h1 { font-size: clamp(2rem, 6vw, 3rem); line-height: 1.2; font-weight: 700; }
+.resume-sheet header p { margin-top: .5rem; }
+.resume-sheet h2 { font-size: 1.35rem; font-weight: 700; margin: 1.8rem 0 .7rem; border-bottom: 1px solid #b4cbd0; color: #104858; }
+.resume-sheet li { margin-bottom: .6rem; }
+.resume-sheet li span { display: block; }
+@media print {
+  @page { margin: 12mm; size: A4; }
+  html:has(.resume-sheet), body:has(.resume-sheet) { background: white !important; color-scheme: light; overflow: visible !important; height: auto; }
+  body:has(.resume-sheet) > :not(.resume-sheet), .resume-sheet nav { display: none !important; }
+  .resume-sheet { max-width: none; padding: 0; margin: 0; font-size: 10pt; line-height: 1.22; }
+  .resume-sheet h1 { font-size: 24pt; }
+  .resume-sheet h2 { font-size: 14pt; margin: .8em 0 .35em; break-after: avoid; }
+  .resume-sheet li, .resume-sheet header { break-inside: avoid; }
+  .resume-sheet li { margin-bottom: .25em; }
+}

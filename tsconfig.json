@@ -37,6 +37,8 @@
   "exclude": [
     "node_modules",
     "apps",
-    "royalarm-ai/app"
+    "royalarm-ai/app",
+    "royalarm-ai/playwright.config.ts",
+    "royalarm-ai/tests"
   ]
 }
