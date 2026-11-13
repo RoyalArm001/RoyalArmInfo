@@ -5,6 +5,8 @@ import { useEffect } from "react";
 export default function PortfolioInteractions() {
   useEffect(() => {
     const root = document.querySelector(".portfolio-page");
+    root.dataset.hydrated = "true";
+    document.dispatchEvent(new Event("portfolio-ready"));
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
     const targets = [...root.querySelectorAll("[data-aos]")];
     const observer = new IntersectionObserver((entries) => {

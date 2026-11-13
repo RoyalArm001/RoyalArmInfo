@@ -36,7 +36,7 @@ const height = 102;
 const clamp = (n, low, high) => Math.max(low, Math.min(high, n));
 
 function drawSignals(ctx, edges, progress, light, width, top) {
-  const colors = light ? ["#397863", "#9b5125", "#81743c"] : ["#80d7b8", "#ffac78", "#d9ce82"];
+  const colors = light ? ["#197174", "#6751a6", "#2e63ad"] : ["#77f0d7", "#c19aff", "#76baff"];
   const last = edges.length - 1;
   for (const [lane, color] of colors.entries()) {
     // Stagger the three arrivals. Each tip settles briefly at a letter before

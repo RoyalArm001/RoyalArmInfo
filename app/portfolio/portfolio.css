@@ -209,13 +209,13 @@ html[data-theme="light"] .portfolio-page .tech-skill-link { color: #426377; }
 
 /* Infrastructure portfolio */
 html .portfolio-page, html[data-theme="dark"] .portfolio-page {
-  --surface: #181a17; --panel: #222520; --ink: #f4efe1; --muted: #b7b8a8;
-  --line: #45483e; --cyan: #ffa872; --section-glass: var(--surface);
+  --surface: #0a1020; --panel: #141e33; --ink: #f4f5ff; --muted: #b9c5dc;
+  --line: #37425c; --cyan: #8eead8; --section-glass: var(--surface);
   background: var(--surface); color: var(--ink);
 }
 html[data-theme="light"] .portfolio-page {
-  --surface: #f2efe5; --panel: #fcfaf2; --ink: #252922; --muted: #53594f;
-  --line: #c4c5b7; --cyan: #994218; --section-glass: var(--surface);
+  --surface: #f1f4ff; --panel: #fbfcff; --ink: #1b2341; --muted: #4e5873;
+  --line: #c1cbe1; --cyan: #156b73; --section-glass: var(--surface);
 }
 #main-content.portfolio-page .portfolio-navigation,
 html[data-theme="light"] #main-content.portfolio-page .portfolio-navigation,
@@ -255,7 +255,7 @@ html[data-theme="light"] #main-content.portfolio-page #mobile-navigation {
 #main-content.portfolio-page :is(#about,#skills,#resume,#projects,#services) { padding-block: clamp(4rem, 7vw, 7rem); }
 #main-content.portfolio-page :is(#about,#skills,#resume,#projects,#services) h2 { font-family: Georgia,serif; font-weight: 400; letter-spacing: -.045em; font-size: clamp(2.4rem,4.8vw,5rem); text-shadow: none; }
 #main-content.portfolio-page :is(#skills .skill-card,#resume .cv-library,#projects article,#projects .web-projects-accordion,#projects .grid > div,#services .grid > div) { color: var(--ink); background: var(--panel) !important; border: 1px solid var(--line) !important; border-radius: 3px; }
-html[data-theme="light"] .portfolio-page :is(.skill-card,.cv-library,#projects article,#projects .web-projects-accordion,#projects .grid > div,#services .grid > div) { --ink: #252922; --muted: #53594f; --cyan: #994218; --line: #c4c5b7; }
+html[data-theme="light"] .portfolio-page :is(.skill-card,.cv-library,#projects article,#projects .web-projects-accordion,#projects .grid > div,#services .grid > div) { --ink: #1b2341; --muted: #4e5873; --cyan: #156b73; --line: #c1cbe1; }
 #main-content.portfolio-page :is(.text-gray-300,.text-gray-400,.text-gray-500) { color: var(--muted) !important; }
 #main-content.portfolio-page :is(.tech-skill-mark,#services .grid > div > div,#about .flex-wrap span,.web-projects-chevron,.client-site-card,.client-sites-grid) { background: var(--panel) !important; border-color: var(--line); color: var(--ink); }
 #main-content.portfolio-page #projects img { filter: none; }
@@ -283,4 +283,51 @@ html[data-theme="light"] .portfolio-page :is(.skill-card,.cv-library,#projects a
 }
 @media (prefers-reduced-motion: reduce), print {
   .portfolio-page .heading-signals { display: none; }
+}
+
+/* Refracted light and extruded edges carry the fibre palette through the page. */
+#main-content.portfolio-page #home {
+  background: radial-gradient(ellipse at 78% 46%, #6756cd24, transparent 46%),
+    radial-gradient(ellipse at 43% 74%, #2589a01a, transparent 45%), var(--surface) !important;
+}
+#main-content.portfolio-page #home h1 span:last-child {
+  width: fit-content;
+  background: linear-gradient(110deg, #c4ffed, #a6d7ff 43%, #c8abfa 89%);
+  color: transparent;
+  background-clip: text;
+}
+html[data-theme="light"] #main-content.portfolio-page #home h1 span:last-child {
+  background-image: linear-gradient(110deg, #16625c, #254f97 45%, #6c4181);
+}
+.systems-links a { border-radius: .55rem; background: var(--panel); box-shadow: inset 0 1px #ffffff16, 0 3px 0 var(--line); }
+.systems-links a:first-child { box-shadow: inset 0 1px #ffffff77, 0 3px 0 color-mix(in srgb,var(--cyan), #000 35%); }
+#main-content.portfolio-page :is(#about,#skills,#resume,#projects,#services) {
+  --section-tint: #589be2;
+  background: radial-gradient(ellipse at 93% 0, color-mix(in srgb,var(--section-tint) 13%,transparent), transparent 50rem), var(--surface) !important;
+}
+#main-content.portfolio-page #about, #main-content.portfolio-page #resume { --section-tint: #a78beb; }
+#main-content.portfolio-page #services { --section-tint: #43c5af; }
+#main-content.portfolio-page #about > div.relative > div:nth-child(2) {
+  border-radius: 1.25rem; border: 1px solid var(--line); box-shadow: 5px 6px 0 var(--panel), 6px 7px 0 var(--line), 12px 22px 40px #02071536;
+}
+#main-content.portfolio-page :is(#resume .cv-library,#projects .web-projects-accordion,#projects .grid > div:not(.absolute),#services .grid > div) {
+  --edge: var(--section-tint);
+  border-radius: 1.15rem;
+  border: 1px solid color-mix(in srgb,var(--edge) 40%,var(--line)) !important;
+  background: radial-gradient(ellipse at 0 0,color-mix(in srgb,var(--edge) 14%,transparent),transparent 68%),var(--panel) !important;
+  box-shadow: inset 0 1px 0 #ffffff22, 0 4px 0 var(--surface), 0 5px 0 var(--line), 0 16px 28px #02071526 !important;
+}
+#main-content.portfolio-page #services .grid > div:nth-child(3n + 2) { --edge: #ac82ee; }
+#main-content.portfolio-page #services .grid > div:nth-child(3n) { --edge: #66abff; }
+#main-content.portfolio-page #services .grid > div > .w-12 {
+  color: var(--edge) !important; border: 1px solid color-mix(in srgb,var(--edge),var(--line));
+  background: linear-gradient(135deg,color-mix(in srgb,var(--edge) 25%,var(--panel)),var(--panel)) !important;
+  box-shadow: 2px 3px 0 var(--line), 3px 7px 15px #0207152e;
+}
+html[data-theme="light"] #main-content.portfolio-page #services .grid > div > .w-12 { color: color-mix(in srgb,var(--edge) 48%,#111535) !important; }
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference) {
+  #main-content.portfolio-page:not(:has(.signal-toggle[aria-pressed="true"])) :is(#projects .grid > div:not(.absolute),#services .grid > div):hover {
+    transform: perspective(900px) rotateX(3deg) rotateY(-2deg) translateY(-3px) !important;
+    border-color: var(--edge) !important;
+  }
 }

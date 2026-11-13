@@ -176,7 +176,7 @@ export default function RootLayout({ children }) {
         <SiteEntryLoader />
         {children}
         <Script src="/js/script.js?v=portfolio-navigation-20260920" strategy="afterInteractive" />
-        <Script src="/js/translate.js?v=systems-20261113" strategy="afterInteractive" />
+        <Script src="/js/translate.js?v=portfolio-depth" strategy="afterInteractive" />
       </body>
     </html>
   );

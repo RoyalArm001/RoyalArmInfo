@@ -138,5 +138,10 @@
     };
   }
 
-  initialize();
+  const portfolio = document.querySelector("main.portfolio-page");
+  if (portfolio && !portfolio.dataset.hydrated) {
+    document.addEventListener("portfolio-ready", initialize, { once: true });
+  } else {
+    initialize();
+  }
 })();

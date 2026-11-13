@@ -1,0 +1,136 @@
+/* Layer the technology marks over a cut-metal pedestal in each tile. */
+#main-content.portfolio-page #skills .skills-grid {
+  gap: clamp(12px, 1.3vw, 22px);
+  align-items: stretch;
+}
+
+#main-content.portfolio-page #skills .skills-grid > .skill-card {
+  --tint: #8c9bff;
+  --face: #172039;
+  --rim: color-mix(in srgb, var(--tint) 42%, #243047);
+  --stand: color-mix(in srgb, var(--tint) 56%, #273951);
+  --shine-x: 22%;
+  --shine-y: 0%;
+  min-width: 0;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  min-height: 175px;
+  padding: 25px 18px 21px;
+  text-align: left;
+  border: 1px solid var(--rim) !important;
+  border-radius: 15px !important;
+  background:
+    radial-gradient(ellipse at var(--shine-x) var(--shine-y), color-mix(in srgb, var(--tint) 27%, transparent), transparent 75%),
+    linear-gradient(135deg, var(--face), color-mix(in srgb, var(--face) 85%, #020819)) !important;
+  box-shadow:
+    inset 0 1px 0 #ffffff32,
+    inset 1px 0 0 #ffffff12,
+    0 4px 0 color-mix(in srgb, var(--rim) 65%, #090e20),
+    0 5px 0 color-mix(in srgb, var(--rim) 85%, #090e20),
+    0 10px 18px -9px #04091cc9 !important;
+  transform-style: preserve-3d;
+}
+
+/* Keep colour assignments on the card identity when more tools are added. */
+#skills .skills-grid > :has([alt="HTML5"]), #skills .skills-grid > [href*="proxmox"] { --tint: #ff8652 !important; }
+#skills .skills-grid > :has([alt="CSS3"]), #skills .skills-grid > [href*="truenas"] { --tint: #6ba9ff !important; }
+#skills .skills-grid > :has([alt="JavaScript"]), #skills .skills-grid > [href*="debian"] { --tint: #f5c44c !important; }
+#skills .skills-grid > :has([alt="Tailwind"]), #skills .skills-grid > [href*="nextcloud"] { --tint: #56caee !important; }
+#skills .skills-grid > :has([alt="React"]), #skills .skills-grid > [href*="docker"] { --tint: #5ae0dd !important; }
+#skills .skills-grid > :has([alt="Node.js"]), #skills .skills-grid > :has([alt="MongoDB"]),
+#skills .skills-grid > [href*="netdata"] { --tint: #83db91 !important; }
+#skills .skills-grid > :has([alt="Hikvision"]), #skills .skills-grid > [href*="zabbix"] { --tint: #ff8189 !important; }
+#skills .skills-grid > [href*="microsoft"], #skills .skills-grid > [href*="ditaknet"] { --tint: #c69dff !important; }
+
+#main-content.portfolio-page #skills .skill-card::before {
+  content: "";
+  position: absolute;
+  top: 52px;
+  left: 18px;
+  width: 65px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--stand);
+  background: radial-gradient(ellipse at 40% 0, var(--stand), transparent 75%), var(--face);
+  box-shadow: 0 3px 0 var(--rim), 0 6px 0 color-mix(in srgb, var(--rim) 68%, #071425);
+  transform: translateZ(4px);
+  pointer-events: none;
+}
+
+#main-content.portfolio-page #skills .skill-card > :is(img,.tech-skill-mark,div:has(img)) {
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  align-self: flex-start;
+  width: 65px;
+  height: 47px;
+  max-height: 47px;
+  margin: 0 0 22px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 3px #0006);
+  transform: translateZ(22px) translateY(-4px);
+}
+
+#main-content.portfolio-page #skills .skill-card > img { padding: 0 11px; }
+#main-content.portfolio-page #skills .skill-card > img[alt="Express.js"] {
+  width: 41px;
+  height: 41px;
+  margin: 3px 12px 25px;
+  padding: 4px;
+  border-radius: 8px;
+}
+#main-content.portfolio-page #skills .skill-card > .tech-skill-mark {
+  color: var(--tint) !important;
+  background: none !important;
+  border: none;
+  box-shadow: none;
+  font-size: 31px;
+}
+#main-content.portfolio-page #skills .skill-card > div:has(img) {
+  width: min(108px, 98%);
+  height: 34px;
+  margin: 4px 0 31px;
+  padding: 7px 8px;
+  border-radius: 5px;
+}
+#main-content.portfolio-page #skills .skill-card > p {
+  color: #f6f8ff !important;
+  font-size: clamp(.9rem, 1.15vw, 1.07rem);
+  line-height: 1.25;
+  text-shadow: none;
+  transform: translateZ(12px);
+}
+#main-content.portfolio-page #skills .skill-card .tech-skill-link {
+  margin-top: 7px;
+  color: #c4d0e2;
+  font-size: .61rem;
+  letter-spacing: .05em;
+  transform: translateZ(9px);
+}
+html[data-theme="light"] #main-content.portfolio-page #skills .skills-grid > .skill-card {
+  --face: #f9fbff;
+  --rim: color-mix(in srgb, var(--tint) 45%, #97a5ba);
+  --stand: color-mix(in srgb, var(--tint) 60%, #e8edf7);
+  background:
+    radial-gradient(ellipse at var(--shine-x) var(--shine-y), color-mix(in srgb, var(--tint) 32%, transparent), transparent 80%),
+    var(--face) !important;
+}
+html[data-theme="light"] #main-content.portfolio-page #skills .skill-card > p { color: #1a2943 !important; }
+html[data-theme="light"] #main-content.portfolio-page #skills .skill-card .tech-skill-link { color: #45516c; }
+html[data-theme="light"] #main-content.portfolio-page #skills .skill-card > .tech-skill-mark {
+  color: color-mix(in srgb, var(--tint) 55%, #14203c) !important;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  #main-content.portfolio-page:not(:has(.signal-toggle[aria-pressed="true"])) #skills .skills-grid > .skill-card:is(:hover, :focus-visible) {
+    z-index: 2;
+    transform: perspective(650px) translateY(-3px) rotateX(var(--tilt-x, 5deg)) rotateY(var(--tilt-y, -4deg)) !important;
+    border-color: var(--tint) !important;
+  }
+}
+@media (max-width: 600px) {
+  #main-content.portfolio-page #skills .skills-grid > .skill-card { min-height: 157px; padding: 19px 13px 14px; }
+  #main-content.portfolio-page #skills .skill-card::before { top: 48px; left: 13px; }
+}

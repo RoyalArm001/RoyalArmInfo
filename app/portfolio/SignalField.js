@@ -2,21 +2,47 @@
 
 import { useEffect, useRef, useState } from "react";
 
-// Each group of fibres shares an endpoint but follows a different route.
-const terminals = [
-  [0.56, 0.14], [0.73, 0.22], [0.91, 0.10], [0.98, 0.38],
-  [0.89, 0.68], [0.97, 0.88], [0.69, 0.80], [0.52, 0.93],
+// A ribbon is an open sheet of optical fibres. Its cross-section twists in
+// world space; the camera projects both the sweep and its depth onto the hero.
+const ribbons = [
+  { offset: -.14, phase: 1.8, depth: -.17, breadth: .052 },
+  { offset: .09, phase: -.6, depth: -.07, breadth: .045 },
+  { offset: -.015, phase: .32, depth: .08, breadth: .094 },
 ];
+const palettes = {
+  dark: [
+    ["#3767fc", "#696eff", "#be80ff"],
+    ["#146cba", "#32e7d5", "#bbffe7"],
+    ["#6055ff", "#db8dff", "#5ce6ff"],
+  ],
+  light: [
+    ["#7362cd", "#6550b2", "#9b42bd"],
+    ["#236297", "#087e88", "#198f72"],
+    ["#465ebd", "#9651aa", "#188195"],
+  ],
+};
 
-function pointOnRoute(t, lane, terminal, time, width, height) {
-  const bend = Math.sin(Math.PI * t);
-  const spread = (lane - 3) * 0.009;
-  const wave = Math.sin(t * 7 - time * 0.55 + terminal[1] * 4);
-  const y = 0.66 + (terminal[1] - 0.66) * (t * t * (3 - 2 * t));
+function project(t, across, ribbon, time, camera, width, height) {
+  const phase = ribbon.phase;
+  const sweep = Math.sin(t * 6.8 - .5 + phase + Math.sin(time * .27) * .48);
+  const envelope = Math.sin(Math.PI * t);
+  const angle = t * 8.5 + phase + time * .32;
+  const radius = ribbon.breadth * (.28 + envelope);
+  const z = ribbon.depth + .11 * Math.sin(t * 7 + phase + time * .24)
+    + Math.sin(angle) * radius * across;
+  const x = -.55 + t * 1.02;
+  const y = .16 - t * .33 + ribbon.offset + sweep * (.1 + .09 * envelope)
+    + Math.cos(angle) * radius * across;
+  const perspective = 1.6 / (1.6 - z);
   return [
-    width * (0.18 + (terminal[0] - 0.18) * t),
-    height * (y + bend * (0.14 * wave + spread)),
+    width * (.66 + (x + z * camera.x * .12) * perspective),
+    height * (.52 + (y + z * camera.y * .12) * perspective),
   ];
+}
+
+function trace(context, points) {
+  context.moveTo(...points[0]);
+  for (let i = 1; i < points.length; i++) context.lineTo(...points[i]);
 }
 
 export default function SignalField() {
@@ -30,46 +56,82 @@ export default function SignalField() {
     if (!context) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     let width, height, frame = 0, last = 0, time = 0, visible = true;
-    let palette;
+    let light = false;
+    const camera = { x: 0, y: 0 };
+    const target = { x: 0, y: 0 };
+    const hero = canvas.parentElement;
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+
+    function aim(event) {
+      if (!finePointer.matches || reduced.matches || pausedRef.current) return;
+      const bounds = hero.getBoundingClientRect();
+      target.x = (event.clientX - bounds.left) / bounds.width * 2 - 1;
+      target.y = (event.clientY - bounds.top) / bounds.height * 2 - 1;
+    }
+    function centre() { target.x = 0; target.y = 0; }
 
     function render() {
       context.clearRect(0, 0, width, height);
-      for (const [group, terminal] of terminals.entries()) {
-        const color = palette[group % palette.length];
+      const palette = light ? palettes.light : palettes.dark;
+      const samples = width < 750 ? 44 : 68;
+      const laneCount = width < 750 ? 9 : 15;
+      context.lineJoin = "round";
+      for (const [group, ribbon] of ribbons.entries()) {
+        const route = (t, across) => project(t, across, ribbon, time, camera, width, height);
+        const color = context.createLinearGradient(width * .32, height * .7, width * .98, height * .22);
+        palette[group].forEach((value, i) => color.addColorStop(i / 2, value));
         context.strokeStyle = color;
         context.fillStyle = color;
-        for (let lane = 0; lane < 7; lane++) {
+        const edges = [-1, 1].map(side => Array.from({ length: samples + 1 },
+          (_, step) => route(step / samples, side)));
+
+        context.beginPath();
+        trace(context, edges[0]);
+        for (let step = samples; step >= 0; step--) context.lineTo(...edges[1][step]);
+        context.closePath();
+        context.globalAlpha = light ? .09 : .16;
+        context.fill();
+
+        // Section lines are stronger on the front ribbon. They reveal the
+        // alternating front and back faces as the network rotates.
+        context.globalAlpha = group === 2 ? .24 : .09;
+        context.lineWidth = .7;
+        context.beginPath();
+        for (let step = 0; step <= samples; step += 2) {
+          context.moveTo(...edges[0][step]);
+          context.lineTo(...edges[1][step]);
+        }
+        context.stroke();
+
+        for (let lane = 0; lane < laneCount; lane++) {
+          const across = 2 * lane / (laneCount - 1) - 1;
+          const edge = lane === 0 || lane === laneCount - 1;
+          context.globalAlpha = edge ? .86 : .34 + group * .09;
+          context.lineWidth = edge ? 1.5 : .85;
           context.beginPath();
-          for (let step = 0; step <= 48; step++) {
-            const [x, y] = pointOnRoute(step / 48, lane, terminal, time, width, height);
-            if (step === 0) context.moveTo(x, y);
-            else context.lineTo(x, y);
+          if (edge) trace(context, edges[lane === 0 ? 0 : 1]);
+          else {
+            context.moveTo(...route(0, across));
+            for (let step = 1; step <= samples; step++) context.lineTo(...route(step / samples, across));
           }
-          context.globalAlpha = lane === 3 ? 0.54 : 0.26;
-          context.lineWidth = lane === 3 ? 1.4 : 0.85;
           context.stroke();
         }
-        // The short bright trails resolve into a pulse when they reach a node.
-        const progress = (time * (0.12 + group * 0.006) + group * 0.371) % 1;
-        context.globalAlpha = 0.95;
-        context.lineWidth = 2;
-        context.beginPath();
-        for (let step = 0; step <= 8; step++) {
-          const t = Math.max(0, progress - 0.042 * (1 - step / 8));
-          const [x, y] = pointOnRoute(t, 3, terminal, time, width, height);
-          if (step === 0) context.moveTo(x, y);
-          else context.lineTo(x, y);
+
+        for (let pulse = 0; pulse < 3; pulse++) {
+          const phase = (time * (.064 + group * .01) + pulse / 3 + group * .21) % 1;
+          const lane = (pulse - 1) * .83;
+          const head = route(phase, lane);
+          context.beginPath();
+          context.moveTo(...route(Math.max(0, phase - .026), lane));
+          context.lineTo(...head);
+          context.globalAlpha = .95;
+          context.lineWidth = 1.9;
+          context.stroke();
+          context.fillStyle = palette[group][2];
+          context.beginPath();
+          context.arc(...head, 1.8, 0, Math.PI * 2);
+          context.fill();
         }
-        context.stroke();
-        const x = terminal[0] * width, y = terminal[1] * height;
-        context.beginPath();
-        context.arc(x, y, 2.5, 0, Math.PI * 2);
-        context.fill();
-        context.globalAlpha = 0.6 * (1 - progress);
-        context.lineWidth = 1;
-        context.beginPath();
-        context.arc(x, y, 4 + progress * 12, 0, Math.PI * 2);
-        context.stroke();
       }
       context.globalAlpha = 1;
     }
@@ -77,6 +139,8 @@ export default function SignalField() {
     function animate(now) {
       if (now - last >= 32) {
         time += last ? Math.min(now - last, 100) / 1000 : 0;
+        camera.x += (target.x - camera.x) * .09;
+        camera.y += (target.y - camera.y) * .09;
         last = now;
         render();
       }
@@ -101,8 +165,7 @@ export default function SignalField() {
       canvas.width = Math.round(width * density);
       canvas.height = Math.round(height * density);
       context.setTransform(density, 0, 0, density, 0, 0);
-      palette = document.documentElement.dataset.theme === "light"
-        ? ["#9b4716", "#3f7562", "#936e29"] : ["#ffac78", "#80d7b8", "#d9ce82"];
+      light = document.documentElement.dataset.theme === "light";
       sync();
     }
 
@@ -112,6 +175,8 @@ export default function SignalField() {
       visible = entry.isIntersecting;
       sync();
     });
+    hero.addEventListener("pointermove", aim, { passive: true });
+    hero.addEventListener("pointerleave", centre);
     size.observe(canvas);
     theme.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
     visibility.observe(canvas);
@@ -122,6 +187,8 @@ export default function SignalField() {
     return () => {
       syncRef.current = null;
       cancelAnimationFrame(frame);
+      hero.removeEventListener("pointermove", aim);
+      hero.removeEventListener("pointerleave", centre);
       size.disconnect();
       theme.disconnect();
       visibility.disconnect();

@@ -1,10 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
 import HeadingSignals from "./portfolio/HeadingSignals";
+import SkillDepth from "./portfolio/SkillDepth";
 import Hero from "./portfolio/Hero";
 import PortfolioInteractions from "./portfolio/PortfolioInteractions";
 import PortfolioNavigation from "./portfolio/PortfolioNavigation";
 import "./portfolio/portfolio.css";
+import "./portfolio/skills-depth.css";
 
 function getPortfolioMarkup() {
   const source = fs.readFileSync(path.join(process.cwd(), "index.html"), "utf8");
@@ -36,6 +38,7 @@ export default function HomePage() {
       <Hero />
       <div className="portfolio-markup" dangerouslySetInnerHTML={{ __html: content }} />
       <HeadingSignals />
+      <SkillDepth />
       <PortfolioInteractions />
     </main>
   );
