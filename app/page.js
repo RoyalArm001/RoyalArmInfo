@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import HeadingWalker from "./portfolio/HeadingWalker";
+import HeadingSignals from "./portfolio/HeadingSignals";
 import Hero from "./portfolio/Hero";
 import PortfolioInteractions from "./portfolio/PortfolioInteractions";
 import PortfolioNavigation from "./portfolio/PortfolioNavigation";
@@ -35,7 +35,7 @@ export default function HomePage() {
       <PortfolioNavigation />
       <Hero />
       <div className="portfolio-markup" dangerouslySetInnerHTML={{ __html: content }} />
-      <HeadingWalker />
+      <HeadingSignals />
       <PortfolioInteractions />
     </main>
   );

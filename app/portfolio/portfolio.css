@@ -272,15 +272,15 @@ html[data-theme="light"] .portfolio-page :is(.skill-card,.cv-library,#projects a
 }
 @media (prefers-reduced-motion: reduce) { .signal-toggle { display: none; } }
 
-.portfolio-page .heading-walker {
+.portfolio-page .heading-signals {
   position: fixed;
   inset: 0 auto auto 0;
   z-index: 3;
-  width: 152px;
-  height: 100px;
+  width: 100%;
+  height: 102px;
   pointer-events: none;
   opacity: 0;
 }
 @media (prefers-reduced-motion: reduce), print {
-  .portfolio-page .heading-walker { display: none; }
+  .portfolio-page .heading-signals { display: none; }
 }

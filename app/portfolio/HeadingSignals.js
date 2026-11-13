@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 
 // Read each character box from the laid-out heading. Font ascent locates the
 // top of the glyph inside that box, including after a language or font change.
-function footholds(heading, context) {
+function letterEdges(heading, context) {
   const walker = document.createTreeWalker(heading, NodeFilter.SHOW_TEXT);
   const range = document.createRange();
   const points = [];
@@ -32,77 +32,46 @@ function footholds(heading, context) {
   return points;
 }
 
-const width = 152, height = 100;
+const height = 102;
 const clamp = (n, low, high) => Math.max(low, Math.min(high, n));
 
-function drawWalker(ctx, contacts, progress, light) {
-  const left = contacts[0].x, right = contacts.at(-1).x;
-  const span = right - left;
-  const scale = Math.min(1, span / 100, innerWidth / 540);
-  const stride = 17 * scale;
-  const margin = Math.min(31 * scale, span / 3);
-  const x = left + margin + progress * (span - 2 * margin);
-  const nearest = (target) => contacts.reduce((best, p) =>
-    Math.abs(p.x - target) < Math.abs(best.x - target) ? p : best);
-  const base = Math.min(...contacts.map((p) => p.y));
-  const originX = x - width / 2, originY = base - 58;
-  const phase = (x - left) / stride;
-  // Perspective projection: height raises a joint from the text, depth
-  // foreshortens the far legs and separates them from the near legs.
-  function project(dx, depth, lift) {
-    const k = 155 / (155 - depth);
-    return [width / 2 + dx * k * scale, 58 + (depth * .46 - lift) * k * scale];
-  }
-  function dot(px, py, r, color) {
+function drawSignals(ctx, edges, progress, light, width, top) {
+  const colors = light ? ["#397863", "#9b5125", "#81743c"] : ["#80d7b8", "#ffac78", "#d9ce82"];
+  const last = edges.length - 1;
+  for (const [lane, color] of colors.entries()) {
+    // Stagger the three arrivals. Each tip settles briefly at a letter before
+    // gliding to the next, while its trailing fibre bends in perspective.
+    const position = clamp((progress * .55 + lane * .19) * last, 0, last);
+    const index = Math.floor(position);
+    const next = edges[Math.min(index + 1, last)];
+    const phase = clamp((position - index - .25) / .75, 0, 1);
+    const ease = phase * phase * (3 - 2 * phase);
+    const endX = edges[index].x + (next.x - edges[index].x) * ease;
+    const endY = edges[index].y + (next.y - edges[index].y) * ease - top;
+    const tipY = endY - Math.sin(phase * Math.PI) * (5 + lane * 2);
+    const tail = Math.min(width * .58, 250 + lane * 46);
+    const startX = endX - tail;
+    const startY = tipY - 32 - lane * 19;
+    const bend = 7 * Math.sin(progress * Math.PI * 2 + lane);
+    const gradient = ctx.createLinearGradient(startX, startY, endX, tipY);
+    gradient.addColorStop(0, color + "00");
+    gradient.addColorStop(.55, color + "58");
+    gradient.addColorStop(1, color);
+    ctx.strokeStyle = gradient;
+    ctx.lineWidth = 1.6 - lane * .26;
     ctx.beginPath();
-    ctx.arc(px, py, r, 0, Math.PI * 2);
+    ctx.moveTo(startX, startY);
+    ctx.bezierCurveTo(startX + tail * .6, startY + bend,
+      endX - tail * .27, tipY - 48 + bend, endX, tipY);
+    ctx.stroke();
     ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(endX, tipY, 1.45, 0, Math.PI * 2);
     ctx.fill();
   }
-  const bronze = light ? "#81572f" : "#dcb581";
-  const mint = light ? "#24594c" : "#a1dac2";
-  const lift = 17 + 1.2 * Math.cos(phase * Math.PI * 2);
-  ctx.lineCap = "round";
-  for (const side of [-1, 1]) {
-    for (let leg = 0; leg < 4; leg++) {
-      const offset = (leg - 1.5) * 13 + side * 3;
-      const beat = phase + ((leg + (side + 1) / 2) % 2) * .5;
-      const fraction = beat - Math.floor(beat);
-      const swing = clamp((fraction - .52) / .48, 0, 1);
-      const planted = x + offset * scale - fraction * stride;
-      const from = nearest(planted), to = nearest(planted + stride);
-      const ease = swing * swing * (3 - 2 * swing);
-      const footX = from.x + (to.x - from.x) * ease - originX;
-      const footY = from.y + (to.y - from.y) * ease - Math.sin(swing * Math.PI) * 11 * scale - originY;
-      const hip = project((leg - 1.5) * 3.4, side * 2, lift);
-      const knee = project(offset * .95, side * (11 + leg % 2 * 4), lift + 5 + 2 * Math.sin(beat * Math.PI * 2));
-      ctx.strokeStyle = side < 0 ? bronze : mint;
-      ctx.globalAlpha = side < 0 ? .67 : .98;
-      ctx.lineWidth = side < 0 ? 1 : 1.5;
-      ctx.beginPath();
-      ctx.moveTo(...hip);
-      ctx.lineTo(...knee);
-      ctx.lineTo(footX, footY);
-      ctx.stroke();
-      dot(...knee, 1.35 * scale, bronze);
-      dot(footX, footY, (swing ? 1.1 : 1.8) * scale, mint);
-    }
-  }
-  ctx.globalAlpha = 1;
-  const [cx, cy] = project(0, 0, lift);
-  const shell = ctx.createLinearGradient(cx, cy - 4 * scale, cx, cy + 4 * scale);
-  shell.addColorStop(0, mint);
-  shell.addColorStop(.4, bronze);
-  shell.addColorStop(1, light ? "#333e37" : "#4a5145");
-  ctx.fillStyle = shell;
-  ctx.beginPath();
-  ctx.ellipse(cx, cy, 8 * scale, 4 * scale, -.13, 0, Math.PI * 2);
-  ctx.fill();
-  dot(cx + 8 * scale, cy - scale, 2.6 * scale, mint);
-  return [originX, originY];
 }
 
-export default function HeadingWalker() {
+export default function HeadingSignals() {
   const ref = useRef(null);
   useEffect(() => {
     const canvas = ref.current;
@@ -113,7 +82,7 @@ export default function HeadingWalker() {
     const visible = new Set();
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
     const toggle = root.querySelector(".signal-toggle");
-    let frame = 0;
+    let frame = 0, width = 0;
     function paint() {
       frame = 0;
       canvas.style.opacity = "0";
@@ -127,17 +96,19 @@ export default function HeadingWalker() {
         if (d < distance) { distance = d; chosen = target; }
       }
       if (!chosen) return;
-      const contacts = footholds(chosen, ctx);
+      const contacts = letterEdges(chosen, ctx);
       if (contacts.length < 3 || contacts.at(-1).x <= contacts[0].x) return;
       const progress = clamp((innerHeight * .86 - contacts[0].y) / (innerHeight * .66), 0, 1);
       ctx.clearRect(0, 0, width, height);
-      const [x, y] = drawWalker(ctx, contacts, progress, document.documentElement.dataset.theme === "light");
-      canvas.style.transform = `translate3d(${x}px,${y}px,0)`;
+      const top = Math.min(...contacts.map((point) => point.y)) - 82;
+      drawSignals(ctx, contacts, progress, document.documentElement.dataset.theme === "light", width, top);
+      canvas.style.transform = `translateY(${top}px)`;
       canvas.style.opacity = String(clamp((1 - distance / (innerHeight * .35)) * 3, 0, 1));
     }
     function schedule() { if (!frame) frame = requestAnimationFrame(paint); }
     function resize() {
       const density = Math.min(devicePixelRatio || 1, 2);
+      width = canvas.clientWidth;
       canvas.width = width * density;
       canvas.height = height * density;
       ctx.setTransform(density, 0, 0, density, 0, 0);
@@ -171,5 +142,5 @@ export default function HeadingWalker() {
       cancelAnimationFrame(frame);
     };
   }, []);
-  return <canvas ref={ref} aria-hidden="true" className="heading-walker" width={width} height={height} />;
+  return <canvas ref={ref} aria-hidden="true" className="heading-signals" height={height} />;
 }
