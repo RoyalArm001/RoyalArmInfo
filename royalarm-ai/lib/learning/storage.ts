@@ -34,7 +34,7 @@ export async function saveMistake(original: string, correction: string) {
 export async function learningContext(prefs: Preferences) {
   const [mistakes, reviews] = await Promise.all([readAll<Mistake>("mistakes"), dueReviews()]);
   const words = await Promise.all(reviews.slice(0, 8).map((review) => getValue<LearningEntry>("entries", review.id)));
-  return { mode: prefs.mode, level: prefs.level, topic: prefs.topic, mistakes: mistakes.sort((a, b) => b.count - a.count).slice(0, 3).map(({ original, correction }) => ({ original, correction })), words: words.filter((word) => word && word.term.length <= 100).map((word) => word!.term) };
+  return { mode: prefs.mode, persona: prefs.persona, depth: prefs.depth, level: prefs.level, topic: prefs.topic, mistakes: mistakes.sort((a, b) => b.count - a.count).slice(0, 3).map(({ original, correction }) => ({ original, correction })), words: words.filter((word) => word && word.term.length <= 100).map((word) => word!.term) };
 }
 export async function importPack(onProgress: (message: string) => void) {
   const manifest = z.object({ version: z.string(), chunks: z.array(z.object({ path: z.string().regex(/^\/packs\/[\w-]+\.json$/), count: z.number().int().positive() })).max(100) }).passthrough().parse(await (await fetch("/packs/manifest.json")).json());
@@ -49,7 +49,7 @@ export async function importPack(onProgress: (message: string) => void) {
   }
   await putValue("settings", { version: manifest.version, imported }, "pack"); return imported;
 }
-const messageSchema = z.object({ id: z.string().max(150), role: z.enum(["user", "assistant"]), content: z.string().max(16000), status: z.enum(["complete", "streaming", "interrupted", "error"]), error: z.string().max(2000).optional(), source: z.enum(["text", "voice", "greeting"]).optional() }).strict();
+const messageSchema = z.object({ id: z.string().max(150), role: z.enum(["user", "assistant"]), content: z.string().max(16000), reasoning: z.string().max(16000).optional(), engine: z.string().max(80).optional(), modelId: z.string().max(120).optional(), status: z.enum(["complete", "streaming", "interrupted", "error"]), error: z.string().max(2000).optional(), source: z.enum(["text", "voice", "greeting"]).optional() }).strict();
 const conversationSchema = z.object({ id: z.string().max(150), title: z.string().max(200), updatedAt: z.number().finite(), messages: z.array(messageSchema).max(10000) }).strict();
 const exportSchema = z.object({ format: z.literal("royalarm-learning"), version: z.literal(2), conversations: z.array(conversationSchema).max(2000), entries: z.array(entrySchema).max(30000), progress: z.array(progressSchema).max(30000), mistakes: z.array(mistakeSchema).max(10000), preferences: preferencesSchema }).strict();
 export async function exportData() {

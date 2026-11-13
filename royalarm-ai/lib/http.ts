@@ -6,10 +6,42 @@ export class RequestError extends Error {
   }
 }
 
+const LOOPBACK_HOSTS = new Set(["localhost", "127.0.0.1", "::1", "[::1]"]);
+
 export function sameOrigin(request: Request) {
-  if (request.headers.get("origin") !== new URL(request.url).origin) {
+  const originHeader = request.headers.get("origin");
+  if (!originHeader) {
     throw new RequestError("This request must come from RoyalArm AI. Reload and try again.", 403);
   }
+
+  let parsedOrigin: URL;
+  try {
+    parsedOrigin = new URL(originHeader);
+  } catch {
+    throw new RequestError("This request must come from RoyalArm AI. Reload and try again.", 403);
+  }
+
+  const reqUrl = new URL(request.url);
+  if (parsedOrigin.origin === reqUrl.origin) return;
+
+  const proto = request.headers.get("x-forwarded-proto")?.split(",")[0]?.trim() || reqUrl.protocol.replace(/:$/, "");
+  const rawHost =
+    request.headers.get("x-forwarded-host")?.split(",")[0]?.trim() ||
+    request.headers.get("host")?.trim();
+
+  if (rawHost && parsedOrigin.origin === `${proto}://${rawHost}`) return;
+
+  // NextRequest normalizes 127.0.0.1 / [::1] in request.url to "localhost"
+  if (
+    parsedOrigin.protocol === reqUrl.protocol &&
+    parsedOrigin.port === reqUrl.port &&
+    LOOPBACK_HOSTS.has(parsedOrigin.hostname) &&
+    LOOPBACK_HOSTS.has(reqUrl.hostname)
+  ) {
+    return;
+  }
+
+  throw new RequestError("This request must come from RoyalArm AI. Reload and try again.", 403);
 }
 
 export async function readJson(request: Request, maxBytes: number): Promise<unknown> {

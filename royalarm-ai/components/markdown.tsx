@@ -34,8 +34,8 @@ function CodeBlock({ children }: { children?: ReactNode }) {
   </div><pre ref={ref}>{children}</pre></div>;
 }
 
-export function MessageMarkdown({ content }: { content: string }) {
-  return <div className="markdown" dir="auto"><Markdown remarkPlugins={[remarkGfm]} skipHtml components={{
+export function MessageMarkdown({ content, className = "markdown" }: { content: string; className?: string }) {
+  return <div className={className} dir="auto"><Markdown remarkPlugins={[remarkGfm]} skipHtml components={{
     pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
     a: ({ href, children }) =>
       href && !href.toLowerCase().startsWith("javascript:") ? (

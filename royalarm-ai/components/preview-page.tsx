@@ -1,11 +1,14 @@
 "use client";
 
+import Link from "next/link";
 import type { ModelSummary, PlanSummary } from "../lib/catalog-types";
+import { useAiBasePath } from "../lib/ai-routes";
 import { SiteNav } from "./site-nav";
 import { useLanguage } from "./language";
 
 export function PreviewPage({ plan, models }: { plan: PlanSummary; models: ModelSummary[] }) {
   const { language } = useLanguage();
+  const aiHref = useAiBasePath();
   const hy = language === "hy";
   const examples = plan.id === "free"
     ? [{ role: "you", text: hy ? "Կօգնե՞ս ամեն օր անգլերեն վարժվել։" : "Can you help me practice English every day?" }, { role: "ai", text: hy ? "Բարև 👋 Իհարկե։ Սկսենք կարճ զրույցից։ Ի՞նչ ես սիրում անել ազատ ժամանակ։" : "Բարև 👋 Absolutely. Let’s start with a short conversation. What do you enjoy doing in your free time?" }]
@@ -29,7 +32,7 @@ export function PreviewPage({ plan, models }: { plan: PlanSummary; models: Model
           <ul className="feature-list preview-features">{plan.features.map((feature) => <li key={feature}>{hy ? feature : feature.replace("Economical", "Economical").replace("Conversation history saved in this browser", "Conversation history saved in this browser")}</li>)}</ul>
           <p className="demo-watermark">{hy ? "ՑՈՒՑԱԴՐԱԿԱՆ ԷԿՐԱՆ" : "DEMONSTRATION SCREEN"}</p>
         </section>
-        <a className="secondary-link" href="/plans">{hy ? "Վերադառնալ պլաններին" : "Back to plans"}</a>
+        <Link className="secondary-link" href={aiHref("/plans")}>{hy ? "Վերադառնալ պլաններին" : "Back to plans"}</Link>
       </main>
     </div>
   );

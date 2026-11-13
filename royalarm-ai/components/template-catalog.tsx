@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import type { PlanId, TemplateSummary } from "../lib/catalog-types";
+import { useAiBasePath } from "../lib/ai-routes";
 import { SiteNav } from "./site-nav";
 import { useLanguage } from "./language";
 
@@ -10,6 +11,7 @@ const FAVORITES_KEY = "royalarm-ai-template-favorites";
 
 export function TemplateCatalog({ templates, activePlan }: { templates: TemplateSummary[]; activePlan: PlanId }) {
   const { language } = useLanguage();
+  const aiHref = useAiBasePath();
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<"all" | "favorites" | PlanId>("all");
   const [favorites, setFavorites] = useState<string[]>([]);
@@ -80,7 +82,7 @@ export function TemplateCatalog({ templates, activePlan }: { templates: Template
                 <h2>{hy ? template.title : template.titleEn}</h2>
                 <p>{hy ? template.description : template.descriptionEn}</p>
                 <ul className="prompt-list">{template.examplePrompts.map((prompt) => <li key={prompt}>“{prompt}”</li>)}</ul>
-                <Link className="secondary-link" href={`/templates/${template.slug}`} aria-label={`${hy ? template.title : template.titleEn} - ${hy ? "Դիտել շաբլոնը" : "View template"}`}>{hy ? "Դիտել շաբլոնը" : "View template"} <span aria-hidden="true">→</span></Link>
+                <Link className="secondary-link" href={aiHref(`/templates/${template.slug}`)} aria-label={`${hy ? template.title : template.titleEn} - ${hy ? "Դիտել շաբլոնը" : "View template"}`}>{hy ? "Դիտել շաբլոնը" : "View template"} <span aria-hidden="true">→</span></Link>
                 {locked && <p className="model-lock-note">{hy ? "Ակտիվացրու Pro պլանը սերվերում՝ օգտագործելու համար։" : "Activate Pro on the server to use this template."}</p>}
               </article>
             );
@@ -95,13 +97,14 @@ export function TemplateCatalog({ templates, activePlan }: { templates: Template
 
 export function TemplateDetail({ template, activePlan }: { template: TemplateSummary; activePlan: PlanId }) {
   const { language } = useLanguage();
+  const aiHref = useAiBasePath();
   const hy = language === "hy";
   const locked = template.requiredPlan === "pro" && activePlan !== "pro";
   return (
     <div className="catalog-page">
       <SiteNav activePlan={activePlan} />
       <main className="catalog-main detail-main">
-        <Link className="back-link" href="/templates">← {hy ? "Բոլոր շաբլոնները" : "All templates"}</Link>
+        <Link className="back-link" href={aiHref("/templates")}>← {hy ? "Բոլոր շաբլոնները" : "All templates"}</Link>
         <div className="glass-card template-detail-card">
           <span className={`plan-badge ${template.requiredPlan}`}>{template.requiredPlan}</span>
           <h1>{hy ? template.title : template.titleEn}</h1>
@@ -109,8 +112,8 @@ export function TemplateDetail({ template, activePlan }: { template: TemplateSum
           <h2>{hy ? "Փորձիր այս հուշումները" : "Try these example prompts"}</h2>
           <ul className="prompt-list">{template.examplePrompts.map((prompt) => <li key={prompt}>“{prompt}”</li>)}</ul>
           {locked
-            ? <div className="locked-action"><p>{hy ? "Այս շաբլոնը հասանելի է Pro պլանի դեպքում։ Պլանը փոխվում է սերվերի կարգավորումներում։" : "This template is available with the Pro plan configured on the server."}</p><Link className="primary-link" href="/plans">{hy ? "Տեսնել պլանները" : "View plans"}</Link></div>
-            : <Link className="primary-link" href={`/?template=${encodeURIComponent(template.slug)}`}>{hy ? "Սկսել զրույցը" : "Start conversation"} <span aria-hidden="true">→</span></Link>}
+            ? <div className="locked-action"><p>{hy ? "Այս շաբլոնը հասանելի է Pro պլանի դեպքում։ Պլանը փոխվում է սերվերի կարգավորումներում։" : "This template is available with the Pro plan configured on the server."}</p><Link className="primary-link" href={aiHref("/plans")}>{hy ? "Տեսնել պլանները" : "View plans"}</Link></div>
+            : <Link className="primary-link" href={aiHref(`/?template=${encodeURIComponent(template.slug)}`)}>{hy ? "Սկսել զրույցը" : "Start conversation"} <span aria-hidden="true">→</span></Link>}
         </div>
       </main>
     </div>

@@ -1,6 +1,14 @@
 import { LIMITS } from "./limits";
 
-export async function readReply(response: Response, onDelta: (text: string) => void): Promise<boolean> {
+export type StreamMetaEvent =
+  | { type: "meta"; engine: string; modelId?: string; domain?: string }
+  | { type: "reasoning"; text: string };
+
+export async function readReply(
+  response: Response,
+  onDelta: (text: string) => void,
+  onEvent?: (event: StreamMetaEvent) => void
+): Promise<boolean> {
   if (!response.body) throw new Error("No reply stream was received. Try again.");
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
@@ -20,13 +28,27 @@ export async function readReply(response: Response, onDelta: (text: string) => v
           count += event.text.length;
           if (count > LIMITS.outputChars) throw new Error("The reply exceeded the output limit.");
           onDelta(event.text);
+        } else if (event.type === "reasoning" && typeof event.text === "string") {
+          onEvent?.({ type: "reasoning", text: event.text });
+        } else if (event.type === "meta" && typeof event.engine === "string") {
+          onEvent?.({
+            type: "meta",
+            engine: event.engine,
+            modelId: typeof event.modelId === "string" ? event.modelId : undefined,
+            domain: typeof event.domain === "string" ? event.domain : undefined,
+          });
         } else if (event.type === "done") {
           return event.incomplete === true;
         } else if (event.type === "error") {
           throw new Error(typeof event.error === "string" ? event.error : "The reply failed. Try again.");
-        } else throw new Error("An invalid reply was received. Try again.");
+        } else {
+          throw new Error("An invalid reply was received. Try again.");
+        }
       }
       if (done) throw new Error("The connection ended before the reply finished. Try again.");
     }
-  } finally { await reader.cancel().catch(() => {}); reader.releaseLock(); }
+  } finally {
+    await reader.cancel().catch(() => {});
+    reader.releaseLock();
+  }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { X, MessageSquare, Bot, User as UserIcon, Copy, Check } from "lucide-react";
+import { X, MessageSquare, Bot, User as UserIcon, Copy, Check, Download } from "lucide-react";
 import type { Message } from "@/lib/history";
 import { MessageMarkdown } from "./markdown";
 import { useState } from "react";
@@ -27,6 +27,26 @@ export function TranscriptDrawer({ isOpen, onClose, title, messages }: Transcrip
     }
   }
 
+  function handleExportMarkdown() {
+    const lines = [
+      `# ${title || "RoyalArm AI Զրույց"}`,
+      "",
+      ...messages.flatMap((m) => [
+        `## ${m.role === "user" ? "Հարց (User)" : `RoyalArm AI${m.modelId ? ` (${m.modelId})` : ""}`}`,
+        m.reasoning ? `> **Reasoning Trace:**\n> ${m.reasoning.replace(/\n/g, "\n> ")}\n` : "",
+        m.content,
+        "",
+      ]),
+    ].join("\n");
+    const blob = new Blob([lines], { type: "text/markdown;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `royalarm-ai-${Date.now()}.md`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   return (
     <>
       <div className="drawer-backdrop" onClick={onClose} aria-hidden="true" />
@@ -46,13 +66,26 @@ export function TranscriptDrawer({ isOpen, onClose, title, messages }: Transcrip
               <p className="drawer-subtitle line-clamp-1">{title || "Զրույց"}</p>
             </div>
           </div>
-          <button
-            className="icon-btn-subtle"
-            onClick={onClose}
-            aria-label="Փակել պատմությունը"
-          >
-            <X size={20} />
-          </button>
+          <div className="flex items-center gap-2">
+            {messages.length > 0 && (
+              <button
+                type="button"
+                className="copy-button"
+                onClick={handleExportMarkdown}
+                title="Արտահանել Markdown (.md)"
+              >
+                <Download size={13} />
+                <span>.md</span>
+              </button>
+            )}
+            <button
+              className="icon-btn-subtle"
+              onClick={onClose}
+              aria-label="Փակել պատմությունը"
+            >
+              <X size={20} />
+            </button>
+          </div>
         </div>
 
         <div className="transcript-content-scroll">

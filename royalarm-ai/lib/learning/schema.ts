@@ -1,9 +1,12 @@
 import { z } from "zod";
 export const levelSchema = z.enum(["A1", "A2", "B1", "B2", "C1", "C2"]);
 export const modeSchema = z.enum(["general", "practice", "translation"]);
+export const personaSchema = z.enum(["architect", "diagnostic", "developer", "mentor"]);
+export const depthSchema = z.enum(["fast", "deep"]);
 const short = z.string().max(2000);
 export const preferencesSchema = z.object({
   level: levelSchema.default("A1"), mode: modeSchema.default("general"),
+  persona: personaSchema.default("architect"), depth: depthSchema.default("deep"),
   topic: z.enum(["daily life", "work", "travel", "computers", "programming", "Delphi"]).default("daily life"),
   sessionMinutes: z.union([z.literal(5), z.literal(10)]).default(5),
   voice: z.enum(["marin", "cedar", "alloy", "coral", "sage", "verse"]).default("marin"), turnMode: z.enum(["auto", "push"]).default("auto"),
@@ -23,5 +26,5 @@ export const progressSchema = z.object({ id: z.string().max(150), due: z.number(
 export type Progress = z.infer<typeof progressSchema>;
 export const mistakeSchema = z.object({ id: z.string().max(150), original: short, correction: short, count: z.number().int().min(1).max(100000), updatedAt: z.number().finite() }).strict();
 export type Mistake = z.infer<typeof mistakeSchema>;
-export const tutorContextSchema = z.object({ mode: modeSchema.default("general"), level: levelSchema.default("A1"), topic: z.string().max(50).default("daily life"), mistakes: z.array(z.object({ original: short, correction: short })).max(3).default([]), words: z.array(z.string().max(100)).max(8).default([]) }).strict();
+export const tutorContextSchema = z.object({ mode: modeSchema.default("general"), persona: personaSchema.default("architect"), depth: depthSchema.default("deep"), level: levelSchema.default("A1"), topic: z.string().max(50).default("daily life"), mistakes: z.array(z.object({ original: short, correction: short })).max(3).default([]), words: z.array(z.string().max(100)).max(8).default([]) }).strict();
 export type TutorContext = z.infer<typeof tutorContextSchema>;

@@ -1,4 +1,7 @@
 export type PlanId = "free" | "pro";
+export type ModelEngine = "local" | "ollama" | "openai";
+export type ThinkingProfileId = "architect" | "diagnostic" | "developer" | "mentor";
+export type ReasoningDepth = "fast" | "deep";
 
 export type PlanSummary = {
   id: PlanId;
@@ -15,11 +18,20 @@ export type ModelSummary = {
   id: string;
   provider: string;
   displayName: string;
+  engine: ModelEngine;
   access: PlanId;
+  badge?: string;
+  specialty?: string;
+  specialtyHy?: string;
+  tagline?: string;
+  taglineHy?: string;
+  reasoningMode?: "architect" | "diagnostic" | "bilingual" | "standard";
   capabilities: {
     text: boolean;
     streaming: boolean;
     voice: boolean;
+    reasoning?: boolean;
+    offline?: boolean;
   };
   contextWindowTokens: number;
   contextTokens: number;
@@ -46,4 +58,6 @@ export type TemplateSummary = {
   descriptionEn: string;
   examplePrompts: string[];
   requiredPlan: PlanId;
+  category?: "engineering" | "security" | "language" | "general";
+  badgeHy?: string;
 };

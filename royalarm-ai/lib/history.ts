@@ -4,6 +4,9 @@ export type Message = {
   id: string;
   role: "user" | "assistant";
   content: string;
+  reasoning?: string;
+  engine?: string;
+  modelId?: string;
   status: "complete" | "streaming" | "interrupted" | "error";
   error?: string;
   source?: string;
