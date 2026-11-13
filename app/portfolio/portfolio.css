@@ -227,21 +227,147 @@ html[data-theme="light"] #main-content.portfolio-page #mobile-navigation {
 .portfolio-nav-name { font-family: Georgia, serif; font-size: 1.15rem; }
 #main-content.portfolio-page #home {
   position: relative; display: grid; align-items: center; isolation: isolate; overflow: hidden;
-  gap: clamp(2rem, 6vw, 7rem); min-height: min(890px, 100svh);
-  padding: clamp(8rem, 12vw, 12rem) max(6%, calc((100vw - 1320px)/2)) clamp(3rem, 7vw, 7rem);
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  gap: clamp(1.75rem, 4vw, 4.25rem); min-height: min(890px, 100svh);
+  padding: clamp(7.5rem, 11vw, 10.5rem) max(6%, calc((100vw - 1340px)/2)) clamp(3rem, 6vw, 6rem);
   background: var(--surface) !important; color: var(--ink) !important;
 }
-.systems-intro { position: relative; z-index: 1; max-width: 43rem; min-width: 0; }
+.systems-intro { position: relative; z-index: 1; max-width: 42rem; min-width: 0; }
 .systems-role { font: 600 clamp(.72rem, 1.1vw, .9rem)/1.55 ui-monospace, monospace; }
-.systems-role { color: var(--cyan); margin-bottom: 1.4rem; }
-#main-content.portfolio-page #home h1 { font: normal clamp(4rem, 8.6vw, 9.5rem)/.97 Georgia, serif; letter-spacing: -.07em; color: var(--ink) !important; margin: 0; }
+.systems-role { color: var(--cyan); margin-bottom: 1.15rem; }
+#main-content.portfolio-page #home h1.welcome-heading {
+  font: normal clamp(3.8rem, 7.6vw, 8rem)/.98 Georgia, serif;
+  letter-spacing: -.065em;
+  color: var(--ink) !important;
+  margin: 0;
+  animation: welcome-reveal .8s cubic-bezier(.16, 1, .3, 1) both;
+  transition: font-size .85s cubic-bezier(.22, 1, .36, 1), letter-spacing .85s ease, transform .85s cubic-bezier(.22, 1, .36, 1);
+}
+#main-content.portfolio-page #home.is-compact h1.welcome-heading {
+  font-size: clamp(2.45rem, 4.3vw, 4.35rem);
+  letter-spacing: -.045em;
+}
+@keyframes welcome-reveal {
+  0% { opacity: 0; transform: translateY(18px) scale(.96); filter: blur(6px); }
+  100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
 .systems-intro h1 span { display: block; }
 .systems-intro h1 span:last-child { font-style: italic; }
-.systems-summary { max-width: 34rem; font-size: clamp(1rem, 1.5vw, 1.25rem); line-height: 1.65; color: var(--muted); margin: 1.6rem 0 2rem; }
+.systems-summary { max-width: 34rem; font-size: clamp(.98rem, 1.35vw, 1.15rem); line-height: 1.65; color: var(--muted); margin: 1.35rem 0 1.75rem; }
 .systems-links { display: flex; gap: .65rem; flex-wrap: wrap; }
 .systems-links a { padding: .85rem 1.1rem; border: 1px solid var(--line); border-radius: 3px; font-size: .88rem; font-weight: 700; color: var(--ink); }
 .systems-links a:first-child { background: var(--cyan); color: var(--surface); border-color: var(--cyan); }
 .systems-links a:hover { outline: 1px solid var(--cyan); }
+
+/* Right-side live typewriter dossier panel */
+.hero-live-brief {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 34rem;
+  justify-self: end;
+  padding: clamp(1.15rem, 2vw, 1.55rem);
+  border-radius: 1.15rem;
+  border: 1px solid color-mix(in srgb, var(--cyan) 38%, var(--line));
+  background:
+    radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--cyan) 14%, transparent), transparent 68%),
+    color-mix(in srgb, var(--panel) 80%, transparent);
+  backdrop-filter: blur(14px);
+  box-shadow:
+    inset 0 1px 0 #ffffff22,
+    0 4px 0 var(--surface),
+    0 5px 0 var(--line),
+    0 18px 36px #02071538;
+  opacity: 0;
+  transform: translateY(16px) scale(.98);
+  transition: opacity .65s ease .12s, transform .65s cubic-bezier(.22, 1, .36, 1) .12s;
+}
+#main-content.portfolio-page #home.is-compact .hero-live-brief {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.hero-brief-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding-bottom: .75rem;
+  margin-bottom: .85rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+}
+.hero-brief-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font: 700 .68rem/1.2 ui-monospace, monospace;
+  letter-spacing: .12em;
+  color: var(--cyan);
+}
+.hero-brief-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #34f5a6;
+  box-shadow: 0 0 8px #34f5a6;
+  animation: brief-pulse 2s ease-in-out infinite;
+}
+.hero-brief-status {
+  padding: .2rem .5rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--cyan) 45%, var(--line));
+  background: color-mix(in srgb, var(--cyan) 12%, transparent);
+  font: 700 .62rem/1 ui-monospace, monospace;
+  letter-spacing: .1em;
+  color: var(--cyan);
+}
+.hero-brief-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: .65rem;
+}
+.hero-brief-item {
+  padding: .5rem .65rem;
+  border-radius: .65rem;
+  border: 1px solid transparent;
+  background: color-mix(in srgb, var(--surface) 42%, transparent);
+  opacity: .35;
+  transition: opacity .25s ease, border-color .25s ease;
+}
+.hero-brief-item.is-active {
+  opacity: 1;
+  border-color: color-mix(in srgb, var(--line) 75%, transparent);
+}
+.hero-brief-tag {
+  display: block;
+  margin-bottom: .18rem;
+  font: 700 .62rem/1.2 ui-monospace, monospace;
+  letter-spacing: .11em;
+  color: var(--cyan);
+}
+.hero-brief-text {
+  margin: 0;
+  min-height: 1.35em;
+  font-size: clamp(.84rem, 1.02vw, .95rem);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink) !important;
+}
+.hero-brief-cursor {
+  display: inline-block;
+  margin-left: 3px;
+  color: var(--cyan);
+  animation: brief-cursor-blink .75s steps(2, start) infinite;
+}
+@keyframes brief-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .45; transform: scale(.86); }
+}
+@keyframes brief-cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
 .portfolio-page .portfolio-code-rain {
   position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0;
   pointer-events: none;
@@ -258,9 +384,21 @@ html[data-theme="light"] .portfolio-page :is(.skill-card,.cv-library,#projects a
 #main-content.portfolio-page :is(.tech-skill-mark,#services .grid > div > div,#about .flex-wrap span,.web-projects-chevron,.client-site-card,.client-sites-grid) { background: var(--panel) !important; border-color: var(--line); color: var(--ink); }
 #main-content.portfolio-page #projects img { filter: none; }
 #main-content.portfolio-page :is(#armenia-support,footer) { background: var(--section-glass) !important; }
+@media (max-width: 960px) {
+  #main-content.portfolio-page #home {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.75rem;
+    min-height: min(790px, 92svh);
+    padding: 7rem 6% clamp(4rem, 10vh, 6rem);
+  }
+  .hero-live-brief {
+    justify-self: stretch;
+    max-width: 100%;
+  }
+}
 @media (max-width: 760px) {
-  #main-content.portfolio-page #home { min-height: min(790px, 92svh); padding: 7rem 6% clamp(9rem, 26vh, 14rem); }
-  #main-content.portfolio-page #home h1 { font-size: clamp(3.25rem, 12vw, 6rem); }
+  #main-content.portfolio-page #home h1.welcome-heading { font-size: clamp(2.9rem, 11vw, 4.8rem); }
+  #main-content.portfolio-page #home.is-compact h1.welcome-heading { font-size: clamp(2.15rem, 8.5vw, 3.2rem); }
   .systems-summary { margin: 1rem 0 1.3rem; }
   .signal-field {
     inset: auto -8% 0 auto; width: 128%; height: 55%;

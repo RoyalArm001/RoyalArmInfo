@@ -62,7 +62,7 @@
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
       acceptNode(node) {
         const parent = node.parentElement;
-        if (!parent || parent.closest("script, style, code, pre, #typed-name, #cursor, .site-entry-loader")) {
+        if (!parent || parent.closest("script, style, code, pre, #typed-name, #cursor, .site-entry-loader, [data-no-translate]")) {
           return NodeFilter.FILTER_REJECT;
         }
         return normalize(node.nodeValue || "")
@@ -88,6 +88,7 @@
     try {
       window.localStorage.setItem("portfolio-language", selected);
     } catch (_) {}
+    window.dispatchEvent(new CustomEvent("portfolio-language-change", { detail: selected }));
     setStatus(selected === "en" ? "English selected" : "Local translation applied");
   }
 
