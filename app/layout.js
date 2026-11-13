@@ -1,4 +1,5 @@
 import Script from "next/script";
+import SiteEntryLoader from "./SiteEntryLoader";
 import "./globals.css";
 
 export const metadata = {
@@ -25,6 +26,19 @@ export const metadata = {
     "Zabbix Armenia",
   ],
   authors: [{ name: "Sipan Danielyan" }],
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   openGraph: {
     title: "Sipan Danielyan | IT Support & Network Engineer Armenia",
     description:
@@ -123,6 +137,14 @@ export default function RootLayout({ children }) {
           })),
         },
       },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.royalarm.uk/#website",
+        url: "https://www.royalarm.uk",
+        name: "Sipan Danielyan — RoyalArm",
+        inLanguage: ["en", "hy", "ru"],
+        publisher: { "@id": "https://www.royalarm.uk/#person" },
+      },
     ],
   };
 
@@ -132,7 +154,7 @@ export default function RootLayout({ children }) {
         <script
           id="theme-init"
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var saved=localStorage.getItem('portfolio-theme');var theme=saved==='light'?'light':'dark';document.documentElement.dataset.theme=theme;document.documentElement.style.colorScheme=theme;}catch(e){document.documentElement.dataset.theme='dark';}})();`,
+            __html: `(function(){try{var saved=localStorage.getItem('portfolio-theme');var theme=saved==='light'?'light':'dark';document.documentElement.dataset.theme=theme;document.documentElement.style.colorScheme=theme;}catch(e){document.documentElement.dataset.theme='dark';}try{var p=location.pathname;var h=location.hostname.toLowerCase();if(h.indexOf('ai.')===0||p.indexOf('/admin')===0||p.indexOf('/ai')===0||p.indexOf('/cv')===0){document.documentElement.dataset.skipEntryLoader='1';}}catch(e){}})();`,
           }}
         />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -151,6 +173,7 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
         <a href="#main-content" className="skip-link">Skip to main content</a>
+        <SiteEntryLoader />
         {children}
         <Script src="/js/script.js?v=portfolio-navigation-20260920" strategy="afterInteractive" />
         <Script src="/js/translate.js?v=systems-20261113" strategy="afterInteractive" />

@@ -62,7 +62,7 @@
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
       acceptNode(node) {
         const parent = node.parentElement;
-        if (!parent || parent.closest("script, style, code, pre, #typed-name, #cursor")) {
+        if (!parent || parent.closest("script, style, code, pre, #typed-name, #cursor, .site-entry-loader")) {
           return NodeFilter.FILTER_REJECT;
         }
         return normalize(node.nodeValue || "")

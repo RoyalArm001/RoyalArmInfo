@@ -16,6 +16,56 @@ function getHostname(request) {
   return host.trim().toLowerCase().split(":")[0];
 }
 
+function createSubdomainRobotsResponse(hostname) {
+  const crawlers = [
+    "*",
+    "Googlebot",
+    "Googlebot-Image",
+    "Googlebot-Mobile",
+    "AdsBot-Google",
+    "Bingbot",
+    "Yandex",
+    "YandexBot",
+    "YandexImages",
+    "DuckDuckBot",
+    "Applebot",
+    "OAI-SearchBot",
+    "ChatGPT-User",
+    "PerplexityBot",
+    "ClaudeBot",
+    "Claude-SearchBot",
+    "Google-Extended",
+    "TelegramBot",
+    "WhatsApp",
+    "facebookexternalhit",
+    "Twitterbot",
+    "LinkedInBot",
+  ];
+
+  const agentLines = crawlers.map((agent) => `User-agent: ${agent}`).join("\n");
+
+  return new Response(
+    `${agentLines}
+Allow: /
+Allow: /_next/static/
+Allow: /_next/image/
+Allow: /assets/
+Disallow: /api/
+Disallow: /admin
+Disallow: /admin/
+
+Host: https://${hostname}
+Sitemap: https://${hostname}/sitemap.xml
+`,
+    {
+      headers: {
+        "content-type": "text/plain; charset=utf-8",
+        "cache-control": "public, max-age=3600, s-maxage=3600",
+      },
+    }
+  );
+}
+
 export function proxy(request) {
   const hostname = getHostname(request);
   const pathname = request.nextUrl.pathname;
@@ -44,20 +94,7 @@ export function proxy(request) {
     }
 
     if (pathname === "/robots.txt") {
-      return new Response(
-        `User-agent: *
-Allow: /
-
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-Sitemap: https://${itHostname}/sitemap.xml
-`,
-        { headers: { "content-type": "text/plain; charset=utf-8" } }
-      );
+      return createSubdomainRobotsResponse(itHostname);
     }
 
     const destination = request.nextUrl.clone();
@@ -77,20 +114,7 @@ Sitemap: https://${itHostname}/sitemap.xml
     }
 
     if (pathname === "/robots.txt") {
-      return new Response(
-        `User-agent: *
-Allow: /
-
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-Sitemap: https://${shopHostname}/sitemap.xml
-`,
-        { headers: { "content-type": "text/plain; charset=utf-8" } }
-      );
+      return createSubdomainRobotsResponse(shopHostname);
     }
 
     const destination = request.nextUrl.clone();
