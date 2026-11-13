@@ -153,7 +153,7 @@ export default function RootLayout({ children }) {
         <a href="#main-content" className="skip-link">Skip to main content</a>
         {children}
         <Script src="/js/script.js?v=portfolio-navigation-20260920" strategy="afterInteractive" />
-        <Script src="/js/translate.js?v=ai-chat-20261113" strategy="afterInteractive" />
+        <Script src="/js/translate.js?v=systems-20261113" strategy="afterInteractive" />
       </body>
     </html>
   );

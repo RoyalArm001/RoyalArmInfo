@@ -109,7 +109,7 @@
 
   async function initialize() {
     try {
-      const response = await fetch("/i18n/translations.json?v=cv-20261113", { cache: "force-cache" });
+      const response = await fetch("/i18n/translations.json?v=systems-20261113", { cache: "force-cache" });
       if (!response.ok) throw new Error("Translation file could not be loaded");
       translations = await response.json();
     } catch (_) {

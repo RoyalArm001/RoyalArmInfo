@@ -1,7 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
 import Hero from "./portfolio/Hero";
-import Hero3D from "./portfolio/Hero3D";
 import PortfolioInteractions from "./portfolio/PortfolioInteractions";
 import PortfolioNavigation from "./portfolio/PortfolioNavigation";
 import "./portfolio/portfolio.css";
@@ -32,7 +31,6 @@ export default function HomePage() {
   const [, content] = markup.split(/<!-- Hero Section -->[\s\S]*?<!-- About Me Section -->/);
   return (
     <main id="main-content" className="portfolio-page">
-      <Hero3D fixed />
       <PortfolioNavigation />
       <Hero />
       <div className="portfolio-markup" dangerouslySetInnerHTML={{ __html: content }} />
