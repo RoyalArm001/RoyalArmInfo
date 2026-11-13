@@ -1,3 +1,5 @@
+import PrismOrbit from "./PrismOrbit";
+
 export default function Hero() {
   return (
     <section id="home" className="systems-hero" aria-labelledby="hero-heading">
@@ -11,6 +13,7 @@ export default function Hero() {
           <a href="https://ai.royalarm.uk/">RoyalArm AI</a>
         </div>
       </div>
+      <PrismOrbit />
     </section>
   );
 }

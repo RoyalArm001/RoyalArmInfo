@@ -271,14 +271,22 @@ html[data-theme="light"] .portfolio-page :is(.skill-card,.cv-library,#projects a
 @media print { .portfolio-code-rain, .signal-toggle { display: none; } }
 #main-content.portfolio-page #home {
   z-index: 1;
-  background: linear-gradient(90deg, color-mix(in srgb,var(--surface) 95%,transparent) 0%,
-    color-mix(in srgb,var(--surface) 88%,transparent) 36%, transparent 82%) !important;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(1rem, 3vw, 4rem);
+  background: radial-gradient(ellipse at 77% 46%, #8353de2e, transparent 41%),
+    radial-gradient(ellipse at 88% 72%, #00cbd62b, transparent 36%), var(--surface) !important;
+}
+.hero-prism-orbit {
+  align-self: center; width: 100%; height: auto; aspect-ratio: 1;
+  filter: drop-shadow(0 18px 20px #606ae135);
+  pointer-events: none;
 }
 @media (max-width: 760px) {
   #main-content.portfolio-page #home {
-    background: linear-gradient(180deg, color-mix(in srgb,var(--surface) 70%,transparent),
-      color-mix(in srgb,var(--surface) 91%,transparent) 46%, transparent 95%) !important;
+    grid-template-columns: minmax(0,1fr); gap: 0; padding-bottom: 2rem;
+    background: radial-gradient(ellipse at 63% 75%, #8353de30, transparent 42%), var(--surface) !important;
   }
+  .hero-prism-orbit { width: min(100%, 340px); justify-self: center; }
 }
 #main-content.portfolio-page #home h1 span:last-child {
   width: fit-content;
