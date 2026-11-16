@@ -125,7 +125,7 @@ export default function ServiceRequestPage() {
             <label className="grid gap-2 text-sm font-medium sm:col-span-2">
               Կապի նախընտրելի եղանակ
               <select name="contactMethod" className="rounded-xl border border-gray-700 bg-[#0f0f0f] px-4 py-3 outline-none transition focus:border-[#ff004f]">
-                <option>Հեռախոսազանգ</option>
+                <option value="Հեռախոսազանգ">Հեռախոսազանգ</option>
                 <option>WhatsApp</option>
                 <option>Email</option>
               </select>

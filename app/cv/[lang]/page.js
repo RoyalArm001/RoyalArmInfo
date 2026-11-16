@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import english from "../en.json";
 import armenian from "../hy.json";
+import PageTranslation from "../../PageTranslation";
 import PrintButton from "../PrintButton";
 import "../cv.css";
 
@@ -34,13 +35,14 @@ export default async function Resume({ params }) {
   const hy = lang === "hy";
   return (
     <main id="main-content" className="resume-sheet" lang={lang}>
+      <PageTranslation fixedLanguage={lang} />
       <nav className="resume-tools" aria-label={hy ? "CV-ի գործիքներ" : "CV tools"}>
         <a href="/#resume">{hy ? "← Պորտֆոլիո" : "← Portfolio"}</a>
         <a href={hy ? "/cv/en" : "/cv/hy"} lang={hy ? "en" : "hy"}>{hy ? "English" : "Հայերեն"}</a>
         <PrintButton>{hy ? "Արտահանել PDF" : "Export PDF"}</PrintButton>
       </nav>
       <header>
-        <img className="resume-portrait" src="/assets/images/Sipan-Danielyan-2026.jpg" alt="" width="480" height="640" />
+        <img className="resume-portrait" src="/assets/images/Sipan-Danielyan-2026.jpg" alt="" width="566" height="775" />
         <div className="resume-intro">
           <h1>{name}</h1>
           <p>{hy ? "ՏՏ տեխնիկ · Ցանցային ինժեներ" : "IT Technician · Network Engineer"}</p>

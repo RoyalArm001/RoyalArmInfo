@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import { setPortfolioLanguage, usePortfolioLanguage } from "../usePortfolioLanguage";
 import ThemeToggle from "../ThemeToggle";
 import styles from "../app/app.module.css";
 import { FlagIcon } from "./FlagIcon";
@@ -29,54 +30,17 @@ const languages = [
 ];
 
 function LanguageControl() {
-  const [language, setLanguage] = useState("en");
-
-  useEffect(() => {
-    try {
-      const saved = window.localStorage.getItem("portfolio-language") || "en";
-      setLanguage(languages.some((item) => item.code === saved) ? saved : "en");
-    } catch (_) {}
-
-    function syncFromDocument() {
-      const current = window.getPortfolioLanguage?.() || document.documentElement.lang || "en";
-      if (languages.some((item) => item.code === current)) setLanguage(current);
-    }
-
-    const timer = window.setTimeout(syncFromDocument, 0);
-    window.addEventListener("storage", syncFromDocument);
-    return () => {
-      window.clearTimeout(timer);
-      window.removeEventListener("storage", syncFromDocument);
-    };
-  }, []);
-
-  function cycleLanguage() {
-    const index = languages.findIndex((item) => item.code === language);
-    const next = languages[(index + 1) % languages.length];
-    setLanguage(next.code);
-
-    if (typeof window.setPortfolioLanguage === "function") {
-      window.setPortfolioLanguage(next.code);
-      return;
-    }
-
-    document.querySelectorAll("[data-language-select]").forEach((select) => {
-      select.value = next.code;
-      select.dispatchEvent(new Event("change", { bubbles: true }));
-    });
-    try {
-      window.localStorage.setItem("portfolio-language", next.code);
-    } catch (_) {}
-  }
-
+  const language = usePortfolioLanguage();
+  const index = languages.findIndex((item) => item.code === language);
+  const next = languages[(index + 1) % languages.length];
   const current = languages.find((item) => item.code === language) || languages[0];
 
   return (
     <button
       type="button"
       className={styles.langFlagButton}
-      onClick={cycleLanguage}
-      aria-label={`Language: ${current.label}. Click to change`}
+      onClick={() => setPortfolioLanguage(next.code)}
+      aria-label="Change page language"
       title={current.label}
     >
       <FlagIcon code={current.code} className={styles.langFlag} />

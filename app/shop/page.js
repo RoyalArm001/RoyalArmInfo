@@ -41,9 +41,9 @@ export const metadata = {
     images: [
       {
         url: "/assets/images/Sipan-Danielyan-2026.jpg",
-        width: 1200,
-        height: 630,
-        alt: "RoyalArm Software Catalog & Official Tools",
+        width: 566,
+        height: 775,
+        alt: "Sipan Danielyan",
       },
     ],
   },

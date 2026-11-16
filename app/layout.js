@@ -66,8 +66,8 @@ export const metadata = {
     images: [
       {
         url: "/assets/images/Sipan-Danielyan-2026.jpg",
-        width: 1200,
-        height: 1200,
+        width: 566,
+        height: 775,
         alt: "Sipan Danielyan — IT Technician and Network Engineer in Armenia",
       },
     ],
@@ -230,7 +230,6 @@ export default function RootLayout({ children }) {
         {children}
         <SiteEntryLoader />
         <Script src="/js/script.js?v=portfolio-navigation-20260920" strategy="afterInteractive" />
-        <Script src="/js/translate.js?v=portfolio-depth" strategy="afterInteractive" />
       </body>
     </html>
   );

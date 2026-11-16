@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { getPortfolioLanguage } from "./usePortfolioLanguage";
 
 const MIN_SHOWCASE_MS = 1450;
 const MAX_WAIT_MS = 2800;
@@ -136,12 +137,7 @@ export default function SiteEntryLoader() {
 
     setBrand(resolveBrandContext(hostname, pathname));
 
-    try {
-      const savedLang = window.localStorage.getItem("portfolio-language");
-      if (savedLang && Object.hasOwn(COPY, savedLang)) {
-        setLang(savedLang);
-      }
-    } catch (_) {}
+    setLang(getPortfolioLanguage());
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reducedMotion) {

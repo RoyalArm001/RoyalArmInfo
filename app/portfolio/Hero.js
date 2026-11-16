@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePortfolioLanguage } from "../usePortfolioLanguage";
 import SignalField from "./SignalField";
 
 const BRIEF_COPY = {
   en: {
+    welcome: "Welcome",
+    biography: "Sipan Danielyan short biography",
     badge: "LIVE DOSSIER · JERMUK, ARMENIA",
     status: "ONLINE",
     lines: [
@@ -16,6 +19,8 @@ const BRIEF_COPY = {
     ],
   },
   hy: {
+    welcome: "Բարի գալուստ",
+    biography: "Սիփան Դանիելյանի համառոտ կենսագրությունը",
     badge: "ՈՒՂԻՂ ՊՐՈՖԻԼ · ՋԵՐՄՈՒԿ, ՀԱՅԱՍՏԱՆ",
     status: "ԱԿՏԻՎ",
     lines: [
@@ -27,6 +32,8 @@ const BRIEF_COPY = {
     ],
   },
   ru: {
+    welcome: "Добро пожаловать",
+    biography: "Краткая биография Сипана Даниеляна",
     badge: "ДОСЬЕ ИНЖЕНЕРА · ДЖЕРМУК, АРМЕНИЯ",
     status: "ОНЛАЙН",
     lines: [
@@ -41,31 +48,11 @@ const BRIEF_COPY = {
 
 export default function Hero() {
   const [stage, setStage] = useState("intro");
-  const [lang, setLang] = useState("en");
+  const lang = usePortfolioLanguage();
   const [typedChars, setTypedChars] = useState(0);
 
   const copy = BRIEF_COPY[lang] || BRIEF_COPY.en;
   const totalChars = copy.lines.reduce((sum, item) => sum + item.text.length, 0);
-
-  useEffect(() => {
-    const syncLang = (event) => {
-      const next =
-        event?.detail ||
-        document.documentElement.lang ||
-        window.localStorage.getItem("portfolio-language") ||
-        "en";
-      if (BRIEF_COPY[next]) {
-        setLang(next);
-      }
-    };
-    syncLang();
-    window.addEventListener("portfolio-language-change", syncLang);
-    window.addEventListener("storage", syncLang);
-    return () => {
-      window.removeEventListener("portfolio-language-change", syncLang);
-      window.removeEventListener("storage", syncLang);
-    };
-  }, []);
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -142,7 +129,7 @@ export default function Hero() {
       <div className="systems-intro">
         <p className="systems-role">IT Technician · Network Engineer</p>
         <h1 id="hero-heading" className="welcome-heading" data-no-translate="">
-          <span className="welcome-word">Welcome</span>{" "}
+          <span className="welcome-word">{copy.welcome}</span>{" "}
           <span className="royalarm-word">RoyalArm</span>
         </h1>
         <p className="systems-summary">
@@ -160,7 +147,7 @@ export default function Hero() {
       <aside
         className="hero-live-brief"
         data-no-translate=""
-        aria-label="Sipan Danielyan short biography"
+        aria-label={copy.biography}
       >
         <div className="hero-brief-header">
           <span className="hero-brief-badge">

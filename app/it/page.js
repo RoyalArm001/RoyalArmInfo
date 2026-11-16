@@ -1,4 +1,5 @@
 import styles from "../app/app.module.css";
+import PageTranslation from "../PageTranslation";
 import InstallAppButton from "./InstallAppButton";
 import OpenSpecialistModalButton from "./OpenSpecialistModalButton";
 import OpenRequestModalLink from "./OpenRequestModalLink";
@@ -104,6 +105,7 @@ export default function AppLandingPage() {
 
   return (
     <>
+      <PageTranslation />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}

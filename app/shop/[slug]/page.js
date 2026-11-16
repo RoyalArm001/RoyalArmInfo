@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { PRODUCTS } from "../../../lib/shopData";
 import HeaderControls from "../../HeaderControls";
 import SoftwareImage from "../SoftwareImage";
+import LocalizedText from "../LocalizedText";
 import "../shop.css";
 
 export async function generateStaticParams() {
@@ -272,7 +273,7 @@ export default async function ProductDetailPage({ params }) {
           </div>
 
           <p style={{ fontSize: "1.05rem", lineHeight: "1.65", color: "var(--shop-text)" }}>
-            {product.fullText || product.description}
+            <LocalizedText en={product.fullText || product.description} hy={product.descriptionHy} ru={product.descriptionRu} />
           </p>
 
           {/* Download Mirrors Box */}
@@ -381,7 +382,11 @@ export default async function ProductDetailPage({ params }) {
             <div className="shop-specialist-text">
               <h4>Need Professional Setup Assistance?</h4>
               <p>
-                Sipan Danielyan provides remote and on-site IT support across Armenia. Get help with {product.title} deployment, corporate networks, or system troubleshooting.
+                <LocalizedText
+                  en={`Sipan Danielyan provides remote and on-site IT support across Armenia. Get help with ${product.title} deployment, corporate networks, or system troubleshooting.`}
+                  hy={`Սիփան Դանիելյանը հեռակա և տեղում ՏՏ աջակցություն է տրամադրում ամբողջ Հայաստանում։ Կարող եք դիմել ${product.title} ծրագրի տեղադրման, կորպորատիվ ցանցերի կամ համակարգային խնդիրների համար։`}
+                  ru={`Сипан Даниелян оказывает ИТ-поддержку удалённо и на месте по всей Армении. Обращайтесь за помощью с установкой ${product.title}, корпоративными сетями и устранением неполадок.`}
+                />
               </p>
             </div>
             <Link href="/service-request" className="shop-specialist-btn">
@@ -409,7 +414,7 @@ export default async function ProductDetailPage({ params }) {
                   <h4 style={{ fontSize: "1.1rem", fontWeight: "800", margin: "0 0 0.4rem", color: "var(--shop-text)" }}>
                     {rel.title}
                   </h4>
-                  <p className="shop-card-desc">{rel.description}</p>
+                  <p className="shop-card-desc"><LocalizedText en={rel.description} hy={rel.descriptionHy} ru={rel.descriptionRu} /></p>
                   <Link href={`/shop/${rel.slug}`} className="shop-btn-primary" style={{ height: "38px" }}>
                     View & Download
                   </Link>

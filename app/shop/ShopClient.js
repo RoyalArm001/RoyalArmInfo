@@ -3,6 +3,8 @@
 import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { PRODUCTS, SHOP_CATEGORIES } from "../../lib/shopData";
+import { setPortfolioLanguage, usePortfolioLanguage } from "../usePortfolioLanguage";
+import PageTranslation from "../PageTranslation";
 import ThemeToggle from "../ThemeToggle";
 import SoftwareImage from "./SoftwareImage";
 import "./shop.css";
@@ -17,7 +19,7 @@ export default function ShopClient() {
   const [selectedLetter, setSelectedLetter] = useState("ALL");
   const [sortBy, setSortBy] = useState("popular");
   const [activeModalProduct, setActiveModalProduct] = useState(null);
-  const [lang, setLang] = useState("hy"); // Armenian default
+  const lang = usePortfolioLanguage();
   const [viewMode, setViewMode] = useState("windows"); // Network.am style windows view by default
 
   // Sync URL search params (?search=... or ?q=...)
@@ -31,24 +33,6 @@ export default function ShopClient() {
       const mode = params.get("view");
       if (mode === "grid" || mode === "windows") setViewMode(mode);
     }
-  }, []);
-
-  // Sync site language
-  useEffect(() => {
-    function detectLanguage() {
-      const saved = localStorage.getItem("portfolio-language");
-      if (saved && ["en", "hy", "ru"].includes(saved)) {
-        setLang(saved);
-      } else {
-        const docLang = document.documentElement.lang;
-        if (docLang && ["en", "hy", "ru"].includes(docLang)) {
-          setLang(docLang);
-        }
-      }
-    }
-    detectLanguage();
-    window.addEventListener("storage", detectLanguage);
-    return () => window.removeEventListener("storage", detectLanguage);
   }, []);
 
   // Keyboard shortcut: ESC to close modal, "/" to focus search
@@ -232,6 +216,16 @@ export default function ShopClient() {
   // Translations
   const t = {
     hy: {
+      windowView: "Պատուհաններ",
+      cardView: "Քարտեր",
+      download: "Բեռնել",
+      license: "Արտոնագիր",
+      operatingSystem: "ՕՀ",
+      disk: "Սկավառակ",
+      productPage: "Բացել ծրագրի էջը →",
+      languageButton: "Փոխել լեզուն",
+      alphabetFilter: "Զտել ըստ սկզբնատառի",
+      searchLabel: "Որոնել ծրագրեր",
       badge: "ROYALARM ՍՏՈՒԳՎԱԾ ԾՐԱԳՐԵՐԻ ԿԱՏԱԼՈԳ",
       title: "Անհրաժեշտ Ծրագրեր և",
       titleGradient: "Պաշտոնական Բեռնումներ",
@@ -282,6 +276,16 @@ export default function ShopClient() {
       disclaimerText: "Ուշադրություն. RoyalArm Shop-ում ներկայացված բոլոր ծրագրերի հղումները տանում են բացառապես մշակողների պաշտոնական կայքեր և ստուգված հայելային աղբյուրներ (Google, Microsoft, Mozilla, The Document Foundation, Adobe, Ghisler, Oracle և այլն)։ Ֆայլերը չեն պարունակում կողմնակի գովազդային հավելվածներ (adware/malware): Բոլոր ապրանքանիշերը և լոգոտիպերը պատկանում են իրենց օրինական իրավատերերին։",
     },
     en: {
+      windowView: "Windows",
+      cardView: "Cards",
+      download: "Download",
+      license: "License",
+      operatingSystem: "OS",
+      disk: "Disk",
+      productPage: "Open product page →",
+      languageButton: "Change language",
+      alphabetFilter: "Filter by initial letter",
+      searchLabel: "Search software catalog",
       badge: "ROYALARM VERIFIED SOFTWARE HUB",
       title: "Essential Software &",
       titleGradient: "Official Downloads",
@@ -332,6 +336,16 @@ export default function ShopClient() {
       disclaimerText: "Notice: All download links provided on RoyalArm Shop lead strictly to verified official vendor domains and secure repositories (Google, Microsoft, Mozilla, The Document Foundation, Adobe, Ghisler, Oracle, etc.). Files are clean, unmodified, and free of adware or third-party wrappers. All trademarks and logos belong to their respective owners.",
     },
     ru: {
+      windowView: "Окна",
+      cardView: "Карточки",
+      download: "Скачать",
+      license: "Лицензия",
+      operatingSystem: "ОС",
+      disk: "Диск",
+      productPage: "Перейти на страницу программы →",
+      languageButton: "Сменить язык",
+      alphabetFilter: "Фильтр по первой букве",
+      searchLabel: "Поиск программ",
       badge: "КАТАЛОГ ПРОВЕРЕННОГО ПО ROYALARM",
       title: "Необходимый Софт и",
       titleGradient: "Официальные Загрузки",
@@ -396,7 +410,8 @@ export default function ShopClient() {
   };
 
   return (
-    <div className="shop-container">
+    <div className="shop-container" data-no-translate>
+      <PageTranslation />
       <div className="shop-glow-1" aria-hidden="true" />
       <div className="shop-glow-2" aria-hidden="true" />
 
@@ -440,13 +455,10 @@ export default function ShopClient() {
                 onClick={() => {
                   const langs = ["hy", "en", "ru"];
                   const nextLang = langs[(langs.indexOf(lang) + 1) % langs.length];
-                  setLang(nextLang);
-                  localStorage.setItem("portfolio-language", nextLang);
-                  document.documentElement.lang = nextLang;
-                  window.dispatchEvent(new Event("storage"));
+                  setPortfolioLanguage(nextLang);
                 }}
-                title="Toggle Language"
-                aria-label="Change page language"
+                title={t.languageButton}
+                aria-label={t.languageButton}
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <circle cx="12" cy="12" r="10" />
@@ -583,14 +595,14 @@ export default function ShopClient() {
                 placeholder={t.searchPlaceholder}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                aria-label="Search software catalog"
+                aria-label={t.searchLabel}
               />
               {searchQuery && (
                 <button
                   type="button"
                   className="shop-search-clear"
                   onClick={() => setSearchQuery("")}
-                  title="Clear search"
+                  title={t.clearSearch}
                 >
                   ✕
                 </button>
@@ -618,17 +630,17 @@ export default function ShopClient() {
                 type="button"
                 className={`shop-view-btn ${viewMode === "windows" ? "active" : ""}`}
                 onClick={() => setViewMode("windows")}
-                title="Network.am ոճի պատուհաններով դասավորություն"
+                title={t.windowView}
               >
-                🪟 <span>Պատուհաններ</span>
+                🪟 <span>{t.windowView}</span>
               </button>
               <button
                 type="button"
                 className={`shop-view-btn ${viewMode === "grid" ? "active" : ""}`}
                 onClick={() => setViewMode("grid")}
-                title="Ժամանակակից քարտերի ցանց"
+                title={t.cardView}
               >
-                🔲 <span>Քարտեր</span>
+                🔲 <span>{t.cardView}</span>
               </button>
             </div>
           </div>
@@ -636,7 +648,7 @@ export default function ShopClient() {
           {/* Secondary Filter Row: Platforms & Licenses */}
           <div className="shop-filters-row">
             <div className="shop-platform-pills">
-              <span className="shop-platform-label">OS:</span>
+              <span className="shop-platform-label">{t.operatingSystem}</span>
               <button
                 type="button"
                 className={`shop-pill-btn ${selectedPlatform === "all" ? "active" : ""}`}
@@ -668,7 +680,7 @@ export default function ShopClient() {
             </div>
 
             <div className="shop-platform-pills">
-              <span className="shop-platform-label">License:</span>
+              <span className="shop-platform-label">{t.license}</span>
               <button
                 type="button"
                 className={`shop-pill-btn ${selectedLicense === "all" ? "active" : ""}`}
@@ -727,7 +739,7 @@ export default function ShopClient() {
           </div>
 
           {/* Alphabet Fast Jump Bar (A-Z inspired by Network.am) */}
-          <div className="shop-alpha-bar" title="Filter by initial letter">
+          <div className="shop-alpha-bar" title={t.alphabetFilter}>
             {ALPHABET.map((char) => (
               <button
                 key={char}
@@ -853,21 +865,21 @@ export default function ShopClient() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="shop-window-dl-btn"
-                            title={`${p.title} — Պաշտոնական Բեռնում`}
+                            title={`${p.title} — ${t.directDownload}`}
                           >
                             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                               <polyline points="7 10 12 15 17 10" />
                               <line x1="12" y1="15" x2="12" y2="3" />
                             </svg>
-                            <span>Բեռնել</span>
+                            <span>{t.download}</span>
                           </a>
                           <button
                             type="button"
                             className="shop-window-info-btn"
                             onClick={() => setActiveModalProduct(p)}
-                            title="Մանրամասներ և հայելիներ"
-                            aria-label={`${p.title} details`}
+                            title={t.detailsAndMirrors}
+                            aria-label={`${p.title} — ${t.detailsAndMirrors}`}
                           >
                             ℹ
                           </button>
@@ -966,7 +978,7 @@ export default function ShopClient() {
                       type="button"
                       className="shop-btn-secondary"
                       onClick={() => setActiveModalProduct(p)}
-                      title="View specifications and all download mirrors"
+                      title={t.detailsAndMirrors}
                     >
                       <span>{t.detailsAndMirrors}</span>
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -1127,7 +1139,7 @@ export default function ShopClient() {
 
                 <div className="shop-sys-req-grid">
                   <div className="shop-req-box">
-                    <span className="shop-req-label">OS</span>
+                    <span className="shop-req-label">{t.operatingSystem}</span>
                     <span className="shop-req-val">{activeModalProduct.systemRequirements.os}</span>
                   </div>
                   <div className="shop-req-box">
@@ -1135,7 +1147,7 @@ export default function ShopClient() {
                     <span className="shop-req-val">{activeModalProduct.systemRequirements.ram}</span>
                   </div>
                   <div className="shop-req-box">
-                    <span className="shop-req-label">Disk</span>
+                    <span className="shop-req-label">{t.disk}</span>
                     <span className="shop-req-val">{activeModalProduct.systemRequirements.disk}</span>
                   </div>
                   <div className="shop-req-box">
@@ -1153,7 +1165,7 @@ export default function ShopClient() {
                 className="shop-modal-official-link"
                 style={{ fontSize: "0.86rem" }}
               >
-                <span>Open Dedicated Product Page & SEO Specs →</span>
+                <span>{t.productPage}</span>
               </Link>
             </div>
 

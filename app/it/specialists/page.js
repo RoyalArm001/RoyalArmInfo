@@ -1,3 +1,4 @@
+import PageTranslation from "../../PageTranslation";
 import styles from "../../app/app.module.css";
 import ApprovedSpecialists from "../ApprovedSpecialists";
 
@@ -33,6 +34,7 @@ export const metadata = {
 export default function SpecialistsPage() {
   return (
     <section id="specialists" className={styles.specialistsSection} aria-labelledby="specialists-title">
+      <PageTranslation />
       <div className={styles.sectionHeading}>
         <span className={styles.eyebrow}>Specialist areas</span>
         <h1 id="specialists-title">Find a verified IT specialist</h1>
